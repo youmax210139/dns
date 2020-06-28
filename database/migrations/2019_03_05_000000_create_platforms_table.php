@@ -23,4 +23,9 @@ class CreatePlatformsTable extends Migration
             $table->softDeletes();
         });
     }
+
+    public function down()
+    {
+        Schema::dropIfExists('platforms');
+    }
 }

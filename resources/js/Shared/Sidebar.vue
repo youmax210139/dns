@@ -14,33 +14,49 @@
     <span class="heading">Main</span>
     <ul class="list-unstyled">
       <li class="active">
-        <a href="/">
+        <a href="#dashboards" aria-expanded="false" data-toggle="collapse">
           <i class="icon-home"></i>仪表板
         </a>
+        <ul id="dashboards" class="collapse list-unstyled">
+          <li>
+            <a href="#">域名分析</a>
+          </li>
+          <li>
+            <a href="#">域名搜寻引擎</a>
+          </li>
+        </ul>
       </li>
       <li>
         <a href="tables.html">
-          <i class="icon-grid"></i>平台管理
+          <i class="fa fa-server"></i>平台管理
         </a>
       </li>
       <li>
-        <a href="charts.html">
-          <i class="fa fa-bar-chart"></i>工具
+        <a href="#tools" aria-expanded="false" data-toggle="collapse">
+          <i class="fa fa-search"></i>检测工具
         </a>
+        <ul id="tools" class="collapse list-unstyled">
+          <li>
+            <a href="#">ping在线检测</a>
+          </li>
+          <li>
+            <a href="#">whois在线检测</a>
+          </li>
+        </ul>
       </li>
       <li>
-        <a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse">
-          <i class="icon-padnote"></i>自动化管理
+        <a href="#automation" aria-expanded="false" data-toggle="collapse">
+          <i class="fa fa-reddit-alien"></i>自动化管理
         </a>
-        <ul id="exampledropdownDropdown" class="collapse list-unstyled">
+        <ul id="automation" class="collapse list-unstyled">
           <li>
-            <a href="#">Page</a>
+            <a href="#">域名状态侦测</a>
           </li>
           <li>
-            <a href="#">Page</a>
+            <a href="#">域名逾期告警</a>
           </li>
           <li>
-            <a href="#">Page</a>
+            <a href="#">域名状态侦测</a>
           </li>
         </ul>
       </li>

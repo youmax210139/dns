@@ -135,24 +135,29 @@
           <div class="col-lg-6 bg-white">
             <div class="form d-flex align-items-center">
               <div class="content">
-                <form method="post" class="form-validate" @submit.prevent="submit">
+                <form
+                  method="post"
+                  class="form-validate needs-validation was-validated"
+                  novalidate
+                  @submit.prevent="submit"
+                >
                   <div class="form-group">
                     <input
                       v-model="form.email"
-                      :errors="$page.errors.email"
                       @focus="emailActive=true"
                       @blur="blur($event)"
                       type="text"
                       name="email"
                       required
-                      data-msg="Please enter your email"
                       class="input-material"
+                      :class="{'is-invalid': $page.errors.email}"
                     />
                     <label
                       for="login-username"
                       class="label-material"
                       :class="{active:emailActive}"
                     >User Name</label>
+                    <div class="invalid-feedback">{{ emailError }}</div>
                   </div>
                   <div class="form-group">
                     <input
@@ -162,14 +167,15 @@
                       type="password"
                       name="password"
                       required
-                      data-msg="Please enter your password"
                       class="input-material"
+                      :class="{'is-invalid': $page.errors.password}"
                     />
                     <label
                       for="login-password"
                       class="label-material"
                       :class="{active:passwordActive}"
                     >Password</label>
+                    <div class="invalid-feedback">{{ passwordError }}</div>
                   </div>
                   <div class="form-group">
                     <button type="submit" class="btn btn-primary">Login</button>
@@ -217,8 +223,26 @@ export default {
         email: "johndoe@example.com",
         password: "secret",
         remember: null
+      },
+      validation: {
+        email: true,
+        password: true
       }
     };
+  },
+  computed :{
+    emailError(){
+      if(this.$page.errors.email){
+        return this.$page.errors.email[0]; 
+      }
+      return "";
+    },
+    passwordError(){
+      if(this.$page.errors.password){
+        return this.$page.errors.password[0]; 
+      }
+      return "";
+    }
   },
   methods: {
     blur(event) {

@@ -8,16 +8,14 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        $account = Account::create(['name' => 'Acme Corporation']);
+        $account = Account::create(['name' => 'IT Corporation']);
 
         factory(User::class)->create([
             'account_id' => $account->id,
-            'first_name' => 'John',
-            'last_name' => 'Doe',
-            'email' => 'johndoe@example.com',
+            'first_name' => 'Charlie',
+            'last_name' => 'Yuan',
+            'email' => 'admin@gmail.com',
             'owner' => true,
         ]);
-
-        factory(User::class, 5)->create(['account_id' => $account->id]);
     }
 }

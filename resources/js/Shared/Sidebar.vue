@@ -3,7 +3,7 @@
     <!-- Sidebar Header-->
     <div class="sidebar-header d-flex align-items-center">
       <div class="avatar">
-        <img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle" />
+        <img src="/img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle" />
       </div>
       <div class="title">
         <h1 class="h4">Mark Stephen</h1>
@@ -27,9 +27,9 @@
         </ul>
       </li>
       <li>
-        <a href="tables.html">
+        <inertia-link :href="route('platforms.index')">
           <i class="fa fa-server"></i>平台管理
-        </a>
+        </inertia-link>
       </li>
       <li>
         <a href="#tools" aria-expanded="false" data-toggle="collapse">
@@ -37,10 +37,10 @@
         </a>
         <ul id="tools" class="collapse list-unstyled">
           <li>
-            <a href="#">ping在线检测</a>
+            <inertia-link :href="route('terminals.ping')">ping在线检测</inertia-link>
           </li>
           <li>
-            <a href="#">whois在线检测</a>
+            <inertia-link :href="route('terminals.whois')">whois在线检测</inertia-link>
           </li>
         </ul>
       </li>

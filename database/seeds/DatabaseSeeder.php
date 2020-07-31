@@ -1,5 +1,7 @@
 <?php
 
+use App\Platform;
+use App\Domain;
 use App\Account;
 use App\User;
 use Illuminate\Database\Seeder;
@@ -16,6 +18,11 @@ class DatabaseSeeder extends Seeder
             'last_name' => 'Yuan',
             'email' => 'admin@gmail.com',
             'owner' => true,
+        ]);
+
+        $platform = Platform::create(['name'=>'google.com.tw']);
+        factory(Domain::class)->create([
+            'platform_id' => $platform->id,
         ]);
     }
 }

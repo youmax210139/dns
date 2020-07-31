@@ -116,13 +116,13 @@
                 aria-expanded="false"
                 class="nav-link language dropdown-toggle"
               >
-                <img src="img/flags/16/CN.png" alt="中文" />
+                <img src="/img/flags/16/CN.png" alt="中文" />
                 <span class="d-none d-sm-inline-block">中文</span>
               </a>
               <ul aria-labelledby="languages" class="dropdown-menu">
                 <li>
                   <a rel="nofollow" href="#" class="dropdown-item">
-                    <img src="img/flags/16/GB.png" alt="English" class="mr-2" />英文
+                    <img src="/img/flags/16/GB.png" alt="English" class="mr-2" />英文
                   </a>
                 </li>
               </ul>

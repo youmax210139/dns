@@ -28,26 +28,15 @@ Route::put('users/{user}')->name('users.update')->uses('UsersController@update')
 Route::delete('users/{user}')->name('users.destroy')->uses('UsersController@destroy')->middleware('auth');
 Route::put('users/{user}/restore')->name('users.restore')->uses('UsersController@restore')->middleware('auth');
 
+// Terminal
+Route::get('terminals/whois')->name('terminals.whois')->uses('TerminalController@whois')->middleware('auth');
+Route::get('terminals/ping')->name('terminals.ping')->uses('TerminalController@ping')->middleware('auth');
+
 // Images
 Route::get('/img/{path}', 'ImagesController@show')->where('path', '.*');
 
-// Organizations
-Route::get('organizations')->name('organizations')->uses('OrganizationsController@index')->middleware('remember', 'auth');
-Route::get('organizations/create')->name('organizations.create')->uses('OrganizationsController@create')->middleware('auth');
-Route::post('organizations')->name('organizations.store')->uses('OrganizationsController@store')->middleware('auth');
-Route::get('organizations/{organization}/edit')->name('organizations.edit')->uses('OrganizationsController@edit')->middleware('auth');
-Route::put('organizations/{organization}')->name('organizations.update')->uses('OrganizationsController@update')->middleware('auth');
-Route::delete('organizations/{organization}')->name('organizations.destroy')->uses('OrganizationsController@destroy')->middleware('auth');
-Route::put('organizations/{organization}/restore')->name('organizations.restore')->uses('OrganizationsController@restore')->middleware('auth');
-
-// Contacts
-Route::get('contacts')->name('contacts')->uses('ContactsController@index')->middleware('remember', 'auth');
-Route::get('contacts/create')->name('contacts.create')->uses('ContactsController@create')->middleware('auth');
-Route::post('contacts')->name('contacts.store')->uses('ContactsController@store')->middleware('auth');
-Route::get('contacts/{contact}/edit')->name('contacts.edit')->uses('ContactsController@edit')->middleware('auth');
-Route::put('contacts/{contact}')->name('contacts.update')->uses('ContactsController@update')->middleware('auth');
-Route::delete('contacts/{contact}')->name('contacts.destroy')->uses('ContactsController@destroy')->middleware('auth');
-Route::put('contacts/{contact}/restore')->name('contacts.restore')->uses('ContactsController@restore')->middleware('auth');
+// Platforms
+Route::get('platforms')->name('platforms.index')->uses('PlatformController')->middleware('auth');
 
 // Reports
 Route::get('reports')->name('reports')->uses('ReportsController')->middleware('auth');

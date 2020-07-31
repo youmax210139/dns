@@ -9,29 +9,22 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Redirect;
 
-class ContactsController extends Controller
+class TerminalController extends Controller
 {
-    public function index()
+    public function whois()
     {
-        return Inertia::render('Contacts/Index', [
+        return Inertia::render('Terminal/Whois', [
             'filters' => Request::all('search', 'trashed'),
-            'contacts' => Auth::user()->account->contacts()
-                ->with('organization')
-                ->orderByName()
-                ->filter(Request::only('search', 'trashed'))
-                ->paginate()
-                ->transform(function ($contact) {
-                    return [
-                        'id' => $contact->id,
-                        'name' => $contact->name,
-                        'phone' => $contact->phone,
-                        'city' => $contact->city,
-                        'deleted_at' => $contact->deleted_at,
-                        'organization' => $contact->organization ? $contact->organization->only('name') : null,
-                    ];
-                }),
         ]);
     }
+
+    public function ping()
+    {
+        return Inertia::render('Terminal/Ping', [
+            'filters' => Request::all('search', 'trashed'),
+        ]);
+    }
+
 
     public function create()
     {

@@ -1,17 +1,7 @@
 <template>
   <nav class="side-navbar" :class="side_navbar">
-    <!-- Sidebar Header-->
-    <div class="sidebar-header d-flex align-items-center">
-      <div class="avatar">
-        <img src="/img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle" />
-      </div>
-      <div class="title">
-        <h1 class="h4">Mark Stephen</h1>
-        <p>Web Designer</p>
-      </div>
-    </div>
     <!-- Sidebar Navidation Menus-->
-    <span class="heading">Main</span>
+    <span class="heading">工具列</span>
     <ul class="list-unstyled">
       <li class="active">
         <a href="#dashboards" aria-expanded="false" data-toggle="collapse">

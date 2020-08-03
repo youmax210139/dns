@@ -4,12 +4,10 @@
 }
 </style>
 <template>
-  <vue-command :commands="commands" prompt="ubuntu@localhost" />
+  <div class=""></div>
 </template>
 
 <script>
-import VueCommand, { createStdout } from "vue-command";
-import "vue-command/dist/vue-command.css";
 import Layout from "@/Shared/Layout";
 import mapValues from "lodash/mapValues";
 import Pagination from "@/Shared/Pagination";
@@ -23,7 +21,6 @@ export default {
   components: {
     Pagination,
     SearchFilter,
-    VueCommand
   },
   props: {
     contacts: Object,
@@ -35,11 +32,6 @@ export default {
         search: this.filters.search,
         trashed: this.filters.trashed
       },
-      commands: {
-        "whois": () => {
-          return createStdout('www.google.com.tw')
-        }
-      }
     };
   },
   watch: {

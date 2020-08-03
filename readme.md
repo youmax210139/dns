@@ -1,8 +1,6 @@
-# Ping CRM
+# Dns tools
 
-A demo application to illustrate how Inertia.js works.
-
-![](https://raw.githubusercontent.com/inertiajs/pingcrm/master/screenshot.png)
+Built by Inertia.js and Laravel
 
 ## Installation
 
@@ -10,7 +8,7 @@ Clone the repo locally:
 
 ```sh
 git clone https://github.com/inertiajs/pingcrm.git pingcrm
-cd pingcrm
+cd dns
 ```
 
 Install PHP dependencies:
@@ -22,13 +20,13 @@ composer install
 Install NPM dependencies:
 
 ```sh
-npm ci
+yarn install
 ```
 
 Build assets:
 
 ```sh
-npm run dev
+yarn run dev
 ```
 
 Setup configuration:
@@ -43,22 +41,16 @@ Generate application key:
 php artisan key:generate
 ```
 
-Create an SQLite database. You can also use another database (MySQL, Postgres), simply update your configuration accordingly.
+Create an Mysql database.
 
 ```sh
-touch database/database.sqlite
+CREATE DATABASE `dns` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 ```
 
 Run database migrations:
 
 ```sh
-php artisan migrate
-```
-
-Run database seeder:
-
-```sh
-php artisan db:seed
+php artisan migrate --seed
 ```
 
 Run the dev server (the output will give the address):
@@ -67,14 +59,14 @@ Run the dev server (the output will give the address):
 php artisan serve
 ```
 
-You're ready to go! Visit Ping CRM in your browser, and login with:
+You're ready to go! Visit Dns Tools Site in your browser, and login with:
 
-- **Username:** johndoe@example.com
-- **Password:** secret
+-   **Username:** admin@gmail.com
+-   **Password:** 123456
 
 ## Running tests
 
-To run the Ping CRM tests, run:
+To run theDns Tools tests, run:
 
 ```
 phpunit

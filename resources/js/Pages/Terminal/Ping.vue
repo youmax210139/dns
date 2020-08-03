@@ -4,12 +4,10 @@
 }
 </style>
 <template>
-  <vue-command :commands="commands" prompt="ubuntu@localhost" />
+  <div class=""></div>
 </template>
 
 <script>
-import VueCommand, { createStdout } from "vue-command";
-import "vue-command/dist/vue-command.css";
 import Layout from "@/Shared/Layout";
 import mapValues from "lodash/mapValues";
 import Pagination from "@/Shared/Pagination";
@@ -18,12 +16,11 @@ import SearchFilter from "@/Shared/SearchFilter";
 import throttle from "lodash/throttle";
 
 export default {
-  metaInfo: { title: "Whois" },
+  metaInfo: { title: "Ping在線檢測" },
   layout: Layout,
   components: {
     Pagination,
     SearchFilter,
-    VueCommand
   },
   props: {
     contacts: Object,
@@ -35,11 +32,6 @@ export default {
         search: this.filters.search,
         trashed: this.filters.trashed
       },
-      commands: {
-        "ping": () => {
-          return createStdout('hello world')
-        }
-      }
     };
   },
   watch: {

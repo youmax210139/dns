@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\User;
+use App\Models\User;
 use App\Account;
 use Tests\TestCase;
 use App\Organization;

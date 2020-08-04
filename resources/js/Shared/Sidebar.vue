@@ -14,6 +14,9 @@
         </a>
         <ul id="dns-tools" class="collapse list-unstyled">
           <li>
+            <inertia-link :href="route('domains.index')">域名管理</inertia-link>
+          </li>
+          <li>
             <a href="#">Ping在線檢測</a>
           </li>
           <li>

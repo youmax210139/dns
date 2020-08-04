@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Platform;
 use Inertia\Inertia;
 
-class PlatformController extends Controller
+class DomainController extends Controller
 {
     public function __invoke()
     {

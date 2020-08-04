@@ -36,7 +36,7 @@ Route::get('terminals/ping')->name('terminals.ping')->uses('TerminalController@p
 Route::get('/img/{path}', 'ImagesController@show')->where('path', '.*');
 
 // Platforms
-Route::get('platforms')->name('platforms.index')->uses('PlatformController')->middleware('auth');
+Route::resource('domains', 'DomainController')->middleware('auth');
 
 // Reports
 Route::get('reports')->name('reports')->uses('ReportsController')->middleware('auth');

@@ -3,7 +3,7 @@
 use App\Platform;
 use App\Domain;
 use App\Account;
-use App\User;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

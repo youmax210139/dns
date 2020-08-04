@@ -125,9 +125,9 @@
             <div class="info d-flex align-items-center">
               <div class="content">
                 <div class="logo">
-                  <h1>DNS Dashboard</h1>
+                  <h1>Tools Dashboard</h1>
                 </div>
-                <p>平台域名管理系统</p>
+                <p>工具管理系统</p>
               </div>
             </div>
           </div>
@@ -211,7 +211,7 @@ export default {
   metaInfo: { title: "Login" },
   components: {},
   props: {
-    errors: Object
+    errors: Object,
   },
   data() {
     return {
@@ -220,29 +220,29 @@ export default {
       loading: false,
       sending: false,
       form: {
-        email: "johndoe@example.com",
-        password: "secret",
-        remember: null
+        email: "admin@gmail.com",
+        password: "123456",
+        remember: null,
       },
       validation: {
         email: true,
-        password: true
-      }
+        password: true,
+      },
     };
   },
-  computed :{
-    emailError(){
-      if(this.$page.errors.email){
-        return this.$page.errors.email[0]; 
+  computed: {
+    emailError() {
+      if (this.$page.errors.email) {
+        return this.$page.errors.email[0];
       }
       return "";
     },
-    passwordError(){
-      if(this.$page.errors.password){
-        return this.$page.errors.password[0]; 
+    passwordError() {
+      if (this.$page.errors.password) {
+        return this.$page.errors.password[0];
       }
       return "";
-    }
+    },
   },
   methods: {
     blur(event) {
@@ -258,10 +258,10 @@ export default {
         .post(this.route("login.attempt"), {
           email: this.form.email,
           password: this.form.password,
-          remember: this.form.remember
+          remember: this.form.remember,
         })
         .then(() => (this.sending = false));
-    }
-  }
+    },
+  },
 };
 </script>

@@ -64,7 +64,6 @@
 
 <script>
 import Icon from '@/Shared/Icon'
-import Layout from '@/Shared/Layout'
 import mapValues from 'lodash/mapValues'
 import Pagination from '@/Shared/Pagination'
 import pickBy from 'lodash/pickBy'
@@ -73,7 +72,6 @@ import throttle from 'lodash/throttle'
 
 export default {
   metaInfo: { title: 'Contacts' },
-  layout: Layout,
   components: {
     Icon,
     Pagination,

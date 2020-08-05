@@ -1,10 +1,8 @@
 <template>
   <div class="page">
-    <!-- Main Navbar-->
-    <navbar />
+    <app-navbar />
     <div class="page-content d-flex align-items-stretch">
-      <!-- Side Navbar -->
-      <sidebar />
+      <app-sidebar />
       <div class="content-inner" :class="content_inner">
         <!-- Page Header-->
         <header class="page-header">
@@ -13,7 +11,7 @@
           </div>
         </header>
         <slot />
-        <page-footer />
+        <app-footer />
       </div>
     </div>
   </div>
@@ -21,41 +19,31 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
-import Navbar from "@/Shared/Navbar";
-import Sidebar from "@/Shared/Sidebar";
-import PageFooter from "@/Shared/PageFooter";
-import Dropdown from "@/Shared/Dropdown";
-import FlashMessages from "@/Shared/FlashMessages";
-import Icon from "@/Shared/Icon";
-import Logo from "@/Shared/Logo";
-import MainMenu from "@/Shared/MainMenu";
+import AppNavbar from "./AppNavbar";
+import AppSidebar from "./AppSidebar";
+import AppFooter from "./AppFooter";
 
 export default {
   components: {
-    Navbar,
-    Sidebar,
-    PageFooter,
-    Dropdown,
-    FlashMessages,
-    Icon,
-    Logo,
-    MainMenu
+    AppNavbar,
+    AppSidebar,
+    AppFooter,
   },
   data() {
     return {
       showUserMenu: false,
-      accounts: null
+      accounts: null,
     };
   },
-    computed: {
-    ...mapState('navbar',{
-        sidebar_toggle: state => state.sidebar_toggle
+  computed: {
+    ...mapState("navbar", {
+      sidebar_toggle: (state) => state.sidebar_toggle,
     }),
-    content_inner: function() {
+    content_inner: function () {
       return {
-        active: this.sidebar_toggle
+        active: this.sidebar_toggle,
       };
-    }
+    },
   },
   methods: {
     url() {
@@ -63,7 +51,7 @@ export default {
     },
     hideDropdownMenus() {
       this.showUserMenu = false;
-    }
-  }
+    },
+  },
 };
 </script>

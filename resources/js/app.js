@@ -13,6 +13,7 @@ import Vue from 'vue'
 import VueMeta from 'vue-meta'
 import { InertiaApp } from '@inertiajs/inertia-vue'
 import store from '@/Store'
+import Layout from '@/Layout/Master/Layout'
 
 Vue.config.productionTip = false
 Vue.mixin({ methods: { route: window.route } })
@@ -20,16 +21,24 @@ Vue.use(InertiaApp)
 Vue.use(VueMeta)
 
 let app = document.getElementById('app')
-
+let page = JSON.parse(app.dataset.page)
+page.props['date'] = moment().format("YYYY MMM")
+console.log(page.props)
 new Vue({
   metaInfo: {
-    titleTemplate: (title) => title ? `${title} - DNS` : 'DNS'
+    titleTemplate: (title) => title ? `${title} - Tool` : 'Tool'
   },
   store,
   render: h => h(InertiaApp, {
     props: {
-      initialPage: JSON.parse(app.dataset.page),
-      resolveComponent: name => import(`@/Pages/${name}`).then(module => module.default),
+      initialPage: page,
+      resolveComponent: name => {
+        const componentOptions = require(`./Pages/${name}`).default;
+        if(componentOptions.layout == undefined){
+          componentOptions.layout = (h, page) => h(Layout, [page]);
+        }
+        return componentOptions;
+      },
     },
   }),
 }).$mount(app)

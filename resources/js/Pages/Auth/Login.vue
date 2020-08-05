@@ -198,18 +198,18 @@
     </div>
     <div class="copyrights text-center">
       <p>
-        &copy; 2020
-        <a href="https://bootstrapious.com/p/admin-template" class="external"></a>
-        <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+        &copy; {{ $page.date }}
+        Maintained by Baam@cybertech.com
       </p>
     </div>
   </div>
 </template>
 
 <script>
+import Layout from "@/Layout/Login/Layout";
 export default {
   metaInfo: { title: "Login" },
-  components: {},
+  layout: Layout,
   props: {
     errors: Object,
   },

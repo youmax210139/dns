@@ -71,7 +71,6 @@
 
 <script>
 import Icon from '@/Shared/Icon'
-import Layout from '@/Shared/Layout'
 import LoadingButton from '@/Shared/LoadingButton'
 import SelectInput from '@/Shared/SelectInput'
 import TextInput from '@/Shared/TextInput'
@@ -81,7 +80,6 @@ export default {
   metaInfo() {
     return { title: this.form.name }
   },
-  layout: Layout,
   components: {
     Icon,
     LoadingButton,

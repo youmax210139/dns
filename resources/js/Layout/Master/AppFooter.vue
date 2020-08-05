@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-6">
-          <p>{{ $page.app.name }} &copy; 2020</p>
+          <p>{{ $page.app.name }} &copy; {{ $page.date }}</p>
         </div>
         <div class="col-sm-6 text-right">
           <p>Maintained by Baam@cybertech.com</p>
@@ -13,5 +13,6 @@
   </footer>
 </template>
 <script>
-export default {};
+export default {
+};
 </script>

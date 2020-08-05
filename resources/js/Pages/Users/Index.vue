@@ -62,7 +62,6 @@
 
 <script>
 import Icon from '@/Shared/Icon'
-import Layout from '@/Shared/Layout'
 import mapValues from 'lodash/mapValues'
 import pickBy from 'lodash/pickBy'
 import SearchFilter from '@/Shared/SearchFilter'
@@ -70,7 +69,6 @@ import throttle from 'lodash/throttle'
 
 export default {
   metaInfo: { title: 'Users' },
-  layout: Layout,
   components: {
     Icon,
     SearchFilter,

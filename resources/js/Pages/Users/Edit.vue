@@ -34,7 +34,6 @@
 </template>
 
 <script>
-import Layout from '@/Shared/Layout'
 import LoadingButton from '@/Shared/LoadingButton'
 import SelectInput from '@/Shared/SelectInput'
 import TextInput from '@/Shared/TextInput'
@@ -47,7 +46,6 @@ export default {
       title: `${this.form.first_name} ${this.form.last_name}`,
     }
   },
-  layout: Layout,
   components: {
     LoadingButton,
     SelectInput,

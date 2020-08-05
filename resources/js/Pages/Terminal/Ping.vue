@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import Layout from "@/Shared/Layout";
 import mapValues from "lodash/mapValues";
 import Pagination from "@/Shared/Pagination";
 import pickBy from "lodash/pickBy";
@@ -17,7 +16,6 @@ import throttle from "lodash/throttle";
 
 export default {
   metaInfo: { title: "Ping在線檢測" },
-  layout: Layout,
   components: {
     Pagination,
     SearchFilter,

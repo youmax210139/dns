@@ -1,20 +1,19 @@
 <template>
   <nav class="side-navbar" :class="side_navbar">
-    <!-- Sidebar Navidation Menus-->
     <span class="heading">工具列</span>
     <ul class="list-unstyled">
-      <!-- <li class="active">
-        <a href="#dashboards" aria-expanded="false" data-toggle="collapse">
+      <li>
+        <a href="/">
           <i class="icon-home"></i>仪表板
         </a>
-      </li>-->
+      </li>
       <li>
         <a href="#dns-tools" aria-expanded="false" data-toggle="collapse">
           <i class="fa fa-server"></i>域名管理
         </a>
         <ul id="dns-tools" class="collapse list-unstyled">
           <li>
-            <inertia-link :href="route('domains.index')">域名管理</inertia-link>
+            <a :href="route('domains.index')">域名管理</a>
           </li>
           <li>
             <a href="#">Ping在線檢測</a>

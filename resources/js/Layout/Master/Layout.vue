@@ -10,6 +10,7 @@
             <!-- <h2 class="no-margin-bottom">Dashboard</h2> -->
           </div>
         </header>
+        <bread-crumb />
         <slot />
         <app-footer />
       </div>
@@ -22,12 +23,14 @@ import { mapState, mapGetters, mapActions } from "vuex";
 import AppNavbar from "./AppNavbar";
 import AppSidebar from "./AppSidebar";
 import AppFooter from "./AppFooter";
+import BreadCrumb from "@/Shared/Breadcrumb";
 
 export default {
   components: {
     AppNavbar,
     AppSidebar,
     AppFooter,
+    BreadCrumb,
   },
   data() {
     return {

@@ -125,7 +125,7 @@
             <div class="info d-flex align-items-center">
               <div class="content">
                 <div class="logo">
-                  <h1>Tools Dashboard</h1>
+                  <h1>{{ $page.app.name }}</h1>
                 </div>
                 <p>工具管理系统</p>
               </div>

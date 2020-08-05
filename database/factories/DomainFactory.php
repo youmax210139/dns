@@ -14,10 +14,10 @@ use Illuminate\Support\Str;
 |
 */
 
-$factory->define(App\Domain::class, function (Faker $faker) {
+$factory->define(App\Models\Domain::class, function (Faker $faker) {
     return [
         'account' => $faker->username,
-        'domainName' => $faker->domainName,
+        'name' => $faker->domainName,
         'usage_status' => 'using',
         'backup_status' => 'using',
         'renew' => $faker->boolean,

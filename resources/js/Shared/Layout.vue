@@ -9,12 +9,11 @@
         <!-- Page Header-->
         <header class="page-header">
           <div class="container-fluid">
-            <h2 class="no-margin-bottom">Dashboard</h2>
+            <!-- <h2 class="no-margin-bottom">Dashboard</h2> -->
           </div>
         </header>
         <slot />
-        <!-- Page Footer-->
-        <tail />
+        <page-footer />
       </div>
     </div>
   </div>
@@ -24,7 +23,7 @@
 import { mapState, mapGetters, mapActions } from "vuex";
 import Navbar from "@/Shared/Navbar";
 import Sidebar from "@/Shared/Sidebar";
-import Tail from "@/Shared/Tail";
+import PageFooter from "@/Shared/PageFooter";
 import Dropdown from "@/Shared/Dropdown";
 import FlashMessages from "@/Shared/FlashMessages";
 import Icon from "@/Shared/Icon";
@@ -35,7 +34,7 @@ export default {
   components: {
     Navbar,
     Sidebar,
-    Tail,
+    PageFooter,
     Dropdown,
     FlashMessages,
     Icon,

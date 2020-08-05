@@ -17,11 +17,10 @@
             <!-- Navbar Brand -->
             <a href="/" class="navbar-brand d-none d-sm-inline-block">
               <div class="brand-text d-none d-lg-inline-block">
-                <span>域名</span>
-                <strong>监控系统</strong>
+                <strong>{{ $page.app.name }}</strong>
               </div>
               <div class="brand-text d-none d-sm-inline-block d-lg-none">
-                <strong>域名</strong>
+                <strong>{{ $page.app.name.substr(0,4) }}</strong>
               </div>
             </a>
             <!-- Toggle Button-->
@@ -45,61 +44,36 @@
                 aria-expanded="false"
                 class="nav-link"
               >
-                <i class="fa fa-bell-o"></i>
-                <span class="badge bg-red badge-corner">12</span>
+                <i class="fa fa-bell-o" v-show="notifications.length > 0"></i>
+                <span
+                  class="badge bg-red badge-corner"
+                  v-show="notifications.length > 0"
+                >{{ notifications.length }}</span>
               </a>
-              <ul aria-labelledby="notifications" class="dropdown-menu">
-                <li>
+              <ul
+                aria-labelledby="notifications"
+                class="dropdown-menu"
+                v-show="notifications.length > 0"
+              >
+                <li v-for="note in notifications">
                   <a rel="nofollow" href="#" class="dropdown-item">
                     <div class="notification">
                       <div class="notification-content">
-                        <i class="fa fa-envelope bg-green"></i>You have 6 new messages
+                        <i
+                          class="fa"
+                          :class="classObject.notification[note.type] || 'fa-comments bg-gray'"
+                        ></i>
+                        {{ note.message }}
                       </div>
                       <div class="notification-time">
-                        <small>4 minutes ago</small>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a rel="nofollow" href="#" class="dropdown-item">
-                    <div class="notification">
-                      <div class="notification-content">
-                        <i class="fa fa-twitter bg-blue"></i>You have 2 followers
-                      </div>
-                      <div class="notification-time">
-                        <small>4 minutes ago</small>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a rel="nofollow" href="#" class="dropdown-item">
-                    <div class="notification">
-                      <div class="notification-content">
-                        <i class="fa fa-upload bg-orange"></i>Server Rebooted
-                      </div>
-                      <div class="notification-time">
-                        <small>4 minutes ago</small>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a rel="nofollow" href="#" class="dropdown-item">
-                    <div class="notification">
-                      <div class="notification-content">
-                        <i class="fa fa-twitter bg-blue"></i>You have 2 followers
-                      </div>
-                      <div class="notification-time">
-                        <small>10 minutes ago</small>
+                        <small>{{ note.time }}</small>
                       </div>
                     </div>
                   </a>
                 </li>
                 <li>
                   <a rel="nofollow" href="#" class="dropdown-item all-notifications text-center">
-                    <strong>view all notifications</strong>
+                    <strong>检视所有讯息</strong>
                   </a>
                 </li>
               </ul>
@@ -130,7 +104,7 @@
             <!-- Logout    -->
             <li class="nav-item">
               <inertia-link class="nav-link logout" :href="route('logout')" method="post">
-                <span class="d-none d-sm-inline">Logout</span>
+                <span class="d-none d-sm-inline">登出</span>
                 <i class="fa fa-sign-out"></i>
               </inertia-link>
             </li>
@@ -141,25 +115,58 @@
   </header>
 </template>
 <script>
-import { mapState, mapGetters, mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
+  data() {
+    return {
+      notifications: [
+        {
+          type: "email",
+          message: "You have 6 new messages",
+          time: moment('2020-08-05 14:00:00').fromNow(),
+        },
+        {
+          type: "twitter",
+          message: "You have 4 followers",
+          time: moment('2020-08-04 14:00:00').fromNow(),
+        },
+        {
+          type: "server",
+          message: "Server Rebooted",
+          time: moment('2020-08-03 12:00:00').fromNow(),
+        },
+        {
+          type: "twitter",
+          message: "You have 2 followers",
+          time:moment('2020-08-03 11:00:00').fromNow(),
+        },
+      ],
+      classObject: {
+        notification: {
+          email: "fa-envelope bg-green",
+          twitter: "fa-twitter bg-blue",
+          server: "fa-upload bg-orange",
+        },
+      },
+    };
+  },
   props: {
-    Page: Object
+    Page: Object,
   },
   computed: {
     ...mapState("navbar", {
-      sidebar_toggle: state => state.sidebar_toggle
+      sidebar_toggle: (state) => state.sidebar_toggle,
     }),
-    btn_toggle: function() {
+    btn_toggle: function () {
       return {
-        active: !this.sidebar_toggle
+        active: !this.sidebar_toggle,
       };
-    }
+    },
   },
   methods: {
     ...mapActions({
-      toggle: "navbar/toggle"
-    })
-  }
+      toggle: "navbar/toggle",
+    }),
+  },
 };
 </script>

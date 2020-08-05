@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use App\Account;
+use App\Models\Account;
 use App\Contact;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;

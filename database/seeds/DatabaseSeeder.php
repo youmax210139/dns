@@ -1,8 +1,8 @@
 <?php
 
-use App\Platform;
-use App\Domain;
-use App\Account;
+// use App\Models\Platform;
+use App\Models\Domain;
+use App\Models\Account;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -20,9 +20,9 @@ class DatabaseSeeder extends Seeder
             'owner' => true,
         ]);
 
-        $platform = Platform::create(['name'=>'google.com.tw']);
+        // $platform = Platform::create(['name'=>'google.com.tw']);
         factory(Domain::class)->create([
-            'platform_id' => $platform->id,
+            'platform_id' => 0,
         ]);
     }
 }

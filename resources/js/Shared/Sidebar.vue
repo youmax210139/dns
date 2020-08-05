@@ -7,7 +7,7 @@
         <a href="#dashboards" aria-expanded="false" data-toggle="collapse">
           <i class="icon-home"></i>仪表板
         </a>
-      </li> -->
+      </li>-->
       <li>
         <a href="#dns-tools" aria-expanded="false" data-toggle="collapse">
           <i class="fa fa-server"></i>域名管理

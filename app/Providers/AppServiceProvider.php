@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Config;
 use Inertia\Inertia;
 use League\Glide\Server;
 use Carbon\CarbonImmutable;
@@ -36,6 +37,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Inertia::share([
+            'app' => [
+                'name' => Config::get('app.name')
+            ],
             'auth' => function () {
                 return [
                     'user' => Auth::user() ? [

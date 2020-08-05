@@ -1,10 +1,12 @@
 import Popper from 'popper.js/dist/umd/popper.js';
+import moment from "moment";
 try {
   window.$ = window.jQuery = require('jquery');
   window.Popper = Popper;
+  window.moment = moment;
   require('bootstrap');
 } catch (e) {
-  log.error(e);
+  console.error(e);
 }
 
 import Vue from 'vue'

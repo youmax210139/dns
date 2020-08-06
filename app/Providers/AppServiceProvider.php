@@ -36,26 +36,10 @@ class AppServiceProvider extends ServiceProvider
             return md5_file(public_path('mix-manifest.json'));
         });
 
-        $breadcrumb = explode('/', request()->path());
-        foreach($breadcrumb as $key=> $v){
-            if($key == (count($breadcrumb) -1) ){
-                $breadcrumb[$key]= [
-                    'label' => $v
-                ];
-            }
-            else{
-                $breadcrumb[$key]= [
-                    'label' => $v,
-                    'link' => "/$v"
-                ];
-            }
-        }
-
         Inertia::share([
             'app' => [
                 'name' => Config::get('app.name')
             ],
-            'breadcrumb' => $breadcrumb,
             'auth' => function () {
                 return [
                     'user' => Auth::user() ? [

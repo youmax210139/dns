@@ -2,12 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Controller as BaseController;
+use Inertia\Inertia;
+use Route;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function __construct()
+    {
+
+        Inertia::share([
+            'breadcrumb' => $this->getBreadCrumb(),
+            'title' => $this->getPageTitle(),
+        ]);
+
+    }
+
+    protected function getBreadCrumb()
+    {
+        $breadcrumb = explode('.', Route::currentRouteName());
+        foreach ($breadcrumb as $key => $v) {
+            if ($key == (count($breadcrumb) - 1)) {
+                $breadcrumb[$key] = [
+                    'label' => $v,
+                ];
+            } else {
+                $breadcrumb[$key] = [
+                    'label' => $v,
+                    'link' => "/$v",
+                ];
+            }
+        }
+        return $breadcrumb;
+    }
+
+    protected function getPageTitle()
+    {
+        return __('title.' . Route::currentRouteName());
+    }
 }

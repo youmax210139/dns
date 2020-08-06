@@ -4,12 +4,7 @@
     <div class="page-content d-flex align-items-stretch">
       <app-sidebar />
       <div class="content-inner" :class="content_inner">
-        <!-- Page Header-->
-        <header class="page-header">
-          <div class="container-fluid">
-            <!-- <h2 class="no-margin-bottom">Dashboard</h2> -->
-          </div>
-        </header>
+        <page-header />
         <bread-crumb />
         <slot />
         <app-footer />
@@ -24,6 +19,7 @@ import AppNavbar from "./AppNavbar";
 import AppSidebar from "./AppSidebar";
 import AppFooter from "./AppFooter";
 import BreadCrumb from "@/Shared/Breadcrumb";
+import PageHeader from "@/Shared/PageHeader";
 
 export default {
   components: {
@@ -31,6 +27,7 @@ export default {
     AppSidebar,
     AppFooter,
     BreadCrumb,
+    PageHeader,
   },
   data() {
     return {

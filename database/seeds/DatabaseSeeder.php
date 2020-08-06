@@ -10,6 +10,7 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
+
         $account = Account::create(['name' => 'IT Corporation']);
 
         factory(User::class)->create([

@@ -1,7 +1,9 @@
-import Popper from 'popper.js/dist/umd/popper.js';
-import moment from "moment";
+import Popper from 'popper.js'
+import moment from 'moment'
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
 try {
-  window.$ = window.jQuery = require('jquery');
+  window.$ = window.jQuery = require('jquery')
   window.Popper = Popper;
   window.moment = moment;
   require('bootstrap');
@@ -12,12 +14,14 @@ try {
 import Vue from 'vue'
 import VueMeta from 'vue-meta'
 import { InertiaApp } from '@inertiajs/inertia-vue'
+import PortalVue from 'portal-vue'
 import store from '@/Store'
 import Layout from '@/Layout/Master/Layout'
 
 Vue.config.productionTip = false
 Vue.mixin({ methods: { route: window.route } })
 Vue.use(InertiaApp)
+Vue.use(PortalVue)
 Vue.use(VueMeta)
 
 let app = document.getElementById('app')

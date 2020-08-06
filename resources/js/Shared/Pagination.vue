@@ -21,8 +21,5 @@ export default {
   props: {
     links: Array,
   },
-  created: function () {
-    console.log(this.links);
-  },
 };
 </script>

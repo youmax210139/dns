@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // $platform = Platform::create(['name'=>'google.com.tw']);
-        factory(Domain::class)->create([
+        factory(Domain::class, 20)->create([
             'platform_id' => 0,
         ]);
     }

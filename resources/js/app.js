@@ -26,7 +26,7 @@ page.props['date'] = moment().format("YYYY MMM")
 console.log(page.props)
 new Vue({
   metaInfo: {
-    titleTemplate: (title) => title ? `${title} - Tool` : 'Tool'
+    title: `${page.props['app']['name']} - ${page.props['title']}`
   },
   store,
   render: h => h(InertiaApp, {
@@ -34,7 +34,7 @@ new Vue({
       initialPage: page,
       resolveComponent: name => {
         const componentOptions = require(`./Pages/${name}`).default;
-        if(componentOptions.layout == undefined){
+        if (componentOptions.layout == undefined) {
           componentOptions.layout = (h, page) => h(Layout, [page]);
         }
         return componentOptions;

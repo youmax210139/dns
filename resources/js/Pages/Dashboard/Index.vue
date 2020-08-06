@@ -995,6 +995,5 @@
 <script>
 
 export default {
-  metaInfo: { title: "Dashboard" },
 };
 </script>

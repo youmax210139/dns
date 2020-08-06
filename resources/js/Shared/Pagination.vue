@@ -1,10 +1,12 @@
 <template>
-  <div class="mt-6 -mb-1 flex flex-wrap">
-    <template v-for="(link, key) in links">
-      <div v-if="link.url === null" :key="key" class="mr-1 mb-1 px-4 py-3 text-sm border rounded text-gray-400" :class="{ 'ml-auto': link.label === 'Next' }">{{ link.label }}</div>
-      <inertia-link v-else :key="key" class="mr-1 mb-1 px-4 py-3 text-sm border rounded hover:bg-white focus:border-indigo-500 focus:text-indigo-500" :class="{ 'bg-white': link.active, 'ml-auto': link.label === 'Next' }" :href="link.url">{{ link.label }}</inertia-link>
-    </template>
-  </div>
+  <nav>
+    <ul class="pagination">
+      <li v-for="(link, key) in links" :key="key" class="page-item">
+        <div v-if="link.url === null" :key="key" :class="{ 'disabled': link.label === 'Next'}" class="page-link">{{ link.label }}</div>
+        <inertia-link v-else :key="key" :href="link.url" class="page-link">{{ link.label }}</inertia-link>
+      </li>
+    </ul>
+  </nav>
 </template>
 
 <script>
@@ -12,5 +14,15 @@ export default {
   props: {
     links: Array,
   },
-}
+  data(){
+    return {
+      classObject:{
+
+      }
+    }
+  },
+  created: function () {
+    console.log(this.links);
+  },
+};
 </script>

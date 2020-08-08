@@ -60,8 +60,7 @@
                     <div class="notification">
                       <div class="notification-content">
                         <i
-                          class="fa"
-                          :class="classObject.notification[note.type] || 'fa-comments bg-gray'"
+                          :class="classObject.notification[note.type] || 'fa fa-comments bg-gray'"
                         />
                         {{ note.message }}
                       </div>
@@ -147,9 +146,9 @@ export default {
       ],
       classObject: {
         notification: {
-          email: "fa-envelope bg-green",
+          email: "fa fa-envelope bg-green",
           twitter: "fab fa-twitter bg-blue",
-          server: "fa-upload bg-orange",
+          server: "fa fa-upload bg-orange",
         },
       },
     };

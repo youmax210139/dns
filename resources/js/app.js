@@ -1,7 +1,6 @@
 import Popper from 'popper.js'
 import moment from 'moment'
 import '@fortawesome/fontawesome-free/css/all.css'
-import '@fortawesome/fontawesome-free/js/all.js'
 
 try {
   window.$ = window.jQuery = require('jquery')

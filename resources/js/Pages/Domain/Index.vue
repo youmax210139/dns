@@ -3,21 +3,28 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
-          <div class="card">
-            <div class="card-body">
-              <search-filter v-model="form.search" class="w-full max-w-md mr-4" @reset="reset">
-                <label class="block text-gray-700">Trashed:</label>
-                <select v-model="form.trashed" class="mt-1 w-full form-select" data-toggle="dropdown">
+          <search-filter v-model="form.search" @reset="reset">
+            <div class="row">
+              <label class="col-12 form-control-label">Trashed:</label>
+              <div class="col-12">
+                <select v-model="form.trashed" class="form-control mb-3">
                   <option :value="null" />
                   <option value="with">With Trashed</option>
                   <option value="only">Only Trashed</option>
                 </select>
-              </search-filter>
-              <inertia-link class="btn-indigo" :href="route('domains.create')">
-                <span>创建域名</span>
-              </inertia-link>
-              <div class="table-responsive bg-white">
-                <table class="table table-striped table-hover">
+              </div>
+            </div>
+            <inertia-link class="btn btn-primary" :href="route('domains.create')" slot="append">
+              <span class="d-none d-md-inline-block">创建域名</span>
+              <span class="d-md-none">创建</span>
+            </inertia-link>
+          </search-filter>
+        </div>
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-striped table-hover mb-0">
                   <thead>
                     <tr class="text-left font-bold">
                       <th scope="col">#</th>
@@ -51,8 +58,14 @@
                     </tr>
                   </tbody>
                 </table>
-                <pagination :links="domains.links" />
               </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card bg-transparent shadow-none">
+            <div class="card-body p-0">
+              <pagination :links="domains.links" />
             </div>
           </div>
         </div>
@@ -93,7 +106,7 @@ export default {
         let query = pickBy(this.form);
         this.$inertia.replace(
           this.route(
-            "domains",
+            "domains.index",
             Object.keys(query).length ? query : { remember: "forget" }
           )
         );

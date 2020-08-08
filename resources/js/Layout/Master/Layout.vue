@@ -1,5 +1,6 @@
 <template>
   <div class="page">
+    <portal-target name="dropdown" slim />
     <app-navbar />
     <div class="page-content d-flex align-items-stretch">
       <app-sidebar />

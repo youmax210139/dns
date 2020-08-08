@@ -1,5 +1,5 @@
 <template>
-  <button class="btn" type="button" @click="show = true">
+  <button type="button" class="btn form-control bg-white shadow-none" @click="show = true">
     <slot />
     <portal v-if="show" to="dropdown">
       <div>
@@ -18,9 +18,17 @@
     </portal>
   </button>
 </template>
+<style lang="scss" scoped>
+button.btn {
+  border: 1px solid #dee2e6;
+  &:focus {
+    border-color: #796aee;
+  }
+}
+</style>
+
 <script>
 import Popper from "popper.js";
-
 export default {
   props: {
     placement: {
@@ -50,10 +58,10 @@ export default {
             modifiers: {
               preventOverflow: { boundariesElement: this.boundary },
             },
-          })
-        })
+          });
+        });
       } else if (this.popper) {
-        setTimeout(() => this.popper.destroy(), 100)
+        setTimeout(() => this.popper.destroy(), 100);
       }
     },
   },

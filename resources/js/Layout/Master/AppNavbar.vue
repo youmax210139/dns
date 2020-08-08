@@ -4,7 +4,7 @@
       <!-- Search Box-->
       <div class="search-box">
         <button class="dismiss">
-          <i class="icon-close"></i>
+          <i class="icon-close" />
         </button>
         <form id="searchForm" action="#" role="search">
           <input type="search" placeholder="What are you looking for..." class="form-control" />
@@ -44,7 +44,7 @@
                 aria-expanded="false"
                 class="nav-link"
               >
-                <i class="fa fa-bell-o" v-show="notifications.length > 0"></i>
+                <i class="far fa-bell" v-show="notifications.length > 0" />
                 <span
                   class="badge bg-red badge-corner"
                   v-show="notifications.length > 0"
@@ -55,14 +55,14 @@
                 class="dropdown-menu"
                 v-show="notifications.length > 0"
               >
-                <li v-for="note in notifications">
+                <li v-for="(note,index) in notifications" :key="note.id">
                   <a rel="nofollow" href="#" class="dropdown-item">
                     <div class="notification">
                       <div class="notification-content">
                         <i
                           class="fa"
                           :class="classObject.notification[note.type] || 'fa-comments bg-gray'"
-                        ></i>
+                        />
                         {{ note.message }}
                       </div>
                       <div class="notification-time">
@@ -105,7 +105,7 @@
             <li class="nav-item">
               <inertia-link class="nav-link logout" :href="route('logout')" method="post">
                 <span class="d-none d-sm-inline">登出</span>
-                <i class="fa fa-sign-out"></i>
+                <i class="fas fa-sign-out-alt" />
               </inertia-link>
             </li>
           </ul>
@@ -121,30 +121,34 @@ export default {
     return {
       notifications: [
         {
+          id: 1,
           type: "email",
           message: "You have 6 new messages",
-          time: moment('2020-08-05 14:00:00').fromNow(),
+          time: moment("2020-08-05 14:00:00").fromNow(),
         },
         {
+          id: 2,
           type: "twitter",
           message: "You have 4 followers",
-          time: moment('2020-08-04 14:00:00').fromNow(),
+          time: moment("2020-08-04 14:00:00").fromNow(),
         },
         {
+          id: 3,
           type: "server",
           message: "Server Rebooted",
-          time: moment('2020-08-03 12:00:00').fromNow(),
+          time: moment("2020-08-03 12:00:00").fromNow(),
         },
         {
+          id: 4,
           type: "twitter",
           message: "You have 2 followers",
-          time:moment('2020-08-03 11:00:00').fromNow(),
+          time: moment("2020-08-03 11:00:00").fromNow(),
         },
       ],
       classObject: {
         notification: {
           email: "fa-envelope bg-green",
-          twitter: "fa-twitter bg-blue",
+          twitter: "fab fa-twitter bg-blue",
           server: "fa-upload bg-orange",
         },
       },

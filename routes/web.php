@@ -28,18 +28,17 @@ Route::put('users/{user}')->name('users.update')->uses('UsersController@update')
 Route::delete('users/{user}')->name('users.destroy')->uses('UsersController@destroy')->middleware('auth');
 Route::put('users/{user}/restore')->name('users.restore')->uses('UsersController@restore')->middleware('auth');
 
-// Terminal
-Route::get('terminals/whois')->name('terminals.whois')->uses('TerminalController@whois')->middleware('auth');
-Route::get('terminals/ping')->name('terminals.ping')->uses('TerminalController@ping')->middleware('auth');
-
 // Images
 Route::get('/img/{path}', 'ImagesController@show')->where('path', '.*');
 
-// Platforms
+// Domains
 Route::resource('domains', 'DomainController')->middleware('auth');
 
-// Reports
-Route::get('reports')->name('reports')->uses('ReportsController')->middleware('auth');
+// Pings
+Route::resource('pings', 'PingController')->middleware('auth')->only(['create','store']);
+
+// Whois
+Route::resource('whois', 'WhoisController')->middleware('auth')->only(['create','store']);
 
 // 500 error
 Route::get('500', function () {

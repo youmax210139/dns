@@ -107,7 +107,7 @@ export default {
         this.$inertia.replace(
           this.route(
             "domains.index",
-            Object.keys(query).length ? query : { remember: "forget" }
+            Object.keys(query).length ? query : {}
           )
         );
       }, 150),

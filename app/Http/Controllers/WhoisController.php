@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 
-class ReportsController extends Controller
+class WhoisController extends Controller
 {
     public function __invoke()
     {

@@ -16,7 +16,7 @@
             <a :href="route('domains.index')">域名管理</a>
           </li>
           <li>
-            <a href="#">Ping在線檢測</a>
+            <a :href="route('pings.create')">Ping在線檢測</a>
           </li>
           <li>
             <a href="#">DNS在線查詢</a>
@@ -25,7 +25,7 @@
             <a href="#">路由器追踪</a>
           </li>
           <li>
-            <a href="#">Whois域名在線查詢</a>
+            <a :href="route('whois.create')">Whois域名在線查詢</a>
           </li>
         </ul>
       </li>

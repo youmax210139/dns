@@ -30,7 +30,7 @@ class Controller extends BaseController
             if (in_array($v, ['index'])) {
                 unset($breadcrumb[$key]);
                 continue;
-            } else if ($key == (count($breadcrumb) - 1)) {
+            } else if ($key == (count($breadcrumb) - 1) || in_array($v, ['pings', 'whois'])) {
                 $breadcrumb[$key] = [
                     'label' => $v,
                 ];

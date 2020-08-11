@@ -37,4 +37,14 @@ class Domain extends Model
             }
         });
     }
+
+    public function getBackupAttribute($value)
+    {
+        return $value == 1;
+    }
+
+    public function getRenewAttribute($value)
+    {
+        return $value == 1;
+    }
 }

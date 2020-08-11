@@ -6,7 +6,7 @@
           <div class="card">
             <div class="card-body">
               <form @submit.prevent="submit">
-                <text-input v-model="form.name" :errors="$page.errors.name" label="Name" />
+                <text-input v-model="form.name" :errors="$page.errors.name" label="Name" placeholder="请输入域名"/>
                 <checkbox-input v-model="form.backup" label="Backup" option />
                 <checkbox-input v-model="form.renew" label="Renew" option />
                 <div class="form-group">
@@ -14,7 +14,7 @@
                     :loading="sending"
                     class="btn btn-primary"
                     type="submit"
-                  >Create Organization</loading-button>
+                  >Create Domain</loading-button>
                 </div>
               </form>
             </div>

@@ -38,14 +38,14 @@ class DomainController extends Controller
             ->with('success', 'Domain created.');
     }
 
-    public function edit(Domain $organization)
+    public function edit(Domain $domain)
     {
         return Inertia::render('Domains/Edit', [
             'domain' => [
                 'id' => $domain->id,
-                'name' => $domain->phone,
-                'usage' => $domain->usage,
+                'name' => $domain->name,
                 'backup' => $domain->backup,
+                'renew' => $domain->renew
             ],
         ]);
     }
@@ -54,9 +54,9 @@ class DomainController extends Controller
     {
         $domain->update(
             Request::validate([
-                'name' => ['required', 'max:100'],
-                'usage_stauts' => ['nullable'],
-                'backup_stauts' => ['nullable'],
+                'name' => ['required', "unique:domains,name,{$domain->id}", 'max:100'],
+                'backup' => ['required', 'boolean'],
+                'renew' => ['required', 'boolean'],
             ])
         );
 

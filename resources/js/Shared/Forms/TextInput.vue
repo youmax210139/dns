@@ -32,6 +32,10 @@ export default {
       type: String,
       default: "text",
     },
+    placeholder:{
+      type: String,
+      default: "",
+    },
     value: String,
     label: String,
     errors: {

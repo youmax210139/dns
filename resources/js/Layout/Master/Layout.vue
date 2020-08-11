@@ -7,6 +7,7 @@
       <div class="content-inner" :class="content_inner">
         <page-header />
         <bread-crumb />
+        <flash-messages />
         <slot />
         <app-footer />
       </div>
@@ -21,6 +22,7 @@ import AppSidebar from "./AppSidebar";
 import AppFooter from "./AppFooter";
 import BreadCrumb from "@/Shared/Breadcrumb";
 import PageHeader from "@/Shared/PageHeader";
+import FlashMessages from "@/Shared/FlashMessages";
 
 export default {
   components: {
@@ -29,6 +31,7 @@ export default {
     AppFooter,
     BreadCrumb,
     PageHeader,
+    FlashMessages,
   },
   data() {
     return {

@@ -32,6 +32,7 @@
                       <th scope="col">使用状态</th>
                       <th scope="col">备援状态</th>
                       <th scope="col">过期日期</th>
+                      <th scope="col">操作</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -52,6 +53,14 @@
                       <td>{{ domain.usage }}</td>
                       <td>{{ domain.backup ? 'Y' : 'N' }}</td>
                       <td>{{ domain.expired_at }}</td>
+                      <td>
+                        <a :href="route('domains.edit', domain.id)" class="btn btn-info text-white">
+                          <i class="fas fa-edit"></i>
+                        </a>
+                        <a class="btn btn-danger text-white" @click="destroy(domain)">
+                          <i class="fas fa-trash-alt"></i>
+                        </a>
+                      </td>
                     </tr>
                     <tr v-if="domains.data.length === 0">
                       <td colspan="4">No domains found.</td>
@@ -105,10 +114,7 @@ export default {
       handler: throttle(function () {
         let query = pickBy(this.form);
         this.$inertia.replace(
-          this.route(
-            "domains.index",
-            Object.keys(query).length ? query : {}
-          )
+          this.route("domains.index", Object.keys(query).length ? query : {})
         );
       }, 150),
       deep: true,
@@ -117,6 +123,13 @@ export default {
   methods: {
     reset() {
       this.form = mapValues(this.form, () => null);
+    },
+    destroy(domain) {
+      if (confirm("Are you sure you want to delete this domain?")) {
+        this.$inertia.delete(
+          this.route("domains.destroy", domain.id)
+        );
+      }
     },
   },
 };

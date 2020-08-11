@@ -28,11 +28,10 @@
 <script>
 import LoadingButton from '@/Shared/LoadingButton'
 import SelectInput from '@/Shared/SelectInput'
-import TextInput from '@/Shared/TextInput'
+import TextInput from '@/Shared/Forms/TextInput'
 import FileInput from '@/Shared/FileInput'
 
 export default {
-  metaInfo: { title: 'Create User' },
   components: {
     LoadingButton,
     SelectInput,

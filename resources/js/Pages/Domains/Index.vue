@@ -49,8 +49,8 @@
                           class="flex-shrink-0 w-3 h-3 fill-gray-400 ml-2"
                         />
                       </td>
-                      <td>{{ domain.usage_status }}</td>
-                      <td>{{ domain.backup_status }}</td>
+                      <td>{{ domain.usage }}</td>
+                      <td>{{ domain.backup ? 'Y' : 'N' }}</td>
                       <td>{{ domain.expired_at }}</td>
                     </tr>
                     <tr v-if="domains.data.length === 0">

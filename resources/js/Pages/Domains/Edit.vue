@@ -73,13 +73,10 @@
 import Icon from '@/Shared/Icon'
 import LoadingButton from '@/Shared/LoadingButton'
 import SelectInput from '@/Shared/SelectInput'
-import TextInput from '@/Shared/TextInput'
+import TextInput from '@/Shared/Forms/TextInput'
 import TrashedMessage from '@/Shared/TrashedMessage'
 
 export default {
-  metaInfo() {
-    return { title: this.form.name }
-  },
   components: {
     Icon,
     LoadingButton,

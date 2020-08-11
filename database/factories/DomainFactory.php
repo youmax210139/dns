@@ -1,7 +1,6 @@
 <?php
 
 use Faker\Generator as Faker;
-use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,16 +11,16 @@ use Illuminate\Support\Str;
 | your application. Factories provide a convenient way to generate new
 | model instances for testing / seeding your application's database.
 |
-*/
+ */
 
 $factory->define(App\Models\Domain::class, function (Faker $faker) {
     return [
         'account' => $faker->username,
         'name' => $faker->domainName,
-        'usage_status' => 'using',
-        'backup_status' => 'using',
+        'usage' => $faker->randomFloat(2, 0, 100),
+        'backup' => $faker->boolean(50),
         'renew' => $faker->boolean,
-        'registered_at' => $faker->dateTime($timezone='Asia/Taipei'),
-        'expired_at' => $faker->dateTime($timezone='Asia/Taipei'),
+        'registered_at' => $faker->dateTime($timezone = 'Asia/Taipei'),
+        'expired_at' => $faker->dateTime($timezone = 'Asia/Taipei'),
     ];
 });

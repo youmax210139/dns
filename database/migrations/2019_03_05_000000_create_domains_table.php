@@ -13,9 +13,9 @@ class CreateDomainsTable extends Migration
             $table->integer('platform_id')->nullable();
             $table->string('name', 200);
             $table->string('account', 100)->nullable();
-            $table->string('usage_status', 100)->nullable();
-            $table->string('backup_status', 100)->nullable();
-            $table->boolean('renew')->nullable();
+            $table->decimal('usage', 4 , 2)->default(0);
+            $table->boolean('backup')->default(true);
+            $table->boolean('renew')->default(true);
             $table->timestamp('registered_at')->nullable();
             $table->timestamp('expired_at')->nullable();
             $table->timestamps();

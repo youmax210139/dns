@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Domain;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
+use Redirect;
 
 class DomainController extends Controller
 {
@@ -15,7 +16,7 @@ class DomainController extends Controller
             'domains' => Domain::orderBy('name')
                 ->filter(Request::only('search', 'trashed'))
                 ->paginate()
-                ->only('id', 'name', 'usage_status', 'backup_status', 'expired_at'),
+                ->only('id', 'name', 'usage', 'backup', 'expired_at'),
         ]);
     }
 
@@ -24,8 +25,15 @@ class DomainController extends Controller
         return Inertia::render('Domains/Create');
     }
 
-    public function store(Request $request)
+    public function store()
     {
+        Domain::create(
+            Request::validate([
+                'name' => ['required', 'unique:domains', 'max:100'],
+                'backup' => ['required', 'boolean'],
+                'renew' => ['required', 'boolean'],
+            ])
+        );
         return Redirect::route('domains.index')
             ->with('success', 'Domain created.');
     }
@@ -36,8 +44,8 @@ class DomainController extends Controller
             'domain' => [
                 'id' => $domain->id,
                 'name' => $domain->phone,
-                'usage_status' => $domain->usage_status,
-                'backup_status' => $domain->backup_status,
+                'usage' => $domain->usage,
+                'backup' => $domain->backup,
             ],
         ]);
     }

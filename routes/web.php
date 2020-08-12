@@ -40,6 +40,12 @@ Route::resource('pings', 'PingController')->middleware('auth')->only(['create','
 // Whois
 Route::resource('whois', 'WhoisController')->middleware('auth')->only(['create','store']);
 
+// Trace
+Route::resource('traces', 'TraceController')->middleware('auth')->only(['create','store']);
+
+// Netcat
+Route::resource('netcats', 'NetcatController')->middleware('auth')->only(['create','store']);
+
 // 500 error
 Route::get('500', function () {
     // Force debug mode for this endpoint in the demo environment

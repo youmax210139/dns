@@ -22,10 +22,13 @@
             <a href="#">DNS在線查詢</a>
           </li>
           <li>
-            <a href="#">路由器追踪</a>
+            <a :href="route('traces.create')">路由器追踪</a>
           </li>
           <li>
             <a :href="route('whois.create')">Whois域名在線查詢</a>
+          </li>
+          <li>
+            <a :href="route('netcats.create')">端口在線檢測工具</a>
           </li>
         </ul>
       </li>
@@ -35,6 +38,11 @@
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
 export default {
+  data(){
+    return {
+      
+    }
+  },
   computed: {
     ...mapState("navbar", {
       sidebar_toggle: (state) => state.sidebar_toggle,

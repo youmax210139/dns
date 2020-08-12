@@ -23,7 +23,7 @@
                       <i class="far fa-trash-alt"></i>
                       淸空
                     </button>
-                    <button type="submit" class="btn btn-primary mr-2">Ping检测</button>
+                    <button type="submit" class="btn btn-primary mr-2">Whois检测</button>
                     <button
                       class="btn btn-primary"
                       ref="copy"
@@ -81,7 +81,7 @@ export default {
       this.sending = true;
       this.output = "";
       this.$http
-        .post(route("pings.store"), this.form)
+        .post(route("whois.store"), this.form)
         .then((res) => {
           this.output = res.data;
           this.sending = false;

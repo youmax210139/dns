@@ -27,10 +27,13 @@ class Controller extends BaseController
     {
         $breadcrumb = explode('.', Route::currentRouteName());
         foreach ($breadcrumb as $key => $v) {
-            if (in_array($v, ['index'])) {
+            if (in_array($v, ['pings', 'whois', 'netcats', 'traces', 'dns'])) {
+                $breadcrumb = [];
+                break;
+            } else if (in_array($v, ['index'])) {
                 unset($breadcrumb[$key]);
                 continue;
-            } else if ($key == (count($breadcrumb) - 1) || in_array($v, ['pings', 'whois'])) {
+            } else if ($key == (count($breadcrumb) - 1)) {
                 $breadcrumb[$key] = [
                     'label' => $v,
                 ];

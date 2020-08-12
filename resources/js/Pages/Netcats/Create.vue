@@ -17,13 +17,14 @@
                     />
                   </div>
                 </div>
+                <text-input v-model="form.port" :errors="$page.errors.name" label="端口号" />
                 <div class="form-group row">
                   <div class="col-12">
                     <button class="btn btn-primary mr-2" @click="reset">
                       <i class="far fa-trash-alt"></i>
                       淸空
                     </button>
-                    <button type="submit" class="btn btn-primary mr-2">Ping检测</button>
+                    <button type="submit" class="btn btn-primary mr-2">檢測端口</button>
                     <button
                       class="btn btn-primary"
                       ref="copy"
@@ -59,13 +60,18 @@
 
 <script>
 import mapValues from "lodash/mapValues";
+import TextInput from "@/Shared/Forms/TextInput";
 
 export default {
+  components: {
+    TextInput,
+  },
   data() {
     return {
       output: "",
       form: {
         url: "",
+        port: null,
       },
       // copyBtn: null,
     };
@@ -80,12 +86,10 @@ export default {
     submit() {
       this.sending = true;
       this.output = "";
-      this.$http
-        .post(route("pings.store"), this.form)
-        .then((res) => {
-          this.output = res.data;
-          this.sending = false;
-        });
+      this.$http.post(route("netcats.store"), this.form).then((res) => {
+        this.output = res.data;
+        this.sending = false;
+      });
     },
   },
 };

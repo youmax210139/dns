@@ -23,7 +23,7 @@
                       <i class="far fa-trash-alt"></i>
                       淸空
                     </button>
-                    <button type="submit" class="btn btn-primary mr-2">Ping检测</button>
+                    <button type="submit" class="btn btn-primary mr-2">路由器追踪</button>
                     <button
                       class="btn btn-primary"
                       ref="copy"
@@ -80,12 +80,10 @@ export default {
     submit() {
       this.sending = true;
       this.output = "";
-      this.$http
-        .post(route("pings.store"), this.form)
-        .then((res) => {
-          this.output = res.data;
-          this.sending = false;
-        });
+      this.$http.post(route("traces.store"), this.form).then((res) => {
+        this.output = res.data;
+        this.sending = false;
+      });
     },
   },
 };

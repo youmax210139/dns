@@ -1,8 +1,8 @@
 <?php
 
 // use App\Models\Platform;
-use App\Models\Domain;
 use App\Models\Account;
+use App\Models\Domain;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -22,8 +22,16 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // $platform = Platform::create(['name'=>'google.com.tw']);
-        factory(Domain::class, 20)->create([
-            'platform_id' => 0,
-        ]);
+        $domains = [
+            'www.google.com.tw',
+            'yahoo.com.tw',
+        ];
+        foreach ($domains as $domain) {
+            factory(Domain::class)->create([
+                'platform_id' => 0,
+                'name' => $domain,
+            ]);
+        }
+
     }
 }

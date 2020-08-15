@@ -23,7 +23,11 @@
                       <i class="far fa-trash-alt"></i>
                       淸空
                     </button>
-                    <button type="submit" class="btn btn-primary mr-2">Whois检测</button>
+                    <loading-button
+                      :loading="sending"
+                      class="btn btn-primary mr-2"
+                      type="submit"
+                    >Whois检测</loading-button>
                     <button
                       class="btn btn-primary"
                       ref="copy"
@@ -59,14 +63,19 @@
 
 <script>
 import mapValues from "lodash/mapValues";
+import LoadingButton from "@/Shared/Forms/LoadingButton";
 
 export default {
+  components: {
+    LoadingButton,
+  },
   data() {
     return {
       output: "",
       form: {
         url: "",
       },
+      sending: false,
       // copyBtn: null,
     };
   },
@@ -80,12 +89,10 @@ export default {
     submit() {
       this.sending = true;
       this.output = "";
-      this.$http
-        .post(route("whois.store"), this.form)
-        .then((res) => {
-          this.output = res.data;
-          this.sending = false;
-        });
+      this.$http.post(route("whois.store"), this.form).then((res) => {
+        this.output = res.data;
+        this.sending = false;
+      });
     },
   },
 };

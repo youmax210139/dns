@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import LoadingButton from '@/Shared/LoadingButton'
+import LoadingButton from '@/Shared/Forms/LoadingButton'
 import SelectInput from '@/Shared/SelectInput'
 import TextInput from '@/Shared/Forms/TextInput'
 import FileInput from '@/Shared/FileInput'

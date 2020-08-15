@@ -20,17 +20,21 @@
                 <div class="form-group row">
                   <div class="col-12">
                     <button class="btn btn-primary mr-2" @click="reset">
-                      <i class="far fa-trash-alt"></i>
+                      <i class="far fa-trash-alt" />
                       淸空
                     </button>
-                    <button type="submit" class="btn btn-primary mr-2">Ping检测</button>
+                    <loading-button
+                      :loading="sending"
+                      class="btn btn-primary mr-2"
+                      type="submit"
+                    >Ping检测</loading-button>
                     <button
-                      class="btn btn-primary"
                       ref="copy"
+                      class="btn btn-primary"
                       data-clipboard-action="copy"
                       data-clipboard-target="#output"
                     >
-                      <i class="far fa-copy"></i>
+                      <i class="far fa-copy" />
                       复制结果
                     </button>
                   </div>
@@ -59,14 +63,19 @@
 
 <script>
 import mapValues from "lodash/mapValues";
+import LoadingButton from "@/Shared/Forms/LoadingButton";
 
 export default {
+  components: {
+    LoadingButton,
+  },
   data() {
     return {
       output: "",
       form: {
         url: "",
       },
+      sending: false,
       // copyBtn: null,
     };
   },
@@ -80,12 +89,10 @@ export default {
     submit() {
       this.sending = true;
       this.output = "";
-      this.$http
-        .post(route("pings.store"), this.form)
-        .then((res) => {
-          this.output = res.data;
-          this.sending = false;
-        });
+      this.$http.post(route("pings.store"), this.form).then((res) => {
+        this.output = res.data;
+        this.sending = false;
+      });
     },
   },
 };

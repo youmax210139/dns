@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import LoadingButton from "@/Shared/LoadingButton";
+import LoadingButton from "@/Shared/Forms/LoadingButton";
 import TextInput from "@/Shared/Forms/TextInput";
 import CheckboxInput from "@/Shared/Forms/CheckboxInput";
 

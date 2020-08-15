@@ -23,7 +23,11 @@
                       <i class="far fa-trash-alt"></i>
                       淸空
                     </button>
-                    <button type="submit" class="btn btn-primary mr-2">路由器追踪</button>
+                    <loading-button
+                      :loading="sending"
+                      class="btn btn-primary mr-2"
+                      type="submit"
+                    >路由器追踪</loading-button>
                     <button
                       class="btn btn-primary"
                       ref="copy"
@@ -59,14 +63,19 @@
 
 <script>
 import mapValues from "lodash/mapValues";
+import LoadingButton from "@/Shared/Forms/LoadingButton";
 
 export default {
+  components: {
+    LoadingButton,
+  },
   data() {
     return {
       output: "",
       form: {
         url: "",
       },
+      sending: false,
       // copyBtn: null,
     };
   },

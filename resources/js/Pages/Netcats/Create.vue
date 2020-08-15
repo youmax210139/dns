@@ -24,7 +24,11 @@
                       <i class="far fa-trash-alt"></i>
                       淸空
                     </button>
-                    <button type="submit" class="btn btn-primary mr-2">檢測端口</button>
+                    <loading-button
+                      :loading="sending"
+                      class="btn btn-primary mr-2"
+                      type="submit"
+                    >檢測端口</loading-button>
                     <button
                       class="btn btn-primary"
                       ref="copy"
@@ -61,10 +65,12 @@
 <script>
 import mapValues from "lodash/mapValues";
 import TextInput from "@/Shared/Forms/TextInput";
+import LoadingButton from "@/Shared/Forms/LoadingButton";
 
 export default {
   components: {
     TextInput,
+    LoadingButton,
   },
   data() {
     return {
@@ -73,6 +79,7 @@ export default {
         url: "",
         port: null,
       },
+      sending: false
       // copyBtn: null,
     };
   },

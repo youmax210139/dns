@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use League\Glide\Server;
+use GlideImage;
+use Illuminate\Http\Request;
 
 class ImagesController extends Controller
 {
-    public function show(Server $glide)
+    public function show(Request $request)
     {
-        return $glide->fromRequest()->response();
+        return GlideImage::create($request->path);
     }
 }

@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use Config;
 use Inertia\Inertia;
-use League\Glide\Server;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\UrlWindow;
@@ -26,7 +25,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerInertia();
-        $this->registerGlide();
         $this->registerLengthAwarePaginator();
     }
 
@@ -67,18 +65,6 @@ class AppServiceProvider extends ServiceProvider
                     : (object) [];
             },
         ]);
-    }
-
-    protected function registerGlide()
-    {
-        $this->app->bind(Server::class, function ($app) {
-            return Server::create([
-                'source' => Storage::getDriver(),
-                'cache' => Storage::getDriver(),
-                'cache_folder' => '.glide-cache',
-                'base_url' => 'img',
-            ]);
-        });
     }
 
     protected function registerLengthAwarePaginator()

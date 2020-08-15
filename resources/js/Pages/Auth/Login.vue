@@ -221,7 +221,7 @@ export default {
       sending: false,
       form: {
         email: "admin@gmail.com",
-        password: "123456",
+        password: "P@ssw0rd",
         remember: null,
       },
       validation: {

@@ -25,10 +25,11 @@
                       type="submit"
                     >檢測端口</loading-button>
                     <a
-                      class="btn btn-primary text-white"
                       ref="copy"
+                      class="btn btn-primary text-white"
                       data-clipboard-action="copy"
                       data-clipboard-target="#output"
+                      @click="copy"
                     >
                       <i class="far fa-copy"></i>
                       复制结果

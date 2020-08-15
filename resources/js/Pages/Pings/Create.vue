@@ -25,6 +25,7 @@
                     >Ping检测</loading-button>
                     <a
                       ref="copy"
+                      @click="copy"
                       class="btn btn-primary text-white"
                       data-clipboard-action="copy"
                       data-clipboard-target="#output"

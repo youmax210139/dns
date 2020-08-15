@@ -48,6 +48,15 @@ let app = document.getElementById('app')
 let page = JSON.parse(app.dataset.page)
 page.props['date'] = moment().format("YYYY MMM")
 console.log(page.props)
+
+Vue.mixin({
+  methods:{
+    copy(){
+      Vue.prototype.$toasted.success("复制成功");
+    }
+  }
+});
+
 new Vue({
   metaInfo: {
     title: `${page.props['app']['name']} - ${page.props['title']}`

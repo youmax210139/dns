@@ -14,6 +14,10 @@ class NetcatController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'url' => 'required',
+            'port' => 'required|numeric'
+        ]);
         system("netcat -z -v -w5 $request->url $request->port 2>&1", $output);
     }
 }

@@ -6,37 +6,32 @@
           <div class="card">
             <div class="card-body">
               <form class="form-horizontal" @submit.prevent="submit">
-                <div class="form-group row">
-                  <label class="col-sm-3 form-control-label">域名或IP地址</label>
-                  <div class="col-sm-9">
-                    <input
-                      id="inputHorizontalSuccess"
-                      v-model="form.url"
-                      placeholder="example.com"
-                      class="form-control form-control-success"
-                    />
-                  </div>
-                </div>
+                <text-input
+                  v-model="form.url"
+                  :error="errors.url"
+                  placeholder="example.com"
+                  label="域名或IP地址"
+                />
                 <div class="form-group row">
                   <div class="col-12">
-                    <button class="btn btn-primary mr-2" @click="reset">
+                    <a class="btn btn-primary mr-2 text-white" @click="reset">
                       <i class="far fa-trash-alt"></i>
                       淸空
-                    </button>
+                    </a>
                     <loading-button
                       :loading="sending"
                       class="btn btn-primary mr-2"
                       type="submit"
                     >路由器追踪</loading-button>
-                    <button
-                      class="btn btn-primary"
+                    <a
+                      class="btn btn-primary text-white"
                       ref="copy"
                       data-clipboard-action="copy"
                       data-clipboard-target="#output"
                     >
                       <i class="far fa-copy"></i>
                       复制结果
-                    </button>
+                    </a>
                   </div>
                 </div>
               </form>
@@ -63,10 +58,12 @@
 
 <script>
 import mapValues from "lodash/mapValues";
+import TextInput from "@/Shared/Forms/TextInput";
 import LoadingButton from "@/Shared/Forms/LoadingButton";
 
 export default {
   components: {
+    TextInput,
     LoadingButton,
   },
   data() {
@@ -76,6 +73,9 @@ export default {
         url: "",
       },
       sending: false,
+      errors: {
+        url: "",
+      },
       // copyBtn: null,
     };
   },
@@ -89,10 +89,17 @@ export default {
     submit() {
       this.sending = true;
       this.output = "";
-      this.$http.post(route("traces.store"), this.form).then((res) => {
-        this.output = res.data;
-        this.sending = false;
-      });
+      this.errors = mapValues(this.errors, () => "");
+      this.$http
+        .post(route("traces.store"), this.form)
+        .then((res) => {
+          this.output = res.data;
+          this.sending = false;
+        })
+        .catch((err) => {
+          this.sending = false;
+          this.errors = err;
+        });
     },
   },
 };

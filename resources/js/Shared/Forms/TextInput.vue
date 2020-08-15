@@ -7,13 +7,13 @@
         ref="input"
         v-bind="$attrs"
         class="form-control"
-        :class="{ 'is-invalid': errors.length }"
+        :class="{ 'is-invalid': error.length > 1 }"
         :type="type"
         :placeholder="placeholder"
         :value="value"
         @input="$emit('input', $event.target.value)"
       />
-      <div v-if="errors.length" class="invalid-feedback">{{ errors[0] }}</div>
+      <div v-if="error" class="invalid-feedback">{{ error }}</div>
     </div>
   </div>
 </template>
@@ -38,9 +38,9 @@ export default {
     },
     value: String,
     label: String,
-    errors: {
-      type: Array,
-      default: () => [],
+    error: {
+      type: String,
+      default: "",
     },
   },
   methods: {

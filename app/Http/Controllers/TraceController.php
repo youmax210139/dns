@@ -14,6 +14,9 @@ class TraceController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'url' => 'required',
+        ]);
         system(env('TRACE_PATH') . " $request->url 2>&1", $output);
     }
 }

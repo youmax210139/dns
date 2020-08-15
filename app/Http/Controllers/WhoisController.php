@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class WhoisController extends Controller
 {
@@ -14,6 +14,9 @@ class WhoisController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'url' => 'required',
+        ]);
         system("whois $request->url 2>&1", $output);
     }
 }

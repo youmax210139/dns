@@ -2,13 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use GlideImage;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\Filesystem\Filesystem;
+use League\Glide\Responses\LaravelResponseFactory;
+use League\Glide\ServerFactory;
 
 class ImagesController extends Controller
 {
-    public function show(Request $request)
+    public function show(Filesystem $filesystem, $path)
     {
-        return GlideImage::create($request->path);
+        // dd('1234');
+        $server = ServerFactory::create([
+            'response' => new LaravelResponseFactory(app('request')),
+            'source' => storage_path('app/public/img'),
+            'cache' => $filesystem->getDriver(),
+            'cache_path_prefix' => '.cache',
+            'base_url' => 'imgages',
+        ]);
+        return $server->getImageResponse($path, request()->all());
     }
 }

@@ -2,24 +2,23 @@
 
 namespace App\Providers;
 
-use Config;
-use Inertia\Inertia;
 use Carbon\CarbonImmutable;
-use Illuminate\Support\Collection;
+use Config;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\UrlWindow;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Inertia\Inertia;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        Date::use(CarbonImmutable::class);
+        Date::use (CarbonImmutable::class);
     }
 
     public function register()
@@ -36,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
 
         Inertia::share([
             'app' => [
-                'name' => Config::get('app.name')
+                'name' => Config::get('app.name'),
             ],
             'auth' => function () {
                 return [
@@ -61,8 +60,8 @@ class AppServiceProvider extends ServiceProvider
             },
             'errors' => function () {
                 return Session::get('errors')
-                    ? Session::get('errors')->getBag('default')->getMessages()
-                    : (object) [];
+                ? Session::get('errors')->getBag('default')->getMessages()
+                : (object) [];
             },
         ]);
     }
@@ -70,7 +69,8 @@ class AppServiceProvider extends ServiceProvider
     protected function registerLengthAwarePaginator()
     {
         $this->app->bind(LengthAwarePaginator::class, function ($app, $values) {
-            return new class(...array_values($values)) extends LengthAwarePaginator {
+            return new class(...array_values($values)) extends LengthAwarePaginator
+            {
                 public function only(...$attributes)
                 {
                     return $this->transform(function ($item) use ($attributes) {

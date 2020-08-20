@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Domain;
 
 class NetcatController extends Controller
 {
     public function create()
     {
-        return Inertia::render('Netcats/Create');
+        return Inertia::render('Netcats/Create', [
+            'domains' => Domain::orderBy('name')
+                ->get()
+                ->pluck('name'),
+        ]);
     }
 
     public function store(Request $request)

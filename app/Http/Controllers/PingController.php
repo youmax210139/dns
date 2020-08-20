@@ -4,13 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Domain;
 
 class PingController extends Controller
 {
 
     public function create()
     {
-        return Inertia::render('Pings/Create');
+        return Inertia::render('Pings/Create', [
+            'domains' => Domain::orderBy('name')
+                ->get()
+                ->pluck('name'),
+        ]);
     }
 
     public function store(Request $request)

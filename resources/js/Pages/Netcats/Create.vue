@@ -6,9 +6,10 @@
           <div class="card">
             <div class="card-body">
               <form class="form-horizontal" @submit.prevent="submit">
-                <text-input
+                <text-select-input
                   v-model="form.url"
                   :error="errors.url"
+                  :options="domains"
                   placeholder="example.com"
                   label="域名或IP地址"
                 />
@@ -61,12 +62,17 @@
 <script>
 import mapValues from "lodash/mapValues";
 import TextInput from "@/Shared/Forms/TextInput";
+import TextSelectInput from "@/Shared/Forms/TextSelectInput";
 import LoadingButton from "@/Shared/Forms/LoadingButton";
 
 export default {
   components: {
     TextInput,
+    TextSelectInput,
     LoadingButton,
+  },
+  props: {
+    domains: Array,
   },
   data() {
     return {

@@ -8,7 +8,7 @@
         :tabindex="0"
         :value="value"
         :options="options"
-        taggable
+        :taggable="taggable"
         :placeholder="placeholder"
         @input="select"
       />
@@ -49,10 +49,18 @@ export default {
       type: Array,
       default: null,
     },
+    taggable: {
+      type: Boolean,
+      default: true,
+    },
   },
   methods: {
     select(value) {
-      this.$emit("input", value);
+      // console.log(value);
+      if(value instanceof Object){
+        return this.$emit("input", value['code']);
+      }
+      return this.$emit("input", value);
     },
   },
 };

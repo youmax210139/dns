@@ -19,7 +19,7 @@
             <a :href="route('pings.create')">Ping在線檢測</a>
           </li>
           <li>
-            <a href="#">DNS在線查詢</a>
+            <a :href="route('nslookups.create')">DNS在線查詢</a>
           </li>
           <li>
             <a :href="route('traces.create')">路由器追踪</a>

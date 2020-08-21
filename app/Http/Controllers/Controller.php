@@ -27,7 +27,7 @@ class Controller extends BaseController
     {
         $breadcrumb = explode('.', Route::currentRouteName());
         foreach ($breadcrumb as $key => $v) {
-            if (in_array($v, ['pings', 'whois', 'netcats', 'traces', 'dns'])) {
+            if (in_array($v, ['pings', 'nslookups', 'whois', 'netcats', 'traces', 'dns'])) {
                 $breadcrumb = [];
                 break;
             } else if (in_array($v, ['index'])) {

@@ -37,6 +37,9 @@ Route::resource('domains', 'DomainController')->middleware('auth');
 // Pings
 Route::resource('pings', 'PingController')->middleware('auth')->only(['create','store']);
 
+// Nslookup
+Route::resource('nslookups', 'NslookupController')->middleware('auth')->only(['create','store']);
+
 // Whois
 Route::resource('whois', 'WhoisController')->middleware('auth')->only(['create','store']);
 

@@ -1,6 +1,6 @@
 <?php
 
-// use App\Models\Platform;
+use App\Models\Platform;
 use App\Models\Account;
 use App\Models\Domain;
 use App\Models\User;
@@ -20,18 +20,17 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'owner' => true,
         ]);
-
-        // $platform = Platform::create(['name'=>'google.com.tw']);
         $domains = [
             'www.google.com.tw',
             'yahoo.com.tw',
         ];
-        foreach ($domains as $domain) {
-            factory(Domain::class)->create([
-                'platform_id' => 0,
-                'name' => $domain,
-            ]);
-        }
-
+        factory(Platform::class)->create()->each(function($platform) use ($domains){
+            foreach ($domains as $domain) {
+                factory(Domain::class)->create([
+                    'platform_id' => $platform->id,
+                    'name' => $domain,
+                ]);
+            }
+        });
     }
 }

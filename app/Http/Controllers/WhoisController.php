@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Domain;
+use Whois;
 
 class WhoisController extends Controller
 {
@@ -22,6 +23,7 @@ class WhoisController extends Controller
         $request->validate([
             'url' => 'required',
         ]);
-        system("whois $request->url 2>&1", $output);
+        $url = Whois::getHostname($request->url);
+        system("whois $url 2>&1", $output);
     }
 }

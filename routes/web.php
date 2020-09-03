@@ -31,6 +31,9 @@ Route::put('users/{user}/restore')->name('users.restore')->uses('UsersController
 // Images
 Route::get('/img/{path}', 'ImagesController@show')->where('path', '.*');
 
+// Platforms
+Route::resource('platforms', 'PlatformController')->middleware('auth');
+
 // Domains
 Route::resource('domains', 'DomainController')->middleware('auth');
 

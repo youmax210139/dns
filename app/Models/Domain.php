@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Whois;
 
 class Domain extends Model
 {
@@ -46,5 +47,10 @@ class Domain extends Model
     public function getRenewAttribute($value)
     {
         return $value == 1;
+    }
+
+    public function getHostnameAttribute()
+    {
+        return Whois::getHostname($this->name);
     }
 }

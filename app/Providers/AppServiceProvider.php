@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Carbon\CarbonImmutable;
-use Config;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\UrlWindow;
 use Illuminate\Support\Collection;
@@ -35,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
 
         Inertia::share([
             'app' => [
-                'name' => Config::get('app.name'),
+                'name' => config('app.name'),
             ],
             'auth' => function () {
                 return [

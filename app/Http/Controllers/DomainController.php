@@ -16,7 +16,7 @@ class DomainController extends Controller
             'domains' => Domain::orderBy('name')
                 ->filter(Request::only('search', 'trashed'))
                 ->paginate()
-                ->only('id', 'name', 'usage', 'backup', 'expired_at'),
+                ->only('id', 'hostname', 'name', 'usage', 'backup', 'expired_at'),
         ]);
     }
 
@@ -45,7 +45,7 @@ class DomainController extends Controller
                 'id' => $domain->id,
                 'name' => $domain->name,
                 'backup' => $domain->backup,
-                'renew' => $domain->renew
+                'renew' => $domain->renew,
             ],
         ]);
     }

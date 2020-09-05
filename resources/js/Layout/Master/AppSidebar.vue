@@ -13,6 +13,9 @@
         </a>
         <ul id="dns-tools" class="collapse list-unstyled">
           <li>
+            <a :href="route('platforms.index')">平台管理</a>
+          </li>
+          <li>
             <a :href="route('domains.index')">域名管理</a>
           </li>
           <li>
@@ -38,10 +41,8 @@
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
 export default {
-  data(){
-    return {
-      
-    }
+  data() {
+    return {};
   },
   computed: {
     ...mapState("navbar", {

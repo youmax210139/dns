@@ -2,6 +2,7 @@
 
 return [
     'dashboard' => 'Dashboard',
+    'platforms.index' => 'Platform List',
     'domains.index' => 'Domain List',
     'domains.create' => 'Create Domain',
     'pings.create' => 'Ping check tool',

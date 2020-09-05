@@ -10,9 +10,11 @@
         :options="options"
         :taggable="taggable"
         :placeholder="placeholder"
+        :reduce="option => option.code || option"
         @input="select"
       />
-      <div v-if="error" class="invalid-feedback">{{ error }}</div>
+      <div v-if="error instanceof Array" class="invalid-feedback d-block">{{ error[0] }}</div>
+      <div v-else-if="error" class="invalid-feedback d-block">{{ error }}</div>
     </div>
   </div>
 </template>
@@ -39,10 +41,10 @@ export default {
       type: String,
       default: "",
     },
-    value: String,
+    value: [String, Number],
     label: String,
     error: {
-      type: String,
+      type: [String, Array],
       default: "",
     },
     options: {
@@ -57,8 +59,8 @@ export default {
   methods: {
     select(value) {
       // console.log(value);
-      if(value instanceof Object){
-        return this.$emit("input", value['code']);
+      if (value instanceof Object) {
+        return this.$emit("input", value["code"]);
       }
       return this.$emit("input", value);
     },

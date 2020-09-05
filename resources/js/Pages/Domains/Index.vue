@@ -28,9 +28,10 @@
                   <thead>
                     <tr class="text-left font-bold">
                       <th scope="col">#</th>
+                      <th scope="col">平台</th>
                       <th scope="col">主域名</th>
                       <th scope="col">域名</th>
-                      <th scope="col">使用状态</th>
+                      <th scope="col">使用率</th>
                       <th scope="col">备援状态</th>
                       <th scope="col">过期日期</th>
                       <th scope="col">操作</th>
@@ -43,9 +44,10 @@
                       class="hover:bg-gray-100 focus-within:bg-gray-100"
                     >
                       <th scope="row">{{ domain.id }}</th>
+                      <th scope="row">{{ domain.platform_name }}</th>
                       <td>{{ domain.hostname }}</td>
                       <td>{{ domain.name }}</td>
-                      <td>{{ domain.usage }}</td>
+                      <td>{{ domain.usage }}％</td>
                       <td>{{ domain.backup ? 'Y' : 'N' }}</td>
                       <td>{{ domain.expired_at }}</td>
                       <td>

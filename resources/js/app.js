@@ -32,11 +32,7 @@ Axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').att
 Axios.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
-  let err = {};
-  for (const [key, value] of Object.entries(error.response.data.errors)) {
-    err[key] = value.join('<br>');
-  }
-  return Promise.reject(err);
+  return Promise.reject(error.response.data.errors);
 });
 Vue.prototype.$http = Axios
 Vue.mixin({ methods: { route: window.route } })

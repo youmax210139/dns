@@ -7,14 +7,12 @@
             <div class="card-body">
               <form @submit.prevent="submit">
                 <text-input v-model="form.name" :errors="$page.errors.name" label="Name" />
-                <checkbox-input v-model="form.backup" label="Backup" option />
-                <checkbox-input v-model="form.renew" label="Renew" option />
                 <div class="form-group">
                   <loading-button
                     :loading="sending"
                     class="btn btn-primary"
                     type="submit"
-                  >Edit Domain</loading-button>
+                  >Edit Platform</loading-button>
                 </div>
               </form>
             </div>
@@ -37,15 +35,13 @@ export default {
     TextInput,
   },
   props: {
-    domain: Object,
+    platform: Object,
   },
   data() {
     return {
       sending: false,
       form: {
-        name: this.domain.name,
-        backup: this.domain.backup,
-        renew: this.domain.renew,
+        name: this.platform.name,
       },
     };
   },
@@ -53,7 +49,7 @@ export default {
     submit() {
       this.sending = true;
       this.$inertia
-        .put(this.route("domains.update", this.domain.id), this.form)
+        .put(this.route("platforms.update", this.platform.id), this.form)
         .then(() => (this.sending = false));
     },
   },

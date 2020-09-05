@@ -13,7 +13,8 @@
         :value="value"
         @input="$emit('input', $event.target.value)"
       />
-      <div v-if="error" class="invalid-feedback">{{ error }}</div>
+      <div v-if="error instanceof Array" class="invalid-feedback d-block">{{ error[0] }}</div>
+      <div v-else-if="error" class="invalid-feedback d-block">{{ error }}</div>
     </div>
   </div>
 </template>
@@ -32,14 +33,14 @@ export default {
       type: String,
       default: "text",
     },
-    placeholder:{
+    placeholder: {
       type: String,
       default: "",
     },
     value: String,
     label: String,
     error: {
-      type: String,
+      type: [String, Array],
       default: "",
     },
   },

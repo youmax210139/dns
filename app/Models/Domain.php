@@ -8,7 +8,13 @@ use Whois;
 class Domain extends Model
 {
     use SoftDeletes;
+
+    protected $appends = [
+        'platform_name',
+    ];
+
     protected $fillable = [
+        'platform_id',
         'name',
         'usage',
         'backup',
@@ -16,6 +22,11 @@ class Domain extends Model
         'registered_at',
         'expired_at',
     ];
+
+    public function platform()
+    {
+        return $this->belongsTo('App\Models\Platform', 'platform_id', 'id');
+    }
 
     public function scopeFilter($query, array $filters)
     {
@@ -52,5 +63,10 @@ class Domain extends Model
     public function getHostnameAttribute()
     {
         return Whois::getHostname($this->name);
+    }
+
+    public function getPlatformNameAttribute()
+    {
+        return $this->platform->name ?? '--';
     }
 }

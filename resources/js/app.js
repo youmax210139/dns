@@ -29,7 +29,7 @@ Vue.use(Toasted, {
   theme: 'toasted-primary',
   duration: 3000
 })
-Axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content')
+// Axios.defaults.withCredentials = true;
 Axios.interceptors.response.use(function (response) {
   return response;
 }, function (error) {

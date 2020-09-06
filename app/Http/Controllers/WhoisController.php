@@ -23,7 +23,6 @@ class WhoisController extends Controller
         $request->validate([
             'url' => 'required',
         ]);
-        $url = Whois::getHostname($request->url);
-        system("whois $url 2>&1", $output);
+        return Whois::getInfo($request->url);
     }
 }

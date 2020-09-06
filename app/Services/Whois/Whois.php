@@ -3,6 +3,27 @@ namespace App\Services\Whois;
 
 class Whois
 {
+    protected $domainRegex = 'domain name:*\s+([\w\.\-]+)';
+    protected $registrarRegex = 'registrar:\s+([\w\.\-\s\,]+)';
+    protected $emailRegex = 'contact email:\s+([\w\.\-\_@]+)';
+    protected $phoneRegex = 'contact phone:\s+([\+\w\.\-\_@]+)';
+    protected $created_atRegex = 'creation date:\s+([\w\.\-\_@\:]+)';
+    protected $expired_atRegex = 'expiration date:\s+([\w\.\-\_@\:]+)';
+    protected $updated_atRegex = 'updated date:\s+([\w\.\-\_@\:]+)';
+    protected $whoisRegex = 'registrar whois server:\s+([\w\.\-\_@\:]+)';
+    protected $nsRegex = 'name server:\s+([\w\.\-\_@\:]+)';
+
+    protected $fields = [
+        'domain',
+        'registrar',
+        'email',
+        'phone',
+        'created_at',
+        'updated_at',
+        'expired_at',
+        'whois',
+        'ns',
+    ];
 
     public function getHostname($domain)
     {
@@ -51,5 +72,40 @@ class Whois
             }
         }
         return join('.', $arr);
+    }
+
+    protected function find($name, $line)
+    {
+        $name .= 'Regex';
+        if (preg_match("/{$this->$name}/", trim(strtolower($line)), $matches)) {
+            return $matches[1];
+        }
+        return null;
+    }
+
+    public function getInfo($domain)
+    {
+        $domain = $this->getHostname($domain);
+        exec("whois $domain 2>&1", $output);
+        // $output = explode('#', $output);
+        $info = [
+            'ns' => [],
+        ];
+
+        foreach ($output as $row) {
+            foreach ($this->fields as $field) {
+                if ($str = $this->find($field, $row)) {
+                    if ($field == 'ns') {
+                        if (!in_array($str, $info['ns'])) {
+                            $info[$field][] = $str;
+                        }
+                    } else {
+                        $info[$field] = $str;
+                    }
+                    continue;
+                }
+            }
+        }
+        return $info;
     }
 }

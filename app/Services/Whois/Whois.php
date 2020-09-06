@@ -1,6 +1,8 @@
 <?php
 namespace App\Services\Whois;
 
+use Carbon\Carbon;
+
 class Whois
 {
     protected $domainRegex = 'domain name:*\s+([\w\.\-]+)';
@@ -106,6 +108,30 @@ class Whois
                 }
             }
         }
+        try {
+            if (!empty($info['created_at'])) {
+                $info['created_at'] = Carbon::parse($info['created_at'])->toDateTimeString();
+            }
+        } catch (\Exception $e) {
+
+        }
+        try {
+            if (!empty($info['updated_at'])) {
+                $info['updated_at'] = Carbon::parse($info['updated_at'])->toDateTimeString();
+            }
+        } catch (\Exception $e) {
+
+        }
+        try {
+            if (!empty($info['expired_at'])) {
+                $info['expired_at'] = Carbon::parse($info['updated_at'])->toDateTimeString();
+            }
+        } catch (\Exception $e) {
+
+        }
+        if (empty($info['ns'])) {
+            unset($info['ns']);
+        };
         return $info;
     }
 }

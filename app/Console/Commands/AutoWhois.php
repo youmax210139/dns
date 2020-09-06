@@ -2,9 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Domain;
 use Illuminate\Console\Command;
 use Whois;
-use App\Models\Domain;
+use Log;
 
 class AutoWhois extends Command
 {
@@ -40,13 +41,15 @@ class AutoWhois extends Command
     public function handle()
     {
         $domains = Domain::all();
-        foreach($domains as $domain)
-        {
+        foreach ($domains as $domain) {
             $info = Whois::getInfo($domain->name);
-            if(isset($info['expired_at'])){
+            if (isset($info['expired_at'])) {
                 $domain->update([
-                    'expired_at' => $info['expired_at']
+                    'expired_at' => $info['expired_at'],
                 ]);
+                $msg = "$domain->name update expired date to {$info['expired_at']}.";
+                $this->info($msg);
+                Log::info($msg);
             }
         }
     }

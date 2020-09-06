@@ -15,6 +15,7 @@
     <link href="{{ mix('/css/vendor.css') }}" rel="stylesheet">
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     <script src="{{ mix('/js/app.js') }}" defer></script>
+    <script src="{{ asset('js/now-ui-dashboard.min.js') }}" defer></script>
     @routes
 </head>
 

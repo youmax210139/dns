@@ -1,36 +1,33 @@
 <template>
-  <section class="forms">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-body">
-              <form @submit.prevent="submit">
-                <text-select-input
-                  v-model="form.platform_id"
-                  :error="$page.errors.platform_id"
-                  :options="platforms"
-                  placeholder="平台名"
-                  label="平台名"
-                  :taggable="false"
-                />
-                <text-input v-model="form.name" :error="$page.errors.name" label="Name" />
-                <checkbox-input v-model="form.backup" :error="$page.errors.backup" label="Backup" option />
-                <checkbox-input v-model="form.renew" :error="$page.errors.renew" label="Renew" option />
-                <div class="form-group">
-                  <loading-button
-                    :loading="sending"
-                    class="btn btn-primary"
-                    type="submit"
-                  >Edit Platform</loading-button>
-                </div>
-              </form>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <form @submit.prevent="submit">
+            <text-select-input
+              v-model="form.platform_id"
+              :error="$page.errors.platform_id"
+              :options="platforms"
+              placeholder="平台名"
+              label="平台名"
+              :taggable="false"
+            />
+            <text-input v-model="form.name" :error="$page.errors.name" label="Name" />
+            <checkbox-input
+              v-model="form.backup"
+              :error="$page.errors.backup"
+              label="Backup"
+              option
+            />
+            <checkbox-input v-model="form.renew" :error="$page.errors.renew" label="Renew" option />
+            <div class="form-group">
+              <loading-button :loading="sending" class="btn btn-primary" type="submit">编辑域名</loading-button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>

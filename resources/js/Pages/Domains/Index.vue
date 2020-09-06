@@ -1,8 +1,8 @@
 <template>
-  <section class="tables">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
           <search-filter v-model="form.search" @reset="reset">
             <div class="row">
               <label class="col-12 form-control-label">Trashed:</label>
@@ -20,64 +20,56 @@
             </inertia-link>
           </search-filter>
         </div>
-        <div class="col-12">
-          <div class="card">
-            <div class="card-body p-0">
-              <div class="table-responsive">
-                <table class="table table-striped table-hover mb-0">
-                  <thead>
-                    <tr class="text-left font-bold">
-                      <th scope="col">#</th>
-                      <th scope="col">平台</th>
-                      <th scope="col">主域名</th>
-                      <th scope="col">域名</th>
-                      <th scope="col">使用率</th>
-                      <th scope="col">备援状态</th>
-                      <th scope="col">过期日期</th>
-                      <th scope="col">操作</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      v-for="domain in domains.data"
-                      :key="domain.id"
-                      class="hover:bg-gray-100 focus-within:bg-gray-100"
-                    >
-                      <th scope="row">{{ domain.id }}</th>
-                      <th scope="row">{{ domain.platform_name }}</th>
-                      <td>{{ domain.hostname }}</td>
-                      <td>{{ domain.name }}</td>
-                      <td>{{ domain.usage }}％</td>
-                      <td>{{ domain.backup ? 'Y' : 'N' }}</td>
-                      <td>{{ domain.expired_at }}</td>
-                      <td>
-                        <a :href="route('domains.edit', domain.id)" class="btn btn-info text-white">
-                          <i class="fas fa-edit"></i>
-                        </a>
-                        <a class="btn btn-danger text-white" @click="destroy(domain)">
-                          <i class="fas fa-trash-alt"></i>
-                        </a>
-                      </td>
-                    </tr>
-                    <tr v-if="domains.data.length === 0">
-                      <td colspan="4">No domains found.</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-hover mb-0">
+              <thead>
+                <tr class="text-left font-bold">
+                  <th scope="col">#</th>
+                  <th scope="col">平台</th>
+                  <th scope="col">主域名</th>
+                  <th scope="col">域名</th>
+                  <th scope="col">使用率</th>
+                  <th scope="col">备援状态</th>
+                  <th scope="col">过期日期</th>
+                  <th scope="col">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="domain in domains.data"
+                  :key="domain.id"
+                  class="hover:bg-gray-100 focus-within:bg-gray-100"
+                >
+                  <th scope="row">{{ domain.id }}</th>
+                  <th scope="row">{{ domain.platform_name }}</th>
+                  <td>{{ domain.hostname }}</td>
+                  <td>{{ domain.name }}</td>
+                  <td>{{ domain.usage }}％</td>
+                  <td>{{ domain.backup ? 'Y' : 'N' }}</td>
+                  <td>{{ domain.expired_at }}</td>
+                  <td>
+                    <a :href="route('domains.edit', domain.id)" class="btn btn-sm btn-info text-white">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <a class="btn btn-sm btn-danger text-white" @click="destroy(domain)">
+                      <i class="fas fa-trash-alt"></i>
+                    </a>
+                  </td>
+                </tr>
+                <tr v-if="domains.data.length === 0">
+                  <td colspan="4">No domains found.</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-        <div class="col-12">
-          <div class="card bg-transparent shadow-none">
-            <div class="card-body p-0">
-              <pagination :links="domains.links" />
-            </div>
-          </div>
+        <div class="card-footer">
+          <pagination :links="domains.links" />
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>

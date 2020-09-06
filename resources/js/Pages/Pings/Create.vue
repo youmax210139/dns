@@ -1,56 +1,54 @@
 <template>
-  <section class="forms">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-body">
-              <form class="form-horizontal" @submit.prevent="submit">
-                <text-select-input
-                  v-model="form.url"
-                  :error="errors.url"
-                  :options="domains"
-                  placeholder="example.com"
-                  label="域名或IP地址"
-                />
-                <div class="form-group row">
-                  <div class="col-12">
-                    <a class="btn btn-primary mr-2 text-white" @click="reset">
-                      <i class="far fa-trash-alt" />
-                      淸空
-                    </a>
-                    <loading-button
-                      :loading="sending"
-                      class="btn btn-primary mr-2"
-                      type="submit"
-                    >Ping检测</loading-button>
-                    <a
-                      ref="copy"
-                      @click="copy"
-                      class="btn btn-primary text-white"
-                      data-clipboard-action="copy"
-                      data-clipboard-target="#output"
-                    >
-                      <i class="far fa-copy" />
-                      复制结果
-                    </a>
-                  </div>
+  <section>
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <form class="form-horizontal" @submit.prevent="submit">
+              <text-select-input
+                v-model="form.url"
+                :error="errors.url"
+                :options="domains"
+                placeholder="example.com"
+                label="域名或IP地址"
+              />
+              <div class="form-group row">
+                <div class="col-12">
+                  <a class="btn btn-primary mr-2 text-white" @click="reset">
+                    <i class="far fa-trash-alt" />
+                    淸空
+                  </a>
+                  <loading-button
+                    :loading="sending"
+                    class="btn btn-primary mr-2"
+                    type="submit"
+                  >Ping检测</loading-button>
+                  <a
+                    ref="copy"
+                    @click="copy"
+                    class="btn btn-primary text-white"
+                    data-clipboard-action="copy"
+                    data-clipboard-target="#output"
+                  >
+                    <i class="far fa-copy" />
+                    复制结果
+                  </a>
                 </div>
-              </form>
-            </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-body">
-              <form class="form-horizontal" @submit.prevent="submit">
-                <div class="form-group">
-                  <textarea id="output" class="form-control" v-model="output" rows="10"></textarea>
-                </div>
-              </form>
-            </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <form class="form-horizontal" @submit.prevent="submit">
+              <div class="form-group">
+                <textarea id="output" class="form-control" v-model="output" readonly></textarea>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -109,3 +107,8 @@ export default {
   },
 };
 </script>
+<style lang=scss scoped>
+textarea#output {
+  min-height: 50vh;
+}
+</style>

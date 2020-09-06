@@ -1,39 +1,32 @@
 <template>
-  <section class="forms">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-body">
-              <form @submit.prevent="submit">
-                <text-input v-model="form.name" :errors="$page.errors.name" label="Name" placeholder="请输入域名"/>
-                <checkbox-input v-model="form.backup" label="Backup" option />
-                <checkbox-input v-model="form.renew" label="Renew" option />
-                <div class="form-group">
-                  <loading-button
-                    :loading="sending"
-                    class="btn btn-primary"
-                    type="submit"
-                  >Create Domain</loading-button>
-                </div>
-              </form>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <form @submit.prevent="submit">
+            <text-input
+              v-model="form.name"
+              :error="$page.errors.name"
+              label="平台名"
+              placeholder="请输入平台"
+            />
+            <div class="form-group">
+              <loading-button :loading="sending" class="btn btn-primary" type="submit">创建平台</loading-button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
 import LoadingButton from "@/Shared/Forms/LoadingButton";
 import TextInput from "@/Shared/Forms/TextInput";
-import CheckboxInput from "@/Shared/Forms/CheckboxInput";
 
 export default {
   components: {
     LoadingButton,
-    CheckboxInput,
     TextInput,
   },
   remember: "form",
@@ -41,9 +34,7 @@ export default {
     return {
       sending: false,
       form: {
-        name: '',
-        backup: false,
-        renew: false,
+        name: "",
       },
     };
   },
@@ -51,7 +42,7 @@ export default {
     submit() {
       this.sending = true;
       this.$inertia
-        .post(this.route("domains.store"), this.form)
+        .post(this.route("platforms.store"), this.form)
         .then(() => (this.sending = false));
     },
   },

@@ -1,26 +1,18 @@
 <template>
-  <section class="forms">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-body">
-              <form @submit.prevent="submit">
-                <text-input v-model="form.name" :errors="$page.errors.name" label="Name" />
-                <div class="form-group">
-                  <loading-button
-                    :loading="sending"
-                    class="btn btn-primary"
-                    type="submit"
-                  >Edit Platform</loading-button>
-                </div>
-              </form>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <form @submit.prevent="submit">
+            <text-input v-model="form.name" :error="$page.errors.name" label="Name" />
+            <div class="form-group">
+              <loading-button :loading="sending" class="btn btn-primary" type="submit">编辑平台</loading-button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>

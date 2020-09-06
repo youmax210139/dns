@@ -1,9 +1,5 @@
 <template>
-  <header class="page-header">
-    <div class="container-fluid">
-      <h2 class="no-margin-bottom">{{ $page.title }}</h2>
-    </div>
-  </header>
+  <a class="navbar-brand" href="#">{{ $page.title }}</a>
 </template>
 
 <script>

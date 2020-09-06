@@ -1,16 +1,16 @@
 <template>
-  <div class="page">
+  <div class="wrapper">
+    <app-sidebar />
     <portal-target name="dropdown" slim />
-    <app-navbar />
-    <div class="page-content d-flex align-items-stretch">
-      <app-sidebar />
-      <div class="content-inner" :class="content_inner">
-        <page-header />
-        <bread-crumb />
+    <div class="main-panel" id="main-panel">
+      <app-navbar />
+      <div class="panel-header panel-header-sm"></div>
+      <!-- <bread-crumb /> -->
+      <div class="content">
         <flash-messages />
         <slot />
-        <app-footer />
       </div>
+      <app-footer />
     </div>
   </div>
 </template>
@@ -21,7 +21,6 @@ import AppNavbar from "./AppNavbar";
 import AppSidebar from "./AppSidebar";
 import AppFooter from "./AppFooter";
 import BreadCrumb from "@/Shared/Breadcrumb";
-import PageHeader from "@/Shared/PageHeader";
 import FlashMessages from "@/Shared/FlashMessages";
 
 export default {
@@ -30,7 +29,6 @@ export default {
     AppSidebar,
     AppFooter,
     BreadCrumb,
-    PageHeader,
     FlashMessages,
   },
   data() {

@@ -1,28 +1,25 @@
 <template>
-  <section class="forms">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-body">
-              <form @submit.prevent="submit">
-                <text-input v-model="form.name" :errors="$page.errors.name" label="Name" placeholder="请输入域名"/>
-                <checkbox-input v-model="form.backup" label="Backup" option />
-                <checkbox-input v-model="form.renew" label="Renew" option />
-                <div class="form-group">
-                  <loading-button
-                    :loading="sending"
-                    class="btn btn-primary"
-                    type="submit"
-                  >Create Domain</loading-button>
-                </div>
-              </form>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <form @submit.prevent="submit">
+            <text-input
+              v-model="form.name"
+              :error="$page.errors.name"
+              label="Name"
+              placeholder="请输入域名"
+            />
+            <checkbox-input v-model="form.backup" label="Backup" option />
+            <checkbox-input v-model="form.renew" label="Renew" option />
+            <div class="form-group">
+              <loading-button :loading="sending" class="btn btn-primary" type="submit">Create Domain</loading-button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -41,7 +38,7 @@ export default {
     return {
       sending: false,
       form: {
-        name: '',
+        name: "",
         backup: false,
         renew: false,
       },

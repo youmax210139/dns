@@ -29,7 +29,7 @@ Vue.use(Toasted, {
   theme: 'toasted-primary',
   duration: 3000
 })
-// Axios.defaults.withCredentials = true;
+Axios.defaults.withCredentials = true;
 Axios.interceptors.response.use(function (response) {
   return response;
 }, function (error) {

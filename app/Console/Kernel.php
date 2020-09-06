@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('autowhois:run')
             ->runInBackground()
-            ->everyTenMinutes();
+            ->daily();
     }
 
     /**

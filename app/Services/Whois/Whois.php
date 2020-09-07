@@ -100,6 +100,9 @@ class Whois
         $regexName = $name.'Regex';
         foreach ($this->$regexName as $regex) {
             if (preg_match("/{$regex}/", trim(strtolower($line)), $matches)) {
+                if($name == 'expired_at'){
+                    // dd($regex ,$matches[1]);
+                }
                 return $matches[1];
             }
         }
@@ -109,7 +112,7 @@ class Whois
     public function getInfo($domain)
     {
         $domain = $this->getHostname($domain);
-        exec("timeout 10 whois $domain 2>&1", $output);
+        exec("whois $domain 2>&1", $output);
         // $output = explode('#', $output);
         $info = [
             'ns' => [],
@@ -145,7 +148,7 @@ class Whois
         }
         try {
             if (!empty($info['expired_at'])) {
-                $info['expired_at'] = Carbon::parse($info['updated_at'])->toDateTimeString();
+                $info['expired_at'] = Carbon::parse($info['expired_at'])->toDateTimeString();
             }
         } catch (\Exception $e) {
 

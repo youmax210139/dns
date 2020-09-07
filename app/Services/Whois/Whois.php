@@ -5,15 +5,34 @@ use Carbon\Carbon;
 
 class Whois
 {
-    protected $domainRegex = 'domain name:*\s+([\w\.\-]+)';
-    protected $registrarRegex = 'registrar:\s+([\w\.\-\s\,]+)';
-    protected $emailRegex = 'contact email:\s+([\w\.\-\_@]+)';
-    protected $phoneRegex = 'contact phone:\s+([\+\w\.\-\_@]+)';
-    protected $created_atRegex = 'creation date:\s+([\w\.\-\_@\:]+)';
-    protected $expired_atRegex = 'expiration date:\s+([\w\.\-\_@\:]+)';
-    protected $updated_atRegex = 'updated date:\s+([\w\.\-\_@\:]+)';
-    protected $whoisRegex = 'registrar whois server:\s+([\w\.\-\_@\:]+)';
-    protected $nsRegex = 'name server:\s+([\w\.\-\_@\:]+)';
+    protected $domainRegex = [
+        'domain name:*\s+([\w\.\-]+)',
+    ];
+    protected $registrarRegex = [
+        'registrar:\s+([\w\.\-\s\,\/\(\)]+)',
+    ];
+    protected $emailRegex = [
+        'contact email:\s+([\w\.\-\_@]+)',
+    ];
+    protected $phoneRegex = [
+        'contact phone:\s+([\+\w\.\-\_@]+)',
+    ];
+    protected $created_atRegex = [
+        'creation date:\s+([\w\.\-\_@\:]+)',
+    ];
+    protected $expired_atRegex = [
+        'expiration date:\s+([\w\.\-\_@\:]+)',
+        'registry expiry date:\s+([\w\.\-\_@\:]+)',
+    ];
+    protected $updated_atRegex = [
+        'updated date:\s+([\w\.\-\_@\:]+)',
+    ];
+    protected $whoisRegex = [
+        'registrar whois server:\s+([\w\.\-\_@\:]+)',
+    ];
+    protected $nsRegex = [
+        'name server:\s+([\w\.\-\_@\:]+)',
+    ];
 
     protected $fields = [
         'domain',
@@ -78,9 +97,11 @@ class Whois
 
     protected function find($name, $line)
     {
-        $name .= 'Regex';
-        if (preg_match("/{$this->$name}/", trim(strtolower($line)), $matches)) {
-            return $matches[1];
+        $regexName = $name.'Regex';
+        foreach ($this->$regexName as $regex) {
+            if (preg_match("/{$regex}/", trim(strtolower($line)), $matches)) {
+                return $matches[1];
+            }
         }
         return null;
     }
@@ -88,7 +109,7 @@ class Whois
     public function getInfo($domain)
     {
         $domain = $this->getHostname($domain);
-        exec("whois $domain 2>&1", $output);
+        exec("timeout 10 whois $domain 2>&1", $output);
         // $output = explode('#', $output);
         $info = [
             'ns' => [],

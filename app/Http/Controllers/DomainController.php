@@ -7,6 +7,7 @@ use App\Models\Platform;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use Redirect;
+use Whois;
 
 class DomainController extends Controller
 {
@@ -28,12 +29,18 @@ class DomainController extends Controller
 
     public function store()
     {
+
         Domain::create(
-            Request::validate([
-                'name' => ['required', 'unique:domains', 'max:100'],
-                'backup' => ['required', 'boolean'],
-                'renew' => ['required', 'boolean'],
-            ])
+            array_merge(
+                Request::validate([
+                    'name' => ['required', 'unique:domains', 'max:100'],
+                    'backup' => ['required', 'boolean'],
+                    'renew' => ['required', 'boolean'],
+                ]),
+                [
+                    'expired_at' => Whois::getInfo(request()->name)['expired_at'] ?? null,
+                ]
+            )
         );
         return Redirect::route('domains.index')
             ->with('success', 'Domain created.');
@@ -53,14 +60,13 @@ class DomainController extends Controller
     }
     public function update(Domain $domain)
     {
-        if(Request::get('platform_id') == null){
+        if (Request::get('platform_id') == null) {
             Request::merge([
                 'platform_id' => 0,
             ]);
-        }
-        else{
+        } else {
             Request::validate([
-                'platform_id' => 'exists:platforms,id'
+                'platform_id' => 'exists:platforms,id',
             ]);
         }
         $domain->update(

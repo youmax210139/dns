@@ -10,7 +10,6 @@ class ImagesController extends Controller
 {
     public function show(Filesystem $filesystem, $path)
     {
-        // dd('1234');
         $server = ServerFactory::create([
             'response' => new LaravelResponseFactory(app('request')),
             'source' => storage_path('app/public/img'),

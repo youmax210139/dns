@@ -5,9 +5,9 @@
     </div>
     <div class="sidebar-wrapper" id="sidebar-wrapper">
       <ul class="nav">
-        <li v-for="(v,index) in navs" :key="index">
-          <a :href="v.href">
-            <i class="now-ui-icons design_app" />
+        <li v-for="(v,index) in navs" :key="index" :class="{active:route().current() == v.route}">
+          <a :href="route(v.route)">
+            <i class="now-ui-icons" :class="v.icon" />
             <p>{{ v.label }}</p>
           </a>
         </li>
@@ -23,35 +23,43 @@ export default {
       navs: [
         {
           label: "仪表板",
-          href: "/",
+          icon: "business_chart-bar-32",
+          route: "dashboard",
         },
         {
           label: "平台管理",
-          href: route("platforms.index"),
+          icon: "business_globe",
+          route: "platforms.index",
         },
         {
           label: "域名管理",
-          href: route("domains.index"),
+          icon: "business_money-coins",
+          route: "domains.index",
         },
         {
           label: "Ping在線檢測",
-          href: route("pings.create"),
+          icon: "media-2_sound-wave",
+          route: "pings.create",
         },
         {
           label: "DNS在線查詢",
-          href: route("nslookups.create"),
+          icon: "gestures_tap-01",
+          route: "nslookups.create",
         },
         {
           label: "路由器追踪",
-          href: route("traces.create"),
+          icon: "education_paper",
+          route: "traces.create",
         },
         {
           label: "Whois域名在線查詢",
-          href: route("whois.create"),
+          icon: "travel_info",
+          route: "whois.create",
         },
         {
           label: "端口在線檢測工具",
-          href: route("netcats.create"),
+          icon: "ui-2_settings-90",
+          route: "netcats.create",
         },
       ],
     };
@@ -68,3 +76,10 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.nav {
+  p {
+    font-size: 1rem;
+  }
+}
+</style>

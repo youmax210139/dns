@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\UrlWindow;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
@@ -18,12 +20,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Date::use (CarbonImmutable::class);
+        $this->registerInertia();
+        $this->registerLengthAwarePaginator();
     }
 
     public function register()
     {
-        $this->registerInertia();
-        $this->registerLengthAwarePaginator();
+        // $this->registerInertia();
+        // $this->registerLengthAwarePaginator();
     }
 
     public function registerInertia()
@@ -35,6 +39,9 @@ class AppServiceProvider extends ServiceProvider
         Inertia::share([
             'app' => [
                 'name' => config('app.name'),
+                'ip' => Cache::remember('ip', 86400, function () {
+                    return file_get_contents("http://ipecho.net/plain");
+                }),
             ],
             'auth' => function () {
                 return [
@@ -51,6 +58,7 @@ class AppServiceProvider extends ServiceProvider
                     ] : null,
                 ];
             },
+            'date' => Carbon::now()->format('Y M'),
             'flash' => function () {
                 return [
                     'success' => Session::get('success'),

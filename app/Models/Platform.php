@@ -12,6 +12,11 @@ class Platform extends Model
         'name',
     ];
 
+    public function domains()
+    {
+        return $this->hasMany('App\Models\Domain', 'platform_id', 'id');
+    }
+
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {

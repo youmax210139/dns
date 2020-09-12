@@ -11,6 +11,9 @@
             <p>{{ v.label }}</p>
           </a>
         </li>
+        <li class="active-pro">
+            <p class="text-center text-white">IP: {{ $page.app.ip }}</p>
+        </li>
       </ul>
     </div>
   </div>
@@ -24,7 +27,7 @@ export default {
         {
           label: "仪表板",
           icon: "business_chart-bar-32",
-          route: "dashboard",
+          route: "dashboards.index",
         },
         {
           label: "平台管理",

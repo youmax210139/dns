@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Whois;
 
@@ -38,7 +39,10 @@ class Domain extends Model
                     $query->where('backup', 0);
                 } else {
                     $query->where('name', 'like', '%' . $search . '%')
-                        ->orWhere('usage', 'like', '%' . $search . '%');
+                        ->orWhere('usage', 'like', '%' . $search . '%')
+                        ->orWhereHas('platform', function (Builder $query) use ($search) {
+                            $query->where('name', 'like', '%' . $search . '%');
+                        });
                 }
             });
         })->when($filters['trashed'] ?? null, function ($query, $trashed) {

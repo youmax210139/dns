@@ -40,7 +40,7 @@
           <!-- Notifications-->
           <li class="nav-item dropdown">
             <a
-              id="notifications"
+              id="nav-notifications"
               rel="nofollow"
               data-target="#"
               href="#"
@@ -58,7 +58,7 @@
               </p>
             </a>
             <ul
-              aria-labelledby="notifications"
+              aria-labelledby="nav-notifications"
               class="dropdown-menu"
               v-show="notifications.length > 0"
             >

@@ -16,9 +16,6 @@ Route::get('login')->name('login')->uses('Auth\LoginController@showLoginForm')->
 Route::post('login')->name('login.attempt')->uses('Auth\LoginController@login')->middleware('guest');
 Route::post('logout')->name('logout')->uses('Auth\LoginController@logout');
 
-// Dashboard
-Route::get('/')->name('dashboard')->uses('DashboardController')->middleware('auth');
-
 // Users
 Route::get('users')->name('users')->uses('UsersController@index')->middleware('remember', 'auth');
 Route::get('users/create')->name('users.create')->uses('UsersController@create')->middleware('auth');
@@ -30,6 +27,9 @@ Route::put('users/{user}/restore')->name('users.restore')->uses('UsersController
 
 // Images
 Route::get('/img/{path}', 'ImagesController@show')->where('path', '.*');
+
+// Dashboard
+Route::resource('dashboards', 'DashboardController')->middleware('auth');
 
 // Platforms
 Route::resource('platforms', 'PlatformController')->middleware('auth');

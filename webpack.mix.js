@@ -19,7 +19,7 @@ mix.autoload({
   .js('resources/js/app.js', 'public/js')
   .copy('resources/js/now-ui-dashboard.min.js', 'public/js')
   .sass('resources/scss/vendor.scss', 'public/css/vendor.css')
-  .sass('resources/scss/now-ui-dashboard.scss', 'public/css/app.css')
+  .sass('resources/scss/app.scss', 'public/css/app.css')
   .options({
     processCssUrls: false
   })

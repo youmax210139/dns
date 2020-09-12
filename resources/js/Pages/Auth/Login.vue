@@ -1,207 +1,84 @@
-<style lang="scss">
-.login-page {
-  position: relative;
-}
-
-.login-page::before {
-  content: "";
-  width: 100%;
-  height: 100%;
-  display: block;
-  z-index: -1;
-  // background: url(../img/bg.jpg);
-  background-size: cover;
-  -webkit-filter: blur(10px);
-  filter: blur(10px);
-  z-index: 1;
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
-.login-page .container {
-  min-height: 100vh;
-  z-index: 999;
-  padding: 20px;
-  position: relative;
-}
-
-.login-page .form-holder {
-  width: 100%;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-bottom: 50px;
-}
-
-.login-page .form-holder .info,
-.login-page .form-holder .form {
-  min-height: 70vh;
-  padding: 40px;
-  height: 100%;
-}
-
-.login-page .form-holder div[class*="col-"] {
-  padding: 0;
-}
-
-.login-page .form-holder .info {
-  background: rgba(121, 106, 238, 0.9);
-  color: #fff;
-}
-
-.login-page .form-holder .info h1 {
-  font-size: 2.5em;
-  font-weight: 600;
-}
-
-.login-page .form-holder .info p {
-  font-weight: 300;
-}
-
-.login-page .form-holder .form .form-group {
-  position: relative;
-  margin-bottom: 30px;
-}
-
-.login-page .form-holder .form .content {
-  width: 100%;
-}
-
-.login-page .form-holder .form form {
-  width: 100%;
-  max-width: 400px;
-}
-
-.login-page .form-holder .form #login,
-.login-page .form-holder .form #register {
-  margin-bottom: 20px;
-  cursor: pointer;
-}
-
-.login-page .form-holder .form a.forgot-pass,
-.login-page .form-holder .form a.signup {
-  font-size: 0.9em;
-  color: #85b4f2;
-}
-
-.login-page .form-holder .form small {
-  color: #aaa;
-}
-
-.login-page .form-holder .form .terms-conditions label {
-  cursor: pointer;
-  color: #aaa;
-  font-size: 0.9em;
-}
-
-.login-page .copyrights {
-  width: 100%;
-  z-index: 9999;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  color: #fff;
-}
-
-@media (max-width: 991px) {
-  .login-page .info,
-  .login-page .form {
-    min-height: auto !important;
-  }
-  .login-page .info {
-    padding-top: 100px !important;
-    padding-bottom: 100px !important;
-  }
-}
-</style>
-
 <template>
-  <div class="page login-page">
-    <div class="container d-flex align-items-center">
-      <div class="form-holder has-shadow">
-        <div class="row">
-          <!-- Logo & Information Panel-->
-          <div class="col-lg-6">
-            <div class="info d-flex align-items-center">
-              <div class="content">
-                <div class="logo">
-                  <h1>{{ $page.app.name }}</h1>
+  <div class="page-header" filter-color="orange">
+    <div class="page-header-image" style="background-image:url(images/login.jpg)"></div>
+    <div class="content">
+      <div class="container">
+        <div class="col-md-5 ml-auto mr-auto">
+          <div class="card card-login card-plain">
+            <form class="form" method="post" @submit.prevent="submit">
+              <div class="card-header text-center">
+                <!-- Logo & Information Panel-->
+                <div class="logo-container">
+                  <img src="images/logo.png" alt />
                 </div>
-                <p>工具管理系统</p>
+                <!-- End of Logo -->
               </div>
-            </div>
-          </div>
-          <!-- Form Panel    -->
-          <div class="col-lg-6 bg-white">
-            <div class="form d-flex align-items-center">
-              <div class="content">
-                <form
-                  method="post"
-                  class="form-validate needs-validation was-validated"
-                  novalidate
-                  @submit.prevent="submit"
-                >
-                  <div class="form-group">
-                    <input
-                      v-model="form.email"
-                      @focus="emailActive=true"
-                      @blur="blur($event)"
-                      type="text"
-                      name="email"
-                      required
-                      class="input-material"
-                      :class="{'is-invalid': $page.errors.email}"
-                    />
-                    <label
-                      for="login-username"
-                      class="label-material"
-                      :class="{active:emailActive}"
-                    >User Name</label>
-                    <div class="invalid-feedback">{{ emailError }}</div>
+              <div class="card-body">
+                <div class="input-group form-group-no-border input-lg">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="now-ui-icons users_circle-08"></i>
+                    </span>
                   </div>
-                  <div class="form-group">
-                    <input
-                      v-model="form.password"
-                      @focus="passwordActive=true"
-                      @blur="blur($event)"
-                      type="password"
-                      name="password"
-                      required
-                      class="input-material"
-                      :class="{'is-invalid': $page.errors.password}"
-                    />
-                    <label
-                      for="login-password"
-                      class="label-material"
-                      :class="{active:passwordActive}"
-                    >Password</label>
-                    <div class="invalid-feedback">{{ passwordError }}</div>
+                  <input
+                    v-model="form.email"
+                    @focus="emailActive=true"
+                    @blur="blur($event)"
+                    type="text"
+                    name="email"
+                    required
+                    class="form-control"
+                    :class="{'is-invalid': $page.errors.email}"
+                  />
+                </div>
+                <div class="input-group form-group-no-border input-lg">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="now-ui-icons text_caps-small"></i>
+                    </span>
                   </div>
-                  <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Login</button>
-                  </div>
-                  <div class="form-group">
-                    <input v-model="form.remember" class="mr-1" type="checkbox" />
-                    <label class="text-sm">Remember Me</label>
-                  </div>
-                  <!-- This should be submit button but I replaced it with <a> for demo purposes-->
-                </form>
-                <a href="#reset-password" class="forgot-pass">Forgot Password?</a>
-                <br />
-                <small>Do not have an account?</small>
-                <a href="register.html" class="signup">Signup</a>
+                  <input
+                    v-model="form.password"
+                    @focus="passwordActive=true"
+                    @blur="blur($event)"
+                    type="password"
+                    name="password"
+                    required
+                    placeholder="test"
+                    class="form-control"
+                    :class="{'is-invalid': $page.errors.password}"
+                  />
+                </div>
               </div>
-            </div>
+              <div class="card-footer text-center">
+                <button type="submit" class="btn btn-primary btn-round btn-lg btn-block">Login</button>
+              </div>
+              <div class="pull-left">
+                <h6>
+                  <a href="#register" class="link footer-link">Signup</a>
+                </h6>
+              </div>
+              <div class="pull-right">
+                <h6>
+                  <a href="#reset-password" class="link footer-link">Forgot Password?</a>
+                </h6>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
-    <div class="copyrights text-center">
-      <p>
-        &copy; {{ $page.date }}
-        Maintained by Baam@cybertech.com
-      </p>
-    </div>
+    <footer class="footer">
+      <div class="container">
+        <div class="copyright" id="copyright">
+          &copy; {{ $page.date }}, Maintained by Charlie. Coded by
+          <a
+            href="https://www.creative-tim.com"
+            target="_blank"
+          >Creative Tim</a>.
+        </div>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -265,3 +142,52 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.page-header .container {
+  position: relative;
+}
+.login-page .link {
+  font-size: 10px;
+  color: #ffffff !important;
+  text-decoration: none;
+}
+.login-page .card-login.card-plain {
+  .form-group.form-group-no-border .form-control,
+  .input-group.form-group-no-border .form-control {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: none;
+  }
+}
+.input-group-text {
+  color: rgba(255, 255, 255, 0.8);
+  border: none;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.login-page
+  .card-login.card-plain
+  .form-group.form-group-no-border.input-group-focus
+  .input-group-text,
+.login-page
+  .card-login.card-plain
+  .input-group.form-group-no-border.input-group-focus
+  .input-group-text,
+.login-page
+  .card-login.card-plain
+  .input-group.form-group-no-border
+  .form-control:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+.login-page
+  .card-login.card-plain
+  .input-group.form-group-no-border
+  .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.8);
+}
+.login-page .card-login .logo-container {
+  margin-top: 55px;
+  margin-bottom: 55px;
+}
+</style>

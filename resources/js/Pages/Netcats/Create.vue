@@ -10,16 +10,18 @@
                 :error="errors.url"
                 :options="domains"
                 placeholder="example.com"
-                label="域名或IP地址"
+                :label="__('domain_or_ip')"
               />
-              <text-input v-model="form.port" :error="errors.port" placeholder="请输入端口号" label="端口号" />
+              <text-input v-model="form.port" :error="errors.port" :placeholder="__('input_port')" :label="__('port')" />
               <div class="form-group row">
                 <div class="col-12">
                   <a class="btn btn-primary mr-2 text-white" @click="reset">
                     <i class="far fa-trash-alt"></i>
-                    淸空
+                    {{ __('reset') }}
                   </a>
-                  <loading-button :loading="sending" class="btn btn-primary mr-2" type="submit">檢測端口</loading-button>
+                  <loading-button :loading="sending" class="btn btn-primary mr-2" type="submit">
+                    {{ __('port_check') }}
+                  </loading-button>
                   <a
                     ref="copy"
                     class="btn btn-primary text-white"
@@ -28,7 +30,7 @@
                     @click="copy"
                   >
                     <i class="far fa-copy"></i>
-                    复制结果
+                    {{ __('copy_result') }}
                   </a>
                 </div>
               </div>

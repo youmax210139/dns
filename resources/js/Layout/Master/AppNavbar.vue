@@ -77,7 +77,7 @@
               </li>
               <li>
                 <a rel="nofollow" href="#" class="dropdown-item all-notifications text-center">
-                  <strong>检视所有讯息</strong>
+                  <strong>{{ __('view_all_messages') }}</strong>
                 </a>
               </li>
             </ul>
@@ -87,20 +87,23 @@
             <a
               id="languages"
               rel="nofollow"
-              data-target="#"
-              href="#"
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
               class="nav-link language dropdown-toggle"
             >
-              <img src="/img/flags/16/CN.png" alt="中文" />
-              <span class="d-none d-sm-inline-block">中文</span>
+              <img :src="`/img/flags/16/${currentLocale.locale}.png`" :alt="currentLocale.native "/>
+              <span class="d-none d-sm-inline-block">{{ currentLocale.native }}</span>
             </a>
             <ul aria-labelledby="languages" class="dropdown-menu">
-              <li>
-                <a rel="nofollow" href="#" class="dropdown-item">
-                  <img src="/img/flags/16/GB.png" alt="English" class="mr-2" />英文
+              <li v-for="(item, index) in $page.locale_nav" :key="index">
+                <a
+                  rel="nofollow"
+                  :href="item.href"
+                  class="dropdown-item"
+                >
+                  <img :src="`/img/flags/16/${item.locale}.png`" :alt="item.native " class="mr-2" />
+                  {{ item.native }}
                 </a>
               </li>
             </ul>
@@ -108,7 +111,7 @@
           <!-- Logout    -->
           <li class="nav-item">
             <inertia-link class="nav-link logout" :href="route('logout')" method="post">
-              <span class="d-none d-sm-inline">登出</span>
+              <span class="d-none d-sm-inline">{{ __('logout') }}</span>
               <i class="fas fa-sign-out-alt" />
             </inertia-link>
           </li>
@@ -119,7 +122,6 @@
 </template>
 <script>
 import PageHeader from "@/Shared/PageHeader";
-import { mapState, mapActions } from "vuex";
 export default {
   components: {
     PageHeader,
@@ -161,23 +163,11 @@ export default {
       },
     };
   },
-  props: {
-    Page: Object,
-  },
   computed: {
-    ...mapState("navbar", {
-      sidebar_toggle: (state) => state.sidebar_toggle,
-    }),
-    btn_toggle: function () {
-      return {
-        active: !this.sidebar_toggle,
-      };
+    currentLocale: function () {
+      return this.$page.locale_nav.find(item=> item.active);
     },
   },
-  methods: {
-    ...mapActions({
-      toggle: "navbar/toggle",
-    }),
-  },
+  methods: {},
 };
 </script>

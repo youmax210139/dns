@@ -6,7 +6,7 @@
           <form class="form-inline">
             <div class="form-group">
               <dropdown :auto-close="false" placement="bottom-start">
-                <span class="d-none d-md-inline-block px-2">Filter</span>
+                <span class="d-none d-md-inline-block px-2">{{ __('filter') }}</span>
                 <i class="fas fa-caret-down" />
                 <div class="card" slot="dropdown">
                   <div class="card-body">
@@ -25,7 +25,7 @@
                 class="form-control"
                 @input="$emit('input', $event.target.value)"
               />
-              <a class="btn-sm" type="button" @click="$emit('reset')">Reset</a>
+              <a class="btn-sm" type="button" @click="$emit('reset')">{{ __('reset') }}</a>
             </div>
           </form>
         </div>

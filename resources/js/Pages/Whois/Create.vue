@@ -10,29 +10,19 @@
                 :error="errors.url"
                 :options="domains"
                 placeholder="example.com"
-                label="域名或IP地址"
+                :label="__('domain_or_ip')"
               />
               <div class="form-group row">
                 <div class="col-12">
                   <a class="btn btn-primary text-white mr-2" @click="reset">
                     <i class="far fa-trash-alt"></i>
-                    淸空
+                    {{ __('reset') }}
                   </a>
                   <loading-button
                     :loading="sending"
                     class="btn btn-primary mr-2"
                     type="submit"
-                  >Whois检测</loading-button>
-                  <a
-                    ref="copy"
-                    @click="copy"
-                    class="btn btn-primary text-white"
-                    data-clipboard-action="copy"
-                    data-clipboard-target="#output"
-                  >
-                    <i class="far fa-copy"></i>
-                    复制结果
-                  </a>
+                  >{{ __('whois_check') }}</loading-button>
                 </div>
               </div>
             </form>
@@ -85,20 +75,19 @@ export default {
       },
       output: null,
       attributes: {
-        domain: "域名",
-        registrar: "注册商",
-        email: "联系邮箱",
-        phone: "联系电话",
-        expired_at: "过期时间",
-        created_at: "创建时间",
-        updated_at: "更新时间",
-        whois: "域名服务器",
+        domain: this.__("domain"),
+        registrar: this.__("registrar"),
+        email: this.__("contact_email"),
+        phone: this.__("contact_phone"),
+        expired_at: this.__("expired_at"),
+        created_at: this.__("created_at"),
+        updated_at: this.__("updated_at"),
+        whois: this.__("whois_server"),
         ns: "DNS",
       },
     };
   },
   mounted() {
-    new this.clipboard(this.$refs.copy);
   },
   methods: {
     transformValue($v) {
@@ -125,7 +114,6 @@ export default {
         .then((res) => {
           this.output = res.data;
           this.sending = false;
-          console.log(this.output);
         })
         .catch((err) => {
           this.sending = false;

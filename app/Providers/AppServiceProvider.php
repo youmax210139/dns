@@ -26,8 +26,6 @@ class AppServiceProvider extends ServiceProvider
 
     public function register()
     {
-        // $this->registerInertia();
-        // $this->registerLengthAwarePaginator();
     }
 
     public function registerInertia()
@@ -35,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
         Inertia::version(function () {
             return md5_file(public_path('mix-manifest.json'));
         });
-
+        // dd(LaravelLocalization::getCurrentLocale());
         Inertia::share([
             'app' => [
                 'name' => config('app.name'),
@@ -57,6 +55,12 @@ class AppServiceProvider extends ServiceProvider
                         ],
                     ] : null,
                 ];
+            },
+            'language' => function () {
+                if (!\Lang::has('all')) {
+                    return [];
+                }
+                return \Lang::get('all');
             },
             'date' => Carbon::now()->format('Y M'),
             'flash' => function () {

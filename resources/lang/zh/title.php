@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'dashboard' => '仪表板',
+    'dashboards.index' => '仪表板',
     'platforms.index' => '平台列表',
     'platforms.create' => '创建平台',
     'platforms.edit' => '编辑平台',

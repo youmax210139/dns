@@ -5,18 +5,18 @@
         <div class="card-header">
           <search-filter v-model="form.search" @reset="reset">
             <div class="row">
-              <label class="col-12 form-control-label">Trashed:</label>
+              <label class="col-12 form-control-label">{{ __('trashed') }}:</label>
               <div class="col-12">
                 <select v-model="form.trashed" class="form-control mb-3">
                   <option :value="null">--</option>
-                  <option value="with">With Trashed</option>
-                  <option value="only">Only Trashed</option>
+                  <option value="with">{{ __('with_trashed') }}</option>
+                  <option value="only">{{ __('only_trashed') }}</option>
                 </select>
               </div>
             </div>
             <inertia-link class="btn btn-primary" :href="route('domains.create')" slot="append">
-              <span class="d-none d-md-inline-block">创建域名</span>
-              <span class="d-md-none">创建</span>
+              <span class="d-none d-md-inline-block">{{ __('create_domain') }}</span>
+              <span class="d-md-none">{{ __('create') }}</span>
             </inertia-link>
           </search-filter>
         </div>
@@ -26,13 +26,13 @@
               <thead>
                 <tr class="text-left font-bold">
                   <th scope="col">#</th>
-                  <th scope="col">平台</th>
-                  <th scope="col">主域名</th>
-                  <th scope="col">域名</th>
-                  <th scope="col">使用率</th>
-                  <th scope="col">备援状态</th>
-                  <th scope="col">过期日期</th>
-                  <th scope="col">操作</th>
+                  <th scope="col">{{ __('platform') }}</th>
+                  <th scope="col">{{ __('main_domain') }}</th>
+                  <th scope="col">{{ __('domain') }}</th>
+                  <th scope="col">{{ __('usage') }}</th>
+                  <th scope="col">{{ __('backup') }}</th>
+                  <th scope="col">{{ __('expired_at') }}</th>
+                  <th scope="col">{{ __('operation') }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -49,7 +49,10 @@
                   <td>{{ domain.backup ? 'Y' : 'N' }}</td>
                   <td>{{ domain.expired_at }}</td>
                   <td>
-                    <a :href="route('domains.edit', domain.id)" class="btn btn-sm btn-info text-white">
+                    <a
+                      :href="route('domains.edit', domain.id)"
+                      class="btn btn-sm btn-info text-white"
+                    >
                       <i class="fas fa-edit"></i>
                     </a>
                     <a class="btn btn-sm btn-danger text-white" @click="destroy(domain)">
@@ -58,7 +61,7 @@
                   </td>
                 </tr>
                 <tr v-if="domains.data.length === 0">
-                  <td colspan="4">No domains found.</td>
+                  <td colspan="4">{{ __('domain_not_found') }}</td>
                 </tr>
               </tbody>
             </table>
@@ -112,7 +115,7 @@ export default {
       this.form = mapValues(this.form, () => null);
     },
     destroy(domain) {
-      if (confirm("Are you sure you want to delete this domain?")) {
+      if (confirm(this.__("delete_domain"))) {
         this.$inertia.delete(this.route("domains.destroy", domain.id));
       }
     },

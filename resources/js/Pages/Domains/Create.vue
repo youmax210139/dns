@@ -7,13 +7,15 @@
             <text-input
               v-model="form.name"
               :error="$page.errors.name"
-              label="Name"
-              placeholder="请输入域名"
+              :label="__('domain')"
+              :placeholder="__('input_domain')"
             />
-            <checkbox-input v-model="form.backup" label="Backup" option />
-            <checkbox-input v-model="form.renew" label="Renew" option />
+            <checkbox-input v-model="form.backup" :label="__('backup')" />
+            <checkbox-input v-model="form.renew" :label="__('renew')" />
             <div class="form-group">
-              <loading-button :loading="sending" class="btn btn-primary" type="submit">Create Domain</loading-button>
+              <loading-button :loading="sending" class="btn btn-primary" type="submit">
+                {{ __('create_domain') }}
+                </loading-button>
             </div>
           </form>
         </div>

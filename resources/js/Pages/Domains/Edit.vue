@@ -8,20 +8,21 @@
               v-model="form.platform_id"
               :error="$page.errors.platform_id"
               :options="platforms"
-              placeholder="平台名"
-              label="平台名"
+              :placeholder="__('input_platform')"
+              :label="__('platform')"
               :taggable="false"
             />
-            <text-input v-model="form.name" :error="$page.errors.name" label="Name" />
+            <text-input v-model="form.name" :error="$page.errors.name" :label="__('domain')" />
             <checkbox-input
               v-model="form.backup"
               :error="$page.errors.backup"
-              label="Backup"
-              option
+              :label="__('backup')"
             />
-            <checkbox-input v-model="form.renew" :error="$page.errors.renew" label="Renew" option />
+            <checkbox-input v-model="form.renew" :error="$page.errors.renew" :label="__('renew')"/>
             <div class="form-group">
-              <loading-button :loading="sending" class="btn btn-primary" type="submit">编辑域名</loading-button>
+              <loading-button :loading="sending" class="btn btn-primary" type="submit">
+                {{ __('edit_domain') }}
+              </loading-button>
             </div>
           </form>
         </div>

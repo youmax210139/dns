@@ -5,18 +5,18 @@
         <div class="card-header">
           <search-filter v-model="form.search" @reset="reset">
             <div class="row">
-              <label class="col-12 form-control-label">Trashed:</label>
+              <label class="col-12 form-control-label">{{ __('trashed') }}:</label>
               <div class="col-12">
                 <select v-model="form.trashed" class="form-control mb-3">
                   <option :value="null">--</option>
-                  <option value="with">With Trashed</option>
-                  <option value="only">Only Trashed</option>
+                  <option value="with">{{ __('with_trashed') }}</option>
+                  <option value="only">{{ __('only_trashed') }}</option>
                 </select>
               </div>
             </div>
             <inertia-link class="btn btn-primary" :href="route('platforms.create')" slot="append">
-              <span class="d-none d-md-inline-block">创建平台</span>
-              <span class="d-md-none">创建</span>
+              <span class="d-none d-md-inline-block">{{ __('create_platform') }}</span>
+              <span class="d-md-none">{{ __('create') }}</span>
             </inertia-link>
           </search-filter>
         </div>
@@ -26,9 +26,9 @@
               <thead>
                 <tr class="text-left font-bold">
                   <th scope="col">#</th>
-                  <th scope="col">名称</th>
-                  <th scope="col">创建日期</th>
-                  <th scope="col">更新日期</th>
+                  <th scope="col">{{ __('platform') }}</th>
+                  <th scope="col">{{ __('created_at') }}</th>
+                  <th scope="col">{{ __('updated_at') }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -42,7 +42,10 @@
                   <td>{{ platform.created_at }}</td>
                   <td>{{ platform.updated_at }}</td>
                   <td>
-                    <a :href="route('platforms.edit', platform.id)" class="btn btn-sm btn-info text-white">
+                    <a
+                      :href="route('platforms.edit', platform.id)"
+                      class="btn btn-sm btn-info text-white"
+                    >
                       <i class="fas fa-edit"></i>
                     </a>
                     <a class="btn btn-sm btn-danger text-white" @click="destroy(platform)">
@@ -51,7 +54,7 @@
                   </td>
                 </tr>
                 <tr v-if="platforms.data.length === 0">
-                  <td colspan="4">No platforms found.</td>
+                  <td colspan="4">{{ __('platform_not_found') }}</td>
                 </tr>
               </tbody>
             </table>
@@ -105,7 +108,7 @@ export default {
       this.form = mapValues(this.form, () => null);
     },
     destroy(platform) {
-      if (confirm("Are you sure you want to delete this platform?")) {
+      if (confirm(this.__('delete_platform'))) {
         this.$inertia.delete(this.route("platforms.destroy", platform.id));
       }
     },

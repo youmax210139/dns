@@ -1,13 +1,16 @@
 <?php
 
 return [
-    'dashboard' => 'Dashboard',
+    'dashboards.index' => 'Dashboard',
     'platforms.index' => 'Platform List',
+    'platforms.create' => 'Create Platform',
+    'platforms.edit' => 'Edit Platform',
     'domains.index' => 'Domain List',
     'domains.create' => 'Create Domain',
-    'pings.create' => 'Ping check tool',
+    'domains.edit' => 'Edit Domain',
+    'pings.create' => 'Ping tool',
     'nslookups.create' => 'Nslookup tool',
-    'whois.create' => 'Whois check tool',
-    'traces.create' => 'Trace route tool',
+    'whois.create' => 'Whois tool',
+    'traces.create' => 'Traceroute tool',
     'netcats.create' => 'Netcat tool',
 ];

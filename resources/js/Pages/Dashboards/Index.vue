@@ -4,7 +4,7 @@
       <div class="col-lg-4">
         <div class="card card-chart">
           <div class="card-header">
-            <h4 class="card-title">Platform Doughnut</h4>
+            <h4 class="card-title">{{ __('platform_percentage') }}</h4>
           </div>
           <div class="card-body">
             <doughnut-chart :labels="doughnut.labels" :data="doughnut.data" :height="190" />
@@ -16,7 +16,7 @@
         <div class="card card-chart">
           <div class="card-header">
             <!-- <h5 class="card-category">Email Statistics</h5> -->
-            <h4 class="card-title">All Platforms</h4>
+            <h4 class="card-title">{{ __('platform_line') }}</h4>
             <!-- <div class="dropdown">
               <button
                 type="button"
@@ -46,7 +46,7 @@
       <div class="col-lg-4 col-md-6">
         <div class="card card-chart">
           <div class="card-header">
-            <h4 class="card-title">Domain Amount</h4>
+            <h4 class="card-title">{{ __('platform_bar') }}</h4>
           </div>
           <div class="card-body">
             <bar-chart :height="190" :labels="doughnut.labels" :data="doughnut.data"/>
@@ -59,15 +59,15 @@
       <div v-for="(domain, key) in domains" :key="key" class="col-md-6">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Expired in {{ key }}</h4>
+            <h4 class="card-title">{{ __(`expired_in_${key}`) }}</h4>
           </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table">
                 <thead class="text-primary">
-                  <th>Platform</th>
-                  <th>Name</th>
-                  <th>Expired At</th>
+                  <th>{{ __('platform') }}</th>
+                  <th>{{ __('domain') }}</th>
+                  <th>{{ __('expired_at') }}</th>
                 </thead>
                 <tbody>
                   <tr v-for="d in domain" :key="d.id">

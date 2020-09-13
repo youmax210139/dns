@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from "vuex";
 import AppNavbar from "./AppNavbar";
 import AppSidebar from "./AppSidebar";
 import AppFooter from "./AppFooter";
@@ -36,16 +35,6 @@ export default {
       showUserMenu: false,
       accounts: null,
     };
-  },
-  computed: {
-    ...mapState("navbar", {
-      sidebar_toggle: (state) => state.sidebar_toggle,
-    }),
-    content_inner: function () {
-      return {
-        active: this.sidebar_toggle,
-      };
-    },
   },
   methods: {
     url() {

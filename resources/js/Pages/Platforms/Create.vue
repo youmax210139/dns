@@ -7,11 +7,13 @@
             <text-input
               v-model="form.name"
               :error="$page.errors.name"
-              label="平台名"
-              placeholder="请输入平台"
+              :label="__('platform')"
+              :placeholder="__('input_platform')"
             />
             <div class="form-group">
-              <loading-button :loading="sending" class="btn btn-primary" type="submit">创建平台</loading-button>
+              <loading-button :loading="sending" class="btn btn-primary" type="submit">
+                {{ __('create_platform') }}
+              </loading-button>
             </div>
           </form>
         </div>

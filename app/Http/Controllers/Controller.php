@@ -7,6 +7,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Inertia\Inertia;
+use LaravelLocalization;
 use Route;
 
 class Controller extends BaseController
@@ -15,12 +16,72 @@ class Controller extends BaseController
 
     public function __construct()
     {
-
         Inertia::share([
             'breadcrumb' => $this->getBreadCrumb(),
             'title' => $this->getPageTitle(),
+            'locale_nav' => $this->getLocaleNav(),
+            'sidebar' => $this->getSidebar(),
         ]);
 
+    }
+
+    protected function getSidebar()
+    {
+        return [
+            [
+                "label" => __('sidebar.dashboard'),
+                "icon" => "business_chart-bar-32",
+                "route" => "dashboards.index",
+            ],
+            [
+                "label" => __('sidebar.platform'),
+                "icon" => "business_globe",
+                "route" => "platforms.index",
+            ],
+            [
+                "label" => __('sidebar.domain'),
+                "icon" => "business_money-coins",
+                "route" => "domains.index",
+            ],
+            [
+                "label" => __('sidebar.ping'),
+                "icon" => "media-2_sound-wave",
+                "route" => "pings.create",
+            ],
+            [
+                "label" => __('sidebar.nslookup'),
+                "icon" => "gestures_tap-01",
+                "route" => "nslookups.create",
+            ],
+            [
+                "label" => __('sidebar.trace'),
+                "icon" => "education_paper",
+                "route" => "traces.create",
+            ],
+            [
+                "label" => __('sidebar.whois'),
+                "icon" => "travel_info",
+                "route" => "whois.create",
+            ],
+            [
+                "label" => __('sidebar.netcat'),
+                "icon" => "ui-2_settings-90",
+                "route" => "netcats.create",
+            ],
+        ];
+    }
+
+    protected function getLocaleNav()
+    {
+        return collect(LaravelLocalization::getSupportedLocales())
+            ->transform(function ($item, $l) {
+                return [
+                    'href' => LaravelLocalization::getLocalizedURL($l, null, [], true),
+                    'native' => $item['native'],
+                    'active' => LaravelLocalization::getCurrentLocale() == $l,
+                    'locale' => $l
+                ];
+            })->values();
     }
 
     protected function getBreadCrumb()

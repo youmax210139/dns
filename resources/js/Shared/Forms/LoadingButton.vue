@@ -2,7 +2,7 @@
   <button :disabled="loading">
     <template v-if="loading">
       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-      Loading...
+      {{ __('loading') }}...
     </template>
     <slot v-else />
   </button>

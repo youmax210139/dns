@@ -10,7 +10,7 @@
                 :error="errors.url"
                 :options="domains"
                 placeholder="example.com"
-                label="域名或IP地址"
+                :label="__('domain_or_ip')"
               />
               <text-select-input
                 v-model="form.type"
@@ -18,7 +18,7 @@
                 :options="types"
                 placeholder="example.com"
                 :taggable="false"
-                label="查询类型"
+                :label="__('query_type')"
               />
               <text-select-input
                 v-model="form.nameserver"
@@ -26,19 +26,21 @@
                 :options="nameservers"
                 placeholder="example.com"
                 :taggable="false"
-                label="DNS查询公共服务器"
+                :label="__('dns_public_server')"
               />
               <div class="form-group row">
                 <div class="col-12">
                   <a class="btn btn-primary text-white mr-2" @click="reset">
                     <i class="far fa-trash-alt"></i>
-                    淸空
+                    {{ __('reset') }}
                   </a>
                   <loading-button
                     :loading="sending"
                     class="btn btn-primary mr-2"
                     type="submit"
-                  >Nslookup检测</loading-button>
+                  >
+                  {{ __('nslookup_check') }}
+                  </loading-button>
                   <a
                     ref="copy"
                     @click="copy"
@@ -47,7 +49,7 @@
                     data-clipboard-target="#output"
                   >
                     <i class="far fa-copy"></i>
-                    复制结果
+                    {{ __('copy_result') }}
                   </a>
                 </div>
               </div>
@@ -99,7 +101,6 @@ export default {
       errors: {
         url: "",
       },
-      // copyBtn: null,
     };
   },
   mounted() {

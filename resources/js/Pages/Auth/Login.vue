@@ -1,6 +1,6 @@
 <template>
   <div class="page-header" filter-color="orange">
-    <div class="page-header-image" style="background-image:url(images/login.jpg)"></div>
+    <div class="page-header-image" style="background-image:url(/images/login.jpg)"></div>
     <div class="content">
       <div class="container">
         <div class="col-md-5 ml-auto mr-auto">
@@ -9,7 +9,7 @@
               <div class="card-header text-center">
                 <!-- Logo & Information Panel-->
                 <div class="logo-container">
-                  <img src="images/logo.png" alt />
+                  <img src="/images/logo.png" alt />
                 </div>
                 <!-- End of Logo -->
               </div>
@@ -28,6 +28,7 @@
                     name="email"
                     required
                     class="form-control"
+                    :placeholder="__('input_email')"
                     :class="{'is-invalid': $page.errors.email}"
                   />
                 </div>
@@ -44,23 +45,29 @@
                     type="password"
                     name="password"
                     required
-                    placeholder="test"
+                    :placeholder="__('input_password')"
                     class="form-control"
                     :class="{'is-invalid': $page.errors.password}"
                   />
                 </div>
               </div>
               <div class="card-footer text-center">
-                <button type="submit" class="btn btn-primary btn-round btn-lg btn-block">Login</button>
+                <button type="submit" class="btn btn-primary btn-round btn-lg btn-block">
+                  {{ __('login') }}
+                  </button>
               </div>
               <div class="pull-left">
                 <h6>
-                  <a href="#register" class="link footer-link">Signup</a>
+                  <a href="#register" class="link footer-link">
+                    {{ __('signup') }}
+                  </a>
                 </h6>
               </div>
               <div class="pull-right">
                 <h6>
-                  <a href="#reset-password" class="link footer-link">Forgot Password?</a>
+                  <a href="#reset-password" class="link footer-link">
+                    {{ __('forgot_password') }}
+                  </a>
                 </h6>
               </div>
             </form>

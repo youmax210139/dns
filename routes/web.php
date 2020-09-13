@@ -9,7 +9,7 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 // Auth
 Route::get('login')->name('login')->uses('Auth\LoginController@showLoginForm')->middleware('guest');
@@ -29,7 +29,9 @@ Route::put('users/{user}/restore')->name('users.restore')->uses('UsersController
 Route::get('/img/{path}', 'ImagesController@show')->where('path', '.*');
 
 // Dashboard
-Route::get('/')->name('dashboard')->uses('DashboardController@index')->middleware('auth');
+Route::get('/', function () {
+    return redirect()->route('dashboards.index');
+})->middleware('auth');
 Route::resource('dashboards', 'DashboardController')->middleware('auth');
 
 // Platforms
@@ -39,19 +41,19 @@ Route::resource('platforms', 'PlatformController')->middleware('auth');
 Route::resource('domains', 'DomainController')->middleware('auth');
 
 // Pings
-Route::resource('pings', 'PingController')->middleware('auth')->only(['create','store']);
+Route::resource('pings', 'PingController')->middleware('auth')->only(['create', 'store']);
 
 // Nslookup
-Route::resource('nslookups', 'NslookupController')->middleware('auth')->only(['create','store']);
+Route::resource('nslookups', 'NslookupController')->middleware('auth')->only(['create', 'store']);
 
 // Whois
-Route::resource('whois', 'WhoisController')->middleware('auth')->only(['create','store']);
+Route::resource('whois', 'WhoisController')->middleware('auth')->only(['create', 'store']);
 
 // Trace
-Route::resource('traces', 'TraceController')->middleware('auth')->only(['create','store']);
+Route::resource('traces', 'TraceController')->middleware('auth')->only(['create', 'store']);
 
 // Netcat
-Route::resource('netcats', 'NetcatController')->middleware('auth')->only(['create','store']);
+Route::resource('netcats', 'NetcatController')->middleware('auth')->only(['create', 'store']);
 
 // 500 error
 Route::get('500', function () {

@@ -4,9 +4,13 @@
       <div class="card">
         <div class="card-body">
           <form @submit.prevent="submit">
-            <text-input v-model="form.name" :error="$page.errors.name" label="Name" />
+            <text-input v-model="form.name" :error="$page.errors.name" :label="__('platform')" />
             <div class="form-group">
-              <loading-button :loading="sending" class="btn btn-primary" type="submit">编辑平台</loading-button>
+              <loading-button
+                :loading="sending"
+                class="btn btn-primary"
+                type="submit"
+              >{{ __('edit_platform') }}</loading-button>
             </div>
           </form>
         </div>
@@ -18,12 +22,10 @@
 <script>
 import LoadingButton from "@/Shared/Forms/LoadingButton";
 import TextInput from "@/Shared/Forms/TextInput";
-import CheckboxInput from "@/Shared/Forms/CheckboxInput";
 
 export default {
   components: {
     LoadingButton,
-    CheckboxInput,
     TextInput,
   },
   props: {

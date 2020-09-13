@@ -10,19 +10,21 @@
                 :error="errors.url"
                 :options="domains"
                 placeholder="example.com"
-                label="域名或IP地址"
+                :label="__('domain_or_ip')"
               />
               <div class="form-group row">
                 <div class="col-12">
                   <a class="btn btn-primary mr-2 text-white" @click="reset">
                     <i class="far fa-trash-alt" />
-                    淸空
+                    {{ __('reset') }}
                   </a>
                   <loading-button
                     :loading="sending"
                     class="btn btn-primary mr-2"
                     type="submit"
-                  >Ping检测</loading-button>
+                  >
+                    {{ __('ping_check') }}
+                  </loading-button>
                   <a
                     ref="copy"
                     @click="copy"
@@ -31,7 +33,7 @@
                     data-clipboard-target="#output"
                   >
                     <i class="far fa-copy" />
-                    复制结果
+                    {{ __('copy_result') }}
                   </a>
                 </div>
               </div>

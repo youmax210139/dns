@@ -29,6 +29,7 @@ Route::put('users/{user}/restore')->name('users.restore')->uses('UsersController
 Route::get('/img/{path}', 'ImagesController@show')->where('path', '.*');
 
 // Dashboard
+Route::get('/')->name('dashboard')->uses('DashboardController@index')->middleware('auth');
 Route::resource('dashboards', 'DashboardController')->middleware('auth');
 
 // Platforms

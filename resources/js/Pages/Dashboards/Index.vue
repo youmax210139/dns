@@ -46,7 +46,7 @@
       <div class="col-lg-4 col-md-6">
         <div class="card card-chart">
           <div class="card-header">
-            <h4 class="card-title">Domain Amount of Platform </h4>
+            <h4 class="card-title">Domain Amount</h4>
           </div>
           <div class="card-body">
             <bar-chart :height="190" :labels="doughnut.labels" :data="doughnut.data"/>

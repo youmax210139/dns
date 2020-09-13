@@ -53,28 +53,22 @@ export default {
           legend: {
             display: false,
           },
-          tooltips: {
-            bodySpacing: 4,
-            mode: "nearest",
-            intersect: 0,
-            position: "nearest",
-            xPadding: 10,
-            yPadding: 10,
-            caretPadding: 10,
-          },
           responsive: 1,
           scales: {
             yAxes: [
               {
+                ticks: {
+                  beginAtZero: true,
+                },
                 gridLines: {
                   zeroLineColor: "transparent",
                   drawBorder: false,
+                  display: true,
                 },
               },
             ],
             xAxes: [
               {
-                display: 0,
                 ticks: {
                   display: false,
                 },

@@ -71,4 +71,14 @@ return [
     'whois_server' => 'Whois Server',
     'whois_check' => 'Whois Check',
     'trace_check' => 'Traceroute Check',
+
+    'DNS_A' => 'A (Specify the IPv4 address corresponding to the domain name)',
+    'DNS_AAAA' => 'AAAA (Specify the IPv6 address corresponding to the domain name)',
+    'DNS_CNAME' => 'CNAME (Alias record)',
+    'DNS_MX' => 'MX (Mail exchange record)',
+    'DNS_NS' => 'NS (Specify which DNS server to resolve the domain name)',
+    'DNS_TXT' => 'TXT (Description of the host name or domain name)',
+    'DNS_SOA' => 'SOA (Initial authority)',
+    'DNS_PTR' => 'PTR (Reverse IP lookup)',
+    'DNS_ANY' => 'ANY (All DNS record types)',
 ];

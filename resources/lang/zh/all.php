@@ -71,4 +71,14 @@ return [
     'whois_server' => 'whois服务器',
     'whois_check' => 'Whois检测',
     'trace_check' => '路由器检测',
+
+    'DNS_A' => 'A (指定域名对应的IPv4地址)',
+    'DNS_AAAA' => 'AAAA (指定域名对应的IPv6地址)',
+    'DNS_CNAME' => 'CNAME (别名记录)',
+    'DNS_MX' => 'MX (邮件交换记录)',
+    'DNS_NS' => 'NS (指定该域名由哪个DNS服务器来进行解析)',
+    'DNS_TXT' => 'TXT (主机名或域名的说明)',
+    'DNS_SOA' => 'SOA (起始授权机构)',
+    'DNS_PTR' => 'PTR (反向IP查询)',
+    'DNS_ANY' => 'ANY (所有DNS记录类型)',
 ];

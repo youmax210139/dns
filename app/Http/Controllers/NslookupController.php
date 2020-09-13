@@ -11,21 +11,21 @@ class NslookupController extends Controller
     protected function getDnsTypeOptions()
     {
         $type = [
-            'A' => 'A (指定域名对应的IPv4地址)',
-            'AAAA' => 'AAAA (指定域名对应的IPv6地址)',
-            'CNAME' => 'CNAME (别名记录)',
-            'MX' => 'MX (邮件交换记录)',
-            'NS' => 'NS (指定该域名由哪个DNS服务器来进行解析)',
-            'TXT' => 'TXT (主机名或域名的说明)',
-            'SOA' => 'SOA (起始授权机构)',
-            'PTR' => 'PTR (反向IP查询)',
-            'ANY' => 'ANY (所有DNS记录类型)',
+            'A',
+            'AAAA',
+            'CNAME',
+            'MX',
+            'NS',
+            'TXT',
+            'SOA',
+            'PTR',
+            'ANY',
         ];
         $options = [];
-        foreach ($type as $k => $v) {
+        foreach ($type as $v) {
             $options[] = [
-                'label' => $v,
-                'code' => $k,
+                'label' => __("all.DNS_${v}"),
+                'code' => $v,
             ];
         }
         return $options;

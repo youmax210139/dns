@@ -41,16 +41,22 @@ return [
     'main_domain' => '主域名',
 
     'create_domain' => '创建域名',
+    'create_domain_success' => '创建域名成功',
     'edit_domain' => '编辑域名',
+    'edit_domain_success' => '编辑域名成功',
     'delete_domain' => '确定要删除该域名？',
+    'delete_domain_success' => '删除域名成功',
     'input_domain' => '请输入域名',
     'domain_not_found' => '域名不存在！',
 
     'platform' => '平台',
 
     'create_platform' => '创建平台',
+    'create_platform_success' => '创建平台成功',
     'edit_platform' => '编辑平台',
+    'edit_platform_success' => '编辑平台成功',
     'delete_platform' => '确定要删除该平台？',
+    'delete_platform_success' => '删除平台成功',
     'input_platform' => '请输入平台',
     'platform_not_found' => '平台不存在！',
 

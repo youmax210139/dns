@@ -33,7 +33,7 @@ class PlatformController extends Controller
             ])
         );
         return Redirect::route('platforms.index')
-            ->with('success', 'Platform created.');
+            ->with('success', __('all.create_platform_success'));
     }
 
     public function edit(Platform $platform)
@@ -57,7 +57,7 @@ class PlatformController extends Controller
         );
 
         return Redirect::back()
-            ->with('success', 'Platform updated.');
+            ->with('success', __('all.edit_platform_success'));
     }
 
     public function destroy(Platform $platform)
@@ -65,6 +65,6 @@ class PlatformController extends Controller
         $platform->delete();
 
         return Redirect::back()
-            ->with('success', 'Platform deleted.');
+            ->with('success', __('all.delete_platform_success'));
     }
 }

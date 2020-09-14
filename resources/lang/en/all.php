@@ -41,16 +41,22 @@ return [
     'main_domain' => 'Main Domain',
 
     'create_domain' => 'Create Domain',
+    'create_domain_success' => 'Create Domain Success!',
     'edit_domain' => 'Edit Domain',
+    'edit_domain_success' => 'Edit Domain Success!',
     'delete_domain' => 'Are you sure to delete the domain？',
+    'delete_domain_success' => 'Delete Domain Success!',
     'input_domain' => 'please input domain',
     'domain_not_found' => 'Domains are not found！',
 
     'platform' => 'Platform',
 
     'create_platform' => 'Create Platform',
+    'create_platform_success' => 'Create Platform Success!',
     'edit_platform' => 'Edit Platform',
+    'edit_platform_success' => 'Edit Platform Success!',
     'delete_platform' => 'Are you sure to delete the platform？',
+    'delete_platform_success' => 'Delete Platform Success!',
     'input_platform' => 'please input platform',
     'platform_not_found' => 'Platform is not found！',
 

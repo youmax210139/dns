@@ -24,18 +24,25 @@ class DomainController extends Controller
 
     public function create()
     {
-        return Inertia::render('Domains/Create');
+        return Inertia::render('Domains/Create',[
+            'platforms' => Platform::all()->transform(function ($platform) {
+                return [
+                    'label' => $platform->name,
+                    'code' => $platform->id,
+                ];
+            })
+        ]);
     }
 
     public function store()
     {
-
         Domain::create(
             array_merge(
                 Request::validate([
                     'name' => ['required', 'unique:domains', 'max:100'],
                     'backup' => ['required', 'boolean'],
                     'renew' => ['required', 'boolean'],
+                    'platform_id' => ['required', 'numeric'],
                 ]),
                 [
                     'expired_at' => Whois::getInfo(request()->name)['expired_at'] ?? null,
@@ -43,7 +50,7 @@ class DomainController extends Controller
             )
         );
         return Redirect::route('domains.index')
-            ->with('success', 'Domain created.');
+            ->with('success', __('all.create_domain_success'));
     }
 
     public function edit(Domain $domain)
@@ -79,7 +86,7 @@ class DomainController extends Controller
         );
 
         return Redirect::back()
-            ->with('success', 'Domain updated.');
+            ->with('success', __('all.edit_domain_success'));
     }
 
     public function destroy(Domain $domain)
@@ -87,6 +94,6 @@ class DomainController extends Controller
         $domain->delete();
 
         return Redirect::back()
-            ->with('success', 'Domain deleted.');
+            ->with('success', __('all.delete_domain_success'));
     }
 }

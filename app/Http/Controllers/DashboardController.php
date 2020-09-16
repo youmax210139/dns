@@ -13,13 +13,13 @@ class DashboardController extends Controller
         $domains = [
             'season' => Domain::where('expired_at', '<=', now()
                     ->addMonths(3))->paginate(10, ['*'], 'season')
-                ->only('id', 'name', 'expired_at', 'platform_name'),
+                ->only('id', 'name', 'expired_at', 'platform_name', 'http_status_code'),
             'month' => Domain::where('expired_at', '<=', now()
                     ->addMonths(1))->paginate(10, ['*'], 'month')
-                ->only('id', 'name', 'expired_at', 'platform_name'),
+                ->only('id', 'name', 'expired_at', 'platform_name', 'http_status_code'),
             'week' => Domain::where('expired_at', '<=', now()
                     ->addWeeks(1))->paginate(10, ['*'], 'week')
-                ->only('id', 'name', 'expired_at', 'platform_name'),
+                ->only('id', 'name', 'expired_at', 'platform_name', 'http_status_code'),
         ];
         $doughnut = [
             'labels' => [],

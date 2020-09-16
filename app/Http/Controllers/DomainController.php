@@ -18,7 +18,7 @@ class DomainController extends Controller
             'domains' => Domain::orderBy('name')
                 ->filter(Request::only('search', 'trashed'))
                 ->paginate()
-                ->only('id', 'hostname', 'name', 'usage', 'backup', 'expired_at', 'platform_name'),
+                ->only('id', 'hostname', 'name', 'usage', 'backup', 'expired_at', 'platform_name', 'http_status_code'),
         ]);
     }
 

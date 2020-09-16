@@ -31,6 +31,7 @@
                   <th scope="col">{{ __('domain') }}</th>
                   <th scope="col">{{ __('usage') }}</th>
                   <th scope="col">{{ __('backup') }}</th>
+                  <th scope="col">{{ __('http_status_code') }}</th>
                   <th scope="col">{{ __('expired_at') }}</th>
                   <th scope="col">{{ __('operation') }}</th>
                 </tr>
@@ -47,6 +48,7 @@
                   <td>{{ domain.name }}</td>
                   <td>{{ domain.usage }}％</td>
                   <td>{{ domain.backup ? 'Y' : 'N' }}</td>
+                  <td :class="getStatusClass(domain.http_status_code)">{{ domain.http_status_code }}</td>
                   <td>{{ domain.expired_at }}</td>
                   <td>
                     <a
@@ -104,7 +106,7 @@ export default {
   },
   computed: {
     content: function () {
-      if (Array.isArray(this.domains )) {
+      if (Array.isArray(this.domains)) {
         console.log(this.domains);
         return this.domains;
       }
@@ -129,6 +131,19 @@ export default {
     destroy(domain) {
       if (confirm(this.__("delete_domain"))) {
         this.$inertia.delete(this.route("domains.destroy", domain.id));
+      }
+    },
+    getStatusClass(code) {
+      if (code >= 200 && code < 300) {
+        return { "text-success": true };
+      } else if (code >= 300 && code < 400) {
+        return { "text-info": true };
+      } else if (code >= 400 && code < 500) {
+        return { "text-danger": true };
+      } else if (code >= 500 && code < 600) {
+        return { "text-danger": true };
+      } else {
+        return {};
       }
     },
   },

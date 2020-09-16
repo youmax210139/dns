@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \App\Console\Commands\AutoWhois::class,
+        \App\Console\Commands\AutoHttp::class,
     ];
 
     /**
@@ -26,7 +27,12 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('autowhois:run')
             ->runInBackground()
+            ->daily();
+
+        $schedule->command('autohttp:run')
+            ->runInBackground()
             ->everyTenMinutes();
+        
     }
 
     /**

@@ -12,6 +12,7 @@ class Domain extends Model
 
     protected $appends = [
         'platform_name',
+        'http_status_code'
     ];
 
     protected $fillable = [
@@ -20,9 +21,22 @@ class Domain extends Model
         'usage',
         'backup',
         'renew',
+        'http',
         'registered_at',
         'expired_at',
     ];
+
+    protected $casts = [
+        'http' => 'array',
+    ];
+
+    protected static function booted() {
+        static::creating(function ($domain) {
+            if ($domain->http === null) {
+                $domain->http = [];  // set empty json array
+            }
+        });
+    }
 
     public function platform()
     {
@@ -72,5 +86,10 @@ class Domain extends Model
     public function getPlatformNameAttribute()
     {
         return $this->platform->name ?? '--';
+    }
+
+    public function getHttpStatusCodeAttribute()
+    {
+        return $this->http['Status_code'] ?? '--';
     }
 }

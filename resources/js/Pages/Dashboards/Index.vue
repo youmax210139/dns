@@ -67,12 +67,14 @@
                 <thead class="text-primary">
                   <th>{{ __('platform') }}</th>
                   <th>{{ __('domain') }}</th>
+                  <th>{{ __('http_status_code') }}</th>
                   <th>{{ __('expired_at') }}</th>
                 </thead>
                 <tbody>
                   <tr v-for="d in domain.data" :key="d.id">
                     <td>{{ d.platform_name }}</td>
                     <td>{{ d.name }}</td>
+                    <td :class="getStatusClass(d.http_status_code)">{{ d.http_status_code }}</td>
                     <td>{{ d.expired_at }}</td>
                   </tr>
                 </tbody>
@@ -107,6 +109,20 @@ export default {
   data() {
     return {};
   },
-  mounted() {},
+  methods: {
+    getStatusClass(code) {
+      if (code >= 200 && code < 300) {
+        return { "text-success": true };
+      } else if (code >= 300 && code < 400) {
+        return { "text-info": true };
+      } else if (code >= 400 && code < 500) {
+        return { "text-danger": true };
+      } else if (code >= 500 && code < 600) {
+        return { "text-danger": true };
+      } else {
+        return {};
+      }
+    },
+  },
 };
 </script>

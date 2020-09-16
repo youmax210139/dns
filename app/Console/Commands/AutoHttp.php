@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use Log;
 use App\Models\Domain;
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
 use Illuminate\Console\Command;
+use Log;
 
 class AutoHttp extends Command
 {
@@ -54,30 +54,28 @@ class AutoHttp extends Command
             try {
                 if ($value['state'] == 'fulfilled') {
                     $response = $value['value'];
+                    $response = [
+                        'Status_code' => $response->getStatusCode(),
+                    ];
                 } else {
                     if (method_exists($value['reason'], 'getResponse')) {
                         $response = $value['reason']->getResponse();
+                        $response = [
+                            'Status_code' => $response->getStatusCode(),
+                        ];
                     } else {
                         $response = [
-                            'message' => $value['reason']->getMessage(),
-                            'Status_code' => $value['reason']->getCode(),
+                            'Status_code' => 0,
                         ];
                     }
                 }
-                if (!is_array($response)) {
-                    $response = array_merge(
-                        $response->getHeaders(), [
-                            'Status_code' => $response->getStatusCode(),
-                        ]);
-                }
-            }
-            catch(\Error $e){
+            } catch (\Error $e) {
                 Log::error($id);
                 Log::error(json_encode($value));
             }
             // store into domain
             Domain::where('id', $id)->update([
-                'http' => $response,
+                'http' => $response ?? [],
             ]);
         }
 

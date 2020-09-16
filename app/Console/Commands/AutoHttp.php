@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Log;
 use App\Models\Domain;
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
@@ -47,26 +48,32 @@ class AutoHttp extends Command
             $promises[$domain->id] = $client->getAsync($domain->name);
         }
         $responses = Promise\settle($promises)->wait();
+        // dd($responses[11]);
         foreach ($responses as $id => $value) {
             $response = [];
-            // try {
-            if ($value['state'] == 'fulfilled') {
-                $response = $value['value'];
-            } else {
-                if (method_exists($value['reason'], 'getResponse')) {
-                    $response = $value['reason']->getResponse();
+            try {
+                if ($value['state'] == 'fulfilled') {
+                    $response = $value['value'];
                 } else {
-                    $response = [
-                        'message' => $value['reason']->getMessage(),
-                        'Status_code' => $value['reason']->getCode(),
-                    ];
+                    if (method_exists($value['reason'], 'getResponse')) {
+                        $response = $value['reason']->getResponse();
+                    } else {
+                        $response = [
+                            'message' => $value['reason']->getMessage(),
+                            'Status_code' => $value['reason']->getCode(),
+                        ];
+                    }
+                }
+                if (!is_array($response)) {
+                    $response = array_merge(
+                        $response->getHeaders(), [
+                            'Status_code' => $response->getStatusCode(),
+                        ]);
                 }
             }
-            if (!is_array($response)) {
-                $response = array_merge(
-                    $response->getHeaders(), [
-                        'Status_code' => $response->getStatusCode(),
-                    ]);
+            catch(\Error $e){
+                Log::error($id);
+                Log::error(json_encode($value));
             }
             // store into domain
             Domain::where('id', $id)->update([

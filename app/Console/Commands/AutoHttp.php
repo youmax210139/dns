@@ -47,21 +47,32 @@ class AutoHttp extends Command
             $promises[$domain->id] = $client->getAsync($domain->name);
         }
         $responses = Promise\settle($promises)->wait();
-        $responses = collect($responses)->map(function ($value) {
+        foreach ($responses as $id => $value) {
+            $response = [];
+            // try {
             if ($value['state'] == 'fulfilled') {
-                return $value['value'];
+                $response = $value['value'];
+            } else {
+                if (method_exists($value['reason'], 'getResponse')) {
+                    $response = $value['reason']->getResponse();
+                } else {
+                    $response = [
+                        'message' => $value['reason']->getMessage(),
+                        'Status_code' => $value['reason']->getCode(),
+                    ];
+                }
             }
-            return $value['reason']->getResponse();
-        })->map(function ($response) {
-            return array_merge($response->getHeaders(), [
-                'Status_code' => $response->getStatusCode(),
-            ]);
-        });
-        // store into domain
-        foreach ($responses as $id => $response) {
+            if (!is_array($response)) {
+                $response = array_merge(
+                    $response->getHeaders(), [
+                        'Status_code' => $response->getStatusCode(),
+                    ]);
+            }
+            // store into domain
             Domain::where('id', $id)->update([
                 'http' => $response,
             ]);
         }
+
     }
 }

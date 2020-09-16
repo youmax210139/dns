@@ -12,17 +12,14 @@ class DashboardController extends Controller
     {
         $domains = [
             'season' => Domain::where('expired_at', '<=', now()
-                    ->addMonths(3))->get()->map(function (Domain $domain) {
-                return $domain->only('id', 'name', 'expired_at', 'platform_name');
-            }),
+                    ->addMonths(3))->paginate(10, ['*'], 'season')
+                ->only('id', 'name', 'expired_at', 'platform_name'),
             'month' => Domain::where('expired_at', '<=', now()
-                    ->addMonths(1))->get()->map(function (Domain $domain) {
-                return $domain->only('id', 'name', 'expired_at', 'platform_name');
-            }),
+                    ->addMonths(1))->paginate(10, ['*'], 'month')
+                ->only('id', 'name', 'expired_at', 'platform_name'),
             'week' => Domain::where('expired_at', '<=', now()
-                    ->addWeeks(1))->get()->map(function (Domain $domain) {
-                return $domain->only('id', 'name', 'expired_at', 'platform_name');
-            }),
+                    ->addWeeks(1))->paginate(10, ['*'], 'week')
+                ->only('id', 'name', 'expired_at', 'platform_name'),
         ];
         $doughnut = [
             'labels' => [],

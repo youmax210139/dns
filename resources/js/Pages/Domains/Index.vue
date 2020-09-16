@@ -37,7 +37,7 @@
               </thead>
               <tbody>
                 <tr
-                  v-for="domain in domains.data"
+                  v-for="domain in content"
                   :key="domain.id"
                   class="hover:bg-gray-100 focus-within:bg-gray-100"
                 >
@@ -60,7 +60,7 @@
                     </a>
                   </td>
                 </tr>
-                <tr v-if="domains.data.length === 0">
+                <tr v-if="content.length === 0">
                   <td colspan="4">{{ __('domain_not_found') }}</td>
                 </tr>
               </tbody>
@@ -68,7 +68,7 @@
           </div>
         </div>
         <div class="card-footer">
-          <pagination :links="domains.links" />
+          <pagination v-show="domains.links" :links="domains.links" />
         </div>
       </div>
     </div>
@@ -88,7 +88,10 @@ export default {
     SearchFilter,
   },
   props: {
-    domains: Object,
+    domains: {
+      type: [Object, Array],
+      default: () => [],
+    },
     filters: Object,
   },
   data() {
@@ -98,6 +101,15 @@ export default {
         trashed: this.filters.trashed,
       },
     };
+  },
+  computed: {
+    content: function () {
+      if (Array.isArray(this.domains )) {
+        console.log(this.domains);
+        return this.domains;
+      }
+      return this.domains.data;
+    },
   },
   watch: {
     form: {

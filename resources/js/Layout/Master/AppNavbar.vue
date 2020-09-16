@@ -51,10 +51,7 @@
             >
               <i class="far fa-bell" v-show="notifications.length > 0" />
               <p>
-                <span
-                  class="badge bg-red badge-corner"
-                  v-show="notifications.length > 0"
-                >{{ notifications.length }}</span>
+                <span v-show="notifications.length > 0">{{ notifications.length }}</span>
               </p>
             </a>
             <ul
@@ -92,16 +89,12 @@
               aria-expanded="false"
               class="nav-link language dropdown-toggle"
             >
-              <img :src="`/img/flags/16/${currentLocale.locale}.png`" :alt="currentLocale.native "/>
+              <img :src="`/img/flags/16/${currentLocale.locale}.png`" :alt="currentLocale.native " />
               <span class="d-none d-sm-inline-block">{{ currentLocale.native }}</span>
             </a>
             <ul aria-labelledby="languages" class="dropdown-menu">
               <li v-for="(item, index) in $page.locale_nav" :key="index">
-                <a
-                  rel="nofollow"
-                  :href="item.href"
-                  class="dropdown-item"
-                >
+                <a rel="nofollow" :href="item.href" class="dropdown-item">
                   <img :src="`/img/flags/16/${item.locale}.png`" :alt="item.native " class="mr-2" />
                   {{ item.native }}
                 </a>
@@ -165,7 +158,7 @@ export default {
   },
   computed: {
     currentLocale: function () {
-      return this.$page.locale_nav.find(item=> item.active);
+      return this.$page.locale_nav.find((item) => item.active);
     },
   },
   methods: {},

@@ -34,7 +34,7 @@
             </div>-->
           </div>
           <div class="card-body">
-            <line-chart :height="190" :labels="doughnut.labels" :data="doughnut.data"/>
+            <line-chart :height="190" :labels="doughnut.labels" :data="doughnut.data" />
           </div>
           <div class="card-footer">
             <!-- <div class="stats">
@@ -49,7 +49,7 @@
             <h4 class="card-title">{{ __('platform_bar') }}</h4>
           </div>
           <div class="card-body">
-            <bar-chart :height="190" :labels="doughnut.labels" :data="doughnut.data"/>
+            <bar-chart :height="190" :labels="doughnut.labels" :data="doughnut.data" />
           </div>
           <div class="card-footer"></div>
         </div>
@@ -70,7 +70,7 @@
                   <th>{{ __('expired_at') }}</th>
                 </thead>
                 <tbody>
-                  <tr v-for="d in domain" :key="d.id">
+                  <tr v-for="d in domain.data" :key="d.id">
                     <td>{{ d.platform_name }}</td>
                     <td>{{ d.name }}</td>
                     <td>{{ d.expired_at }}</td>
@@ -78,6 +78,9 @@
                 </tbody>
               </table>
             </div>
+          </div>
+          <div class="card-footer">
+            <pagination v-show="domain.links" :links="domain.links" />
           </div>
         </div>
       </div>
@@ -89,11 +92,13 @@
 import BarChart from "@/Shared/Charts/BarChart";
 import LineChart from "@/Shared/Charts/LineChart";
 import DoughnutChart from "@/Shared/Charts/DoughnutChart";
+import Pagination from "@/Shared/Pagination";
 export default {
   components: {
     BarChart,
     LineChart,
     DoughnutChart,
+    Pagination,
   },
   props: {
     domains: Object,

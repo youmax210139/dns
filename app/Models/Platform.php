@@ -32,6 +32,17 @@ class Platform extends Model
         });
     }
 
+    public function scopeSort($query, $sort)
+    {
+        $query->when($sort, function ($query, $sort) {
+            $sort = explode('|', $sort);
+            switch ($sort[0]) {
+                default:
+                    $query->orderBy($sort[0], $sort[1]);
+            }
+        });
+    }
+
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->format('Y-m-d H:i:s');

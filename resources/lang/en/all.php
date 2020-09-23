@@ -51,6 +51,7 @@ return [
     'delete_domain_success' => 'Delete Domain Success!',
     'input_domain' => 'please input domain',
     'domain_not_found' => 'Domains are not found！',
+    'domain_status_alert' => 'Domain Status Alert',
 
     'platform' => 'Platform',
 

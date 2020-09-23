@@ -11,12 +11,23 @@ class PlatformController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Platforms/Index', [
-            'filters' => Request::all('search', 'trashed'),
-            'platforms' => Platform::orderBy('name')
+        $fields = [
+            'id' => 'id',
+            'name' => 'platform',
+            'created_at' => 'created_at',
+            'updated_at' => 'updated_at',
+            'actions' => 'operation',
+        ];
+        if (Request::wantsJson()) {
+            return Platform::query()
+                ->sort(Request::get('sort'))
                 ->filter(Request::only('search', 'trashed'))
                 ->paginate()
-                ->only('id', 'name', 'created_at', 'updated_at'),
+                ->only(...array_keys($fields));
+        }
+        return Inertia::render('Platforms/Index', [
+            'filters' => Request::all('search', 'trashed'),
+            'fields' => $this->getDataTableFields($fields),
         ]);
     }
 

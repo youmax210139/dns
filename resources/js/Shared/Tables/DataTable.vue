@@ -1,19 +1,23 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <search-filter v-model="form.search" @reset="reset">
-        <div class="row">
-          <label class="col-12 form-control-label">{{ __('trashed') }}:</label>
-          <div class="col-12">
-            <select v-model="form.trashed" class="form-control mb-3">
-              <option :value="null">--</option>
-              <option value="with">{{ __('with_trashed') }}</option>
-              <option value="only">{{ __('only_trashed') }}</option>
-            </select>
+      <slot name="header">
+        <search-filter v-model="form.search" @reset="reset">
+          <div class="row">
+            <label class="col-12 form-control-label"
+              >{{ __("trashed") }}:</label
+            >
+            <div class="col-12">
+              <select v-model="form.trashed" class="form-control mb-3">
+                <option :value="null">--</option>
+                <option value="with">{{ __("with_trashed") }}</option>
+                <option value="only">{{ __("only_trashed") }}</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <slot slot="append" name="append"></slot>
-      </search-filter>
+          <slot slot="append" name="append"></slot>
+        </search-filter>
+      </slot>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -29,10 +33,13 @@
           :append-params="form"
           @vuetable:pagination-data="onPaginationData"
         >
-          <template v-for="(_, slot) of $scopedSlots" :slot="slot" slot-scope="props">
+          <template
+            v-for="(_, slot) of $scopedSlots"
+            :slot="slot"
+            slot-scope="props"
+          >
             <slot :name="slot" v-bind="props" />
           </template>
-          <slot :name="actions" slot-scope="props" />
         </vuetable>
       </div>
     </div>
@@ -48,7 +55,7 @@
 
 <script>
 import { Vuetable } from "vuetable-2";
-import SearchFilter from "@/Shared/SearchFilter";
+import SearchFilter from "@/Shared/Tables/SearchFilter";
 import throttle from "lodash/throttle";
 import mapValues from "lodash/mapValues";
 import DataTablePagination from "@/Shared/Tables/DataTablePagination";

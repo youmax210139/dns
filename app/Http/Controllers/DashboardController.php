@@ -10,17 +10,6 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $domains = [
-            'season' => Domain::where('expired_at', '<=', now()
-                    ->addMonths(3))->paginate(10, ['*'], 'season')
-                ->only('id', 'name', 'expired_at', 'platform_name', 'http_status_code'),
-            'month' => Domain::where('expired_at', '<=', now()
-                    ->addMonths(1))->paginate(10, ['*'], 'month')
-                ->only('id', 'name', 'expired_at', 'platform_name', 'http_status_code'),
-            'week' => Domain::where('expired_at', '<=', now()
-                    ->addWeeks(1))->paginate(10, ['*'], 'week')
-                ->only('id', 'name', 'expired_at', 'platform_name', 'http_status_code'),
-        ];
         $doughnut = [
             'labels' => [],
             'data' => [],
@@ -30,7 +19,16 @@ class DashboardController extends Controller
             $doughnut['data'][] = $platform->domains_count;
         });
         return Inertia::render('Dashboards/Index', [
-            'domains' => $domains,
+            'expirationFields' => $this->getDataTableFields([
+                'platform_name' => 'platform',
+                'name' => 'domain',
+                'expired_at' => 'expired_at',
+            ]),
+            'statusFields' => $this->getDataTableFields([
+                'platform_name' => 'platform',
+                'name' => 'domain',
+                'http_status_code' => 'http_status_code',
+            ]),
             'doughnut' => $doughnut,
         ]);
     }

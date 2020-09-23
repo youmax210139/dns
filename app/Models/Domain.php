@@ -65,6 +65,10 @@ class Domain extends Model
             } elseif ($trashed === 'only') {
                 $query->onlyTrashed();
             }
+        })->when($filters['expired'] ?? null, function ($query, $expired) {
+            $query->where('domains.expired_at', '<=', $expired);
+        })->when($filters['status'] ?? null, function ($query, $status) {
+            $query->where('domains.http->Status_code', ...$status);
         });
     }
 

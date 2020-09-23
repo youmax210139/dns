@@ -4,10 +4,14 @@
       <div class="col-lg-4">
         <div class="card card-chart">
           <div class="card-header">
-            <h4 class="card-title">{{ __('platform_percentage') }}</h4>
+            <h4 class="card-title">{{ __("platform_percentage") }}</h4>
           </div>
           <div class="card-body">
-            <doughnut-chart :labels="doughnut.labels" :data="doughnut.data" :height="190" />
+            <doughnut-chart
+              :labels="doughnut.labels"
+              :data="doughnut.data"
+              :height="190"
+            />
           </div>
           <div class="card-footer"></div>
         </div>
@@ -16,7 +20,7 @@
         <div class="card card-chart">
           <div class="card-header">
             <!-- <h5 class="card-category">Email Statistics</h5> -->
-            <h4 class="card-title">{{ __('platform_line') }}</h4>
+            <h4 class="card-title">{{ __("platform_line") }}</h4>
             <!-- <div class="dropdown">
               <button
                 type="button"
@@ -34,7 +38,11 @@
             </div>-->
           </div>
           <div class="card-body">
-            <line-chart :height="190" :labels="doughnut.labels" :data="doughnut.data" />
+            <line-chart
+              :height="190"
+              :labels="doughnut.labels"
+              :data="doughnut.data"
+            />
           </div>
           <div class="card-footer">
             <!-- <div class="stats">
@@ -46,45 +54,69 @@
       <div class="col-lg-4 col-md-6">
         <div class="card card-chart">
           <div class="card-header">
-            <h4 class="card-title">{{ __('platform_bar') }}</h4>
+            <h4 class="card-title">{{ __("platform_bar") }}</h4>
           </div>
           <div class="card-body">
-            <bar-chart :height="190" :labels="doughnut.labels" :data="doughnut.data" />
+            <bar-chart
+              :height="190"
+              :labels="doughnut.labels"
+              :data="doughnut.data"
+            />
           </div>
           <div class="card-footer"></div>
         </div>
       </div>
     </div>
+
     <div class="row">
-      <div v-for="(domain, key) in domains" :key="key" class="col-md-6">
-        <div class="card">
-          <div class="card-header">
-            <h4 class="card-title">{{ __(`expired_in_${key}`) }}</h4>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table">
-                <thead class="text-primary">
-                  <th>{{ __('platform') }}</th>
-                  <th>{{ __('domain') }}</th>
-                  <th>{{ __('http_status_code') }}</th>
-                  <th>{{ __('expired_at') }}</th>
-                </thead>
-                <tbody>
-                  <tr v-for="d in domain.data" :key="d.id">
-                    <td>{{ d.platform_name }}</td>
-                    <td>{{ d.name }}</td>
-                    <td :class="getStatusClass(d.http_status_code)">{{ d.http_status_code }}</td>
-                    <td>{{ d.expired_at }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="card-footer">
-            <pagination v-show="domain.links" :links="domain.links" />
-          </div>
-        </div>
+      <div class="col-12">
+        <data-table
+          :fields="statusFields"
+          :api-url="route('domains.index', { status: ['!=','200'] }).url()"
+          :filterMode="false"
+        >
+          <template v-slot:header>
+            <h5 class="card-title">{{ __('domain_status_alert') }}</h5>
+          </template>
+          <template v-slot:name="props">
+            <a
+              name="name"
+              :href="urlTransform(props.rowData.name)"
+              target="_blank"
+              >{{ props.rowData.name }}</a
+            >
+          </template>
+
+          <template v-slot:http_status_code="props">
+            <span
+              name="http_status_code"
+              :class="getStatusClass(props.rowData.http_status_code)"
+              >{{ props.rowData.http_status_code }}</span
+            >
+          </template>
+        </data-table>
+      </div>
+    </div>
+
+    <div class="row">
+      <div :key="key" class="col-md-4" v-for="(expiration, key) in expiration">
+        <data-table
+          :fields="expirationFields"
+          :api-url="route('domains.index', { expired: expiration }).url()"
+          :filterMode="false"
+        >
+          <template v-slot:header>
+            <h5 class="card-title">{{ __(`expired_in_${key}`) }}</h5>
+          </template>
+          <template v-slot:name="props">
+            <a
+              name="name"
+              :href="urlTransform(props.rowData.name)"
+              target="_blank"
+              >{{ props.rowData.name }}</a
+            >
+          </template>
+        </data-table>
       </div>
     </div>
   </div>
@@ -94,20 +126,29 @@
 import BarChart from "@/Shared/Charts/BarChart";
 import LineChart from "@/Shared/Charts/LineChart";
 import DoughnutChart from "@/Shared/Charts/DoughnutChart";
-import Pagination from "@/Shared/Pagination";
+import DataTable from "@/Shared/Tables/DataTable";
+
 export default {
   components: {
     BarChart,
     LineChart,
     DoughnutChart,
-    Pagination,
+    DataTable,
   },
   props: {
     domains: Object,
     doughnut: Object,
+    expirationFields: Array,
+    statusFields: Array,
   },
   data() {
-    return {};
+    return {
+      expiration: {
+        week: window.moment().add(7, "d").format("YYYY-MM-DD hh:mm:ss"),
+        month: window.moment().add(1, "M").format("YYYY-MM-DD hh:mm:ss"),
+        season: window.moment().add(3, "M").format("YYYY-MM-DD hh:mm:ss"),
+      },
+    };
   },
   methods: {
     getStatusClass(code) {

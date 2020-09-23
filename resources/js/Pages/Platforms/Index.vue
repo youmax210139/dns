@@ -1,117 +1,41 @@
 <template>
   <div class="row">
     <div class="col-12">
-      <div class="card">
-        <div class="card-header">
-          <search-filter v-model="form.search" @reset="reset">
-            <div class="row">
-              <label class="col-12 form-control-label">{{ __('trashed') }}:</label>
-              <div class="col-12">
-                <select v-model="form.trashed" class="form-control mb-3">
-                  <option :value="null">--</option>
-                  <option value="with">{{ __('with_trashed') }}</option>
-                  <option value="only">{{ __('only_trashed') }}</option>
-                </select>
-              </div>
-            </div>
-            <inertia-link class="btn btn-primary" :href="route('platforms.create')" slot="append">
+            <data-table :fields="fields" :api-url="route('platforms.index').url()">
+        <template v-slot:append>
+          <inertia-link class="btn btn-primary" :href="route('platforms.create')">
               <span class="d-none d-md-inline-block">{{ __('create_platform') }}</span>
               <span class="d-md-none">{{ __('create') }}</span>
             </inertia-link>
-          </search-filter>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-striped table-hover mb-0">
-              <thead>
-                <tr class="text-left font-bold">
-                  <th scope="col">#</th>
-                  <th scope="col">{{ __('platform') }}</th>
-                  <th scope="col">{{ __('created_at') }}</th>
-                  <th scope="col">{{ __('updated_at') }}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  v-for="platform in platforms.data"
-                  :key="platform.id"
-                  class="hover:bg-gray-100 focus-within:bg-gray-100"
-                >
-                  <th scope="row">{{ platform.id }}</th>
-                  <td>{{ platform.name }}</td>
-                  <td>{{ platform.created_at }}</td>
-                  <td>{{ platform.updated_at }}</td>
-                  <td>
-                    <a
-                      :href="route('platforms.edit', platform.id)"
-                      class="btn btn-sm btn-info text-white"
-                    >
-                      <i class="fas fa-edit"></i>
-                    </a>
-                    <a class="btn btn-sm btn-danger text-white" @click="destroy(platform)">
-                      <i class="fas fa-trash-alt"></i>
-                    </a>
-                  </td>
-                </tr>
-                <tr v-if="platforms.data.length === 0">
-                  <td colspan="4">{{ __('platform_not_found') }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="card-footer">
-          <pagination :links="platforms.links" />
-        </div>
-      </div>
+        </template>
+        <template v-slot:actions="props">
+          <a class="btn btn-sm btn-info text-white" :href="route(`platforms.edit`, props.rowData.id)">
+            <i class="fas fa-edit" />
+          </a>
+          <button
+            class="btn btn-sm btn-danger text-white"
+            @click="destroy(__('delete_platform'), route('platforms.destroy', props.rowData.id))"
+          >
+            <i class="fas fa-trash-alt" />
+          </button>
+        </template>
+      </data-table>
     </div>
   </div>
 </template>
 
 <script>
-import mapValues from "lodash/mapValues";
-import Pagination from "@/Shared/Pagination";
-import pickBy from "lodash/pickBy";
-import SearchFilter from "@/Shared/SearchFilter";
-import throttle from "lodash/throttle";
+import DataTable from "@/Shared/Tables/DataTable";
 
 export default {
   components: {
-    Pagination,
-    SearchFilter,
+    DataTable,
   },
   props: {
-    platforms: Object,
     filters: Object,
-  },
-  data() {
-    return {
-      form: {
-        search: this.filters.search,
-        trashed: this.filters.trashed,
-      },
-    };
-  },
-  watch: {
-    form: {
-      handler: throttle(function () {
-        let query = pickBy(this.form);
-        this.$inertia.replace(
-          this.route("platforms.index", Object.keys(query).length ? query : {})
-        );
-      }, 150),
-      deep: true,
-    },
+    fields: Array,
   },
   methods: {
-    reset() {
-      this.form = mapValues(this.form, () => null);
-    },
-    destroy(platform) {
-      if (confirm(this.__('delete_platform'))) {
-        this.$inertia.delete(this.route("platforms.destroy", platform.id));
-      }
-    },
   },
 };
 </script>

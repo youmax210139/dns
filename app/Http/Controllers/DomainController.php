@@ -29,8 +29,8 @@ class DomainController extends Controller
             return Domain::leftjoin('platforms', 'domains.platform_id', '=', 'platforms.id')
                 ->select('domains.*', 'platforms.name as platform_name', 'domains.http->Status_code as http_status_code')
                 ->sort(Request::get('sort'))
-                ->filter(Request::only('search', 'trashed'))
-                ->paginate(2)
+                ->filter(Request::only('search', 'trashed', 'expired', 'status'))
+                ->paginate()
                 ->only(...array_keys($fields));
         }
         return Inertia::render('Domains/Index', [

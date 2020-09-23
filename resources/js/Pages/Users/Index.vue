@@ -64,7 +64,7 @@
 import Icon from '@/Shared/Icon'
 import mapValues from 'lodash/mapValues'
 import pickBy from 'lodash/pickBy'
-import SearchFilter from '@/Shared/SearchFilter'
+import SearchFilter from '@/Shared/Tables/SearchFilter'
 import throttle from 'lodash/throttle'
 
 export default {

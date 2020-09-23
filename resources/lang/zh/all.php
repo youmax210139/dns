@@ -51,6 +51,7 @@ return [
     'delete_domain_success' => '删除域名成功',
     'input_domain' => '请输入域名',
     'domain_not_found' => '域名不存在！',
+    'domain_status_alert' => '域名告警视窗',
 
     'platform' => '平台',
 

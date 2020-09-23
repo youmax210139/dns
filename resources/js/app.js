@@ -75,6 +75,25 @@ Vue.mixin({
       }
       return tt(key, replace);
     },
+    urlTransform(url) {
+      if (!/^https?:\/\//i.test(url)) {
+        return "http://" + url;
+      }
+      return url;
+    },
+    getStatusClass(code) {
+      if (code >= 200 && code < 300) {
+        return { "text-success": true };
+      } else if (code >= 300 && code < 400) {
+        return { "text-info": true };
+      } else if (code >= 400 && code < 500) {
+        return { "text-danger": true };
+      } else if (code >= 500 && code < 600) {
+        return { "text-danger": true };
+      } else {
+        return {};
+      }
+    },
   }
 });
 

@@ -49,6 +49,11 @@ Vue.mixin({
     copy() {
       Vue.prototype.$toasted.success(this.__('copy_success'));
     },
+    destroy(message, route) {
+      if (confirm(message)) {
+        this.$inertia.delete(route);
+      }
+    },
     // Translate the given key.
     __(key, replace = {}) {
       var translation = this.$page.language[key]

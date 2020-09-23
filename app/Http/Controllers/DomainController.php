@@ -13,24 +13,41 @@ class DomainController extends Controller
 {
     public function index()
     {
+        $fields = [
+            'id' => 'id',
+            'hostname' => 'main_domain',
+            'name' => 'domain',
+            'usage' => 'usage',
+            'backup' => 'backup',
+            'expired_at' => 'expired_at',
+            'platform_name' => 'platform',
+            'http_status_code' => 'http_status_code',
+            'actions' => 'operation',
+        ];
+
+        if (Request::wantsJson()) {
+            return Domain::leftjoin('platforms', 'domains.platform_id', '=', 'platforms.id')
+                ->select('domains.*', 'platforms.name as platform_name', 'domains.http->Status_code as http_status_code')
+                ->sort(Request::get('sort'))
+                ->filter(Request::only('search', 'trashed'))
+                ->paginate(2)
+                ->only(...array_keys($fields));
+        }
         return Inertia::render('Domains/Index', [
             'filters' => Request::all('search', 'trashed'),
-            'domains' => Domain::orderBy('name')
-                ->filter(Request::only('search', 'trashed'))
-                ->paginate()
-                ->only('id', 'hostname', 'name', 'usage', 'backup', 'expired_at', 'platform_name', 'http_status_code'),
+            'fields' => $this->getDataTableFields($fields, ['actions', 'hostname']),
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Domains/Create',[
+        return Inertia::render('Domains/Create', [
             'platforms' => Platform::all()->transform(function ($platform) {
                 return [
                     'label' => $platform->name,
                     'code' => $platform->id,
                 ];
-            })
+            }),
         ]);
     }
 

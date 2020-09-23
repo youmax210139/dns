@@ -26,11 +26,13 @@ return [
     'created_at' => 'Created DateTime',
     'updated_at' => 'Updated DateTime',
     
+    'search' => 'Search ...',
     'filter' => 'Filter',
     'trashed' => 'Trashed',
     'with_trashed' => 'With Trashed',
     'only_trashed' => 'Only Trashed',
     'reset' => 'Reset',
+    'id'    => '#',
 
     'domain' => 'Domain',
     'backup' => 'Backup',

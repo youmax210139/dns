@@ -21,8 +21,9 @@
 <style lang="scss" scoped>
 button.btn {
   border: 1px solid #dee2e6;
-  &:focus {
-    border-color: #796aee;
+  &:focus, &:hover {
+    border-color: #f96332;
+    color: inherit;
   }
 }
 </style>

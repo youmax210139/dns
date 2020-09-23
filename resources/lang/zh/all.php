@@ -26,11 +26,13 @@ return [
     'created_at' => '创建日期',
     'updated_at' => '更新日期',
     
+    'search' => '搜寻 ...',
     'filter' => '过滤',
     'trashed' => '删除',
     'with_trashed' => '包含已删除',
     'only_trashed' => '已删除',
     'reset' => '淸空',
+    'id'    => '#',
 
     'domain' => '域名',
     'backup' => '备援',

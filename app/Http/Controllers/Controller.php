@@ -112,4 +112,21 @@ class Controller extends BaseController
     {
         return __('title.' . Route::currentRouteName());
     }
+
+    protected function getDataTableFields(array $fields, array $unsortFields = ['actions'])
+    {
+        return collect($fields)->transform(function ($field, $key) use ($unsortFields) {
+            if (in_array($key, $unsortFields)) {
+                return [
+                    'name' => $key,
+                    'title' => __('all.' . $field),
+                ];
+            }
+            return [
+                'name' => $key,
+                'title' => __('all.' . $field),
+                'sortField' => $key,
+            ];
+        })->values();
+    }
 }

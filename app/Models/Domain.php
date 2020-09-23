@@ -11,8 +11,9 @@ class Domain extends Model
     use SoftDeletes;
 
     protected $appends = [
+        'hostname',
         'platform_name',
-        'http_status_code'
+        'http_status_code',
     ];
 
     protected $fillable = [
@@ -52,11 +53,10 @@ class Domain extends Model
                 } else if (strtoupper($search) == 'N') {
                     $query->where('backup', 0);
                 } else {
-                    $query->where('name', 'like', '%' . $search . '%')
-                        ->orWhere('usage', 'like', '%' . $search . '%')
-                        ->orWhereHas('platform', function (Builder $query) use ($search) {
-                            $query->where('name', 'like', '%' . $search . '%');
-                        });
+                    $query->where('domains.name', 'like', '%' . $search . '%')
+                        ->orWhere('domains.usage', 'like', '%' . $search . '%')
+                        ->orWhere('domains.http->Status_code', 'like', '%' . $search . '%')
+                        ->orWhere('platforms.name', 'like', '%' . $search . '%');
                 }
             });
         })->when($filters['trashed'] ?? null, function ($query, $trashed) {
@@ -64,6 +64,20 @@ class Domain extends Model
                 $query->withTrashed();
             } elseif ($trashed === 'only') {
                 $query->onlyTrashed();
+            }
+        });
+    }
+
+    public function scopeSort($query, $sort)
+    {
+        $query->when($sort, function ($query, $sort) {
+            $sort = explode('|', $sort);    
+            switch($sort[0])
+            {
+                case 'hostname':
+                    break;
+                default:
+                    $query->orderBy($sort[0], $sort[1]);
             }
         });
     }

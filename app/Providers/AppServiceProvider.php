@@ -98,10 +98,9 @@ class AppServiceProvider extends ServiceProvider
 
                 public function toArray()
                 {
-                    return [
-                        'data' => $this->items->toArray(),
+                    return array_merge(parent::toArray(), [
                         'links' => $this->links(),
-                    ];
+                    ]);
                 }
 
                 public function links($view = null, $data = [])

@@ -49,6 +49,7 @@
       <data-table-pagination
         ref="pagination"
         :css="css.pagination"
+        :info-template="infoTemplate"
         @vuetable-pagination:change-page="onChangePage"
       />
     </div>
@@ -94,6 +95,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    infoTemplate:{
+      type: String,
+      default: "Displaying {from} to {to} of {total} items",
+    },
   },
   data() {
     return {
@@ -124,6 +129,7 @@ export default {
           paginationClass: "pagination",
           paginationInfoClass: "float-right",
           dropdownClass: "form-control",
+          infoClass: "text-center mr-auto mb-3",
           icons: {
             first: "fa fa-angle-double-left",
             prev: "fa fa-angle-left",

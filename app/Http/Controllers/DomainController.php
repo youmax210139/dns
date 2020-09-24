@@ -17,13 +17,13 @@ class DomainController extends Controller
     {
         $fields = [
             'id' => 'id',
+            'platform_name' => 'platform',
             'hostname' => 'main_domain',
             'name' => 'domain',
             'usage' => 'usage',
             'backup' => 'backup',
-            'expired_at' => 'expired_at',
-            'platform_name' => 'platform',
             'http_status_code' => 'http_status_code',
+            'expired_at' => 'expired_at',
             'actions' => 'operation',
         ];
 
@@ -32,7 +32,13 @@ class DomainController extends Controller
                 ->select('domains.*', 'platforms.name as platform_name', 'domains.http->Status_code as http_status_code')
                 ->sort(Request::get('sort'))
                 ->filter(Request::only('search', 'trashed', 'expired', 'status'))
-                ->paginate()
+                ->paginate(1)
+                ->merge([
+                    'problem' => Domain::leftjoin('platforms', 'domains.platform_id', '=', 'platforms.id')
+                                ->filter(Request::only('search', 'trashed', 'expired', 'status'))
+                                ->selectRaw('sum(case json_extract(domains.http, "$.Status_code") when 200 then 0 else 1 end) as problem')
+                                ->first()->problem
+                ])
                 ->only(...array_keys($fields));
         }
         return Inertia::render('Domains/Index', [

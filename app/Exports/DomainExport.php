@@ -35,13 +35,13 @@ class DomainExport implements FromCollection, Responsable, WithHeadings, WithMap
 
     protected $fields = [
         'id' => 'id',
+        'platform_name' => 'platform',
         'hostname' => 'main_domain',
         'name' => 'domain',
         'usage' => 'usage',
         'backup' => 'backup',
-        'expired_at' => 'expired_at',
-        'platform_name' => 'platform',
         'http_status_code' => 'http_status_code',
+        'expired_at' => 'expired_at',
     ];
 
     public function headings(): array

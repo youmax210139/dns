@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-12">
-      <data-table :fields="fields" :api-url="route('domains.index').url()">
+      <data-table :fields="fields" :api-url="route('domains.index').url()" :info-template="infoTemplate">
         <template v-slot:append="props">
           <a class="btn btn-primary" :href="route('domains.export', props.data.form)">
             {{ __("export") }}
@@ -62,6 +62,11 @@ export default {
   props: {
     filters: Object,
     fields: Array,
+  },
+  data(){
+    return {
+      infoTemplate: "Total: {total}, Problem: <span class='text-danger'>{problem}</span>",
+    }
   },
   methods: {
 

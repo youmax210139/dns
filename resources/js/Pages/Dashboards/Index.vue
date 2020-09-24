@@ -74,6 +74,7 @@
           :fields="statusFields"
           :api-url="route('domains.index', { status: ['!=','200'] }).url()"
           :filterMode="false"
+          :info-template="infoTemplate"
         >
           <template v-slot:header>
             <h5 class="card-title">{{ __('domain_status_alert') }}</h5>
@@ -148,6 +149,7 @@ export default {
         month: window.moment().add(1, "M").format("YYYY-MM-DD hh:mm:ss"),
         season: window.moment().add(3, "M").format("YYYY-MM-DD hh:mm:ss"),
       },
+      infoTemplate: "Total: {total}, Problem: <span class='text-danger'>{problem}</span>",
     };
   },
   methods: {

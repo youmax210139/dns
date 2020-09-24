@@ -98,52 +98,13 @@ class AppServiceProvider extends ServiceProvider
 
                 public function toArray()
                 {
-                    return array_merge(parent::toArray(), [
-                        'links' => $this->links(),
-                    ]);
+                    return array_merge(parent::toArray(), $this->additional??[]);
                 }
 
-                public function links($view = null, $data = [])
+                public function merge(array $additiona)
                 {
-                    $this->appends(Request::all());
-
-                    $window = UrlWindow::make($this);
-
-                    $elements = array_filter([
-                        $window['first'],
-                        is_array($window['slider']) ? '...' : null,
-                        $window['slider'],
-                        is_array($window['last']) ? '...' : null,
-                        $window['last'],
-                    ]);
-
-                    return Collection::make($elements)->flatMap(function ($item) {
-                        if (is_array($item)) {
-                            return Collection::make($item)->map(function ($url, $page) {
-                                return [
-                                    'url' => $url,
-                                    'label' => $page,
-                                    'active' => $this->currentPage() === $page,
-                                ];
-                            });
-                        } else {
-                            return [
-                                [
-                                    'url' => null,
-                                    'label' => '...',
-                                    'active' => false,
-                                ],
-                            ];
-                        }
-                    })->prepend([
-                        'url' => $this->previousPageUrl(),
-                        'label' => 'Previous',
-                        'active' => false,
-                    ])->push([
-                        'url' => $this->nextPageUrl(),
-                        'label' => 'Next',
-                        'active' => false,
-                    ]);
+                    $this->additional = $additiona;
+                    return $this;
                 }
             };
         });

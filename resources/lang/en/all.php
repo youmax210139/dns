@@ -7,6 +7,7 @@ return [
     'edit' => 'Edit',
     'input' => 'Please input',
     'loading' => 'loading',
+    'export' => 'Export',
 
     'input_email' => 'please input email',
     'email' => 'Email',

@@ -35,9 +35,11 @@ Route::get('/', function () {
 Route::resource('dashboards', 'DashboardController')->middleware('auth');
 
 // Platforms
+Route::get('/platforms/export', 'PlatformController@export')->name('platforms.export')->middleware('auth');
 Route::resource('platforms', 'PlatformController')->middleware('auth');
 
 // Domains
+Route::get('/domains/export', 'DomainController@export')->name('domains.export')->middleware('auth');
 Route::resource('domains', 'DomainController')->middleware('auth');
 
 // Pings

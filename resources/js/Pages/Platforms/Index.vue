@@ -2,7 +2,10 @@
   <div class="row">
     <div class="col-12">
             <data-table :fields="fields" :api-url="route('platforms.index').url()">
-        <template v-slot:append>
+        <template v-slot:append="props">
+          <a class="btn btn-primary" :href="route('platforms.export', props.data.form)">
+            {{ __("export") }}
+          </a>
           <inertia-link class="btn btn-primary" :href="route('platforms.create')">
               <span class="d-none d-md-inline-block">{{ __('create_platform') }}</span>
               <span class="d-md-none">{{ __('create') }}</span>

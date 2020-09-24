@@ -15,7 +15,9 @@
               </select>
             </div>
           </div>
-          <slot slot="append" name="append"></slot>
+          <slot slot="append">
+            <slot name="append" v-bind="{props:$props,data:$data}"/>
+          </slot>
         </search-filter>
       </slot>
     </div>
@@ -139,7 +141,7 @@ export default {
   watch: {
     form: {
       handler: throttle(function () {
-        this.$nextTick(() => this.$refs.vuetable.reload());
+        this.$nextTick(() => this.$refs.vuetable.refresh());
       }, 150),
       deep: true,
     },

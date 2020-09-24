@@ -99,7 +99,7 @@
     </div>
 
     <div class="row">
-      <div :key="key" class="col-md-4" v-for="(expiration, key) in expiration">
+      <div :key="key" class="col-12" v-for="(expiration, key) in expiration">
         <data-table
           :fields="expirationFields"
           :api-url="route('domains.index', { expired: expiration }).url()"

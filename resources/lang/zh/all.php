@@ -7,6 +7,7 @@ return [
     'edit' => '编辑',
     'input' => '请输入',
     'loading' => '加载中',
+    'export' => '汇出',
 
     'input_email' => '请输入邮箱',
     'email' => '邮箱',

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Platform;
+use App\Exports\PlatformExport;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use Redirect;
@@ -77,5 +78,9 @@ class PlatformController extends Controller
 
         return Redirect::back()
             ->with('success', __('all.delete_platform_success'));
+    }
+
+    public function export(){
+        return new PlatformExport();
     }
 }

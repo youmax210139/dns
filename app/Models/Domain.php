@@ -88,12 +88,12 @@ class Domain extends Model
 
     public function getBackupAttribute($value)
     {
-        return $value == 1;
+        return $value == 1? 'Y' : 'N';
     }
 
     public function getRenewAttribute($value)
     {
-        return $value == 1;
+        return $value == 1? 'Y' : 'N';
     }
 
     public function getHostnameAttribute()

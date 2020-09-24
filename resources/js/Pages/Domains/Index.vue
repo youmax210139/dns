@@ -2,7 +2,10 @@
   <div class="row">
     <div class="col-12">
       <data-table :fields="fields" :api-url="route('domains.index').url()">
-        <template v-slot:append>
+        <template v-slot:append="props">
+          <a class="btn btn-primary" :href="route('domains.export', props.data.form)">
+            {{ __("export") }}
+          </a>
           <inertia-link class="btn btn-primary" :href="route('domains.create')">
             <span class="d-none d-md-inline-block">{{
               __("create_domain")
@@ -17,9 +20,6 @@
         </template>
         <template v-slot:usage="props">
           <slot name="usage">{{ props.rowData.usage }}%</slot>
-        </template>
-        <template v-slot:backup="props">
-          <slot name="backup">{{ props.rowData.backup ? "Y" : "N" }}</slot>
         </template>
         <template v-slot:http_status_code="props">
           <span

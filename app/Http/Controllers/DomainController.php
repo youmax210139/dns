@@ -32,7 +32,7 @@ class DomainController extends Controller
                 ->select('domains.*', 'platforms.name as platform_name', 'domains.http->Status_code as http_status_code')
                 ->sort(Request::get('sort'))
                 ->filter(Request::only('search', 'trashed', 'expired', 'status'))
-                ->paginate(1)
+                ->paginate()
                 ->merge([
                     'problem' => Domain::leftjoin('platforms', 'domains.platform_id', '=', 'platforms.id')
                                 ->filter(Request::only('search', 'trashed', 'expired', 'status'))

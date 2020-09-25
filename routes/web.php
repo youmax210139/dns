@@ -28,6 +28,8 @@ Route::put('users/{user}/restore')->name('users.restore')->uses('UsersController
 // Images
 Route::get('/img/{path}', 'ImagesController@show')->where('path', '.*');
 
+// Locale
+Route::get('locales/{locale}', 'LocaleController@index')->name('locales.index')->middleware('auth');
 // Dashboard
 Route::get('/', function () {
     return redirect()->route('dashboards.index');

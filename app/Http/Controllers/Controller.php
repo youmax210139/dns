@@ -73,13 +73,14 @@ class Controller extends BaseController
 
     protected function getLocaleNav()
     {
-        return collect(LaravelLocalization::getSupportedLocales())
-            ->transform(function ($item, $l) {
+        
+        return  collect(LaravelLocalization::getSupportedLocales())
+            ->transform(function ($item, $locale) {
                 return [
-                    'href' => LaravelLocalization::getLocalizedURL($l, null, [], true),
+                    'href' => route('locales.index', $locale),
                     'native' => $item['native'],
-                    'active' => LaravelLocalization::getCurrentLocale() == $l,
-                    'locale' => $l
+                    'active' => LaravelLocalization::getCurrentLocale() == $locale,
+                    'locale' => $locale,
                 ];
             })->values();
     }

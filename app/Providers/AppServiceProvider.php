@@ -5,12 +5,9 @@ namespace App\Providers;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\UrlWindow;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Date;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
@@ -33,11 +30,11 @@ class AppServiceProvider extends ServiceProvider
         Inertia::version(function () {
             return md5_file(public_path('mix-manifest.json'));
         });
-        // dd(LaravelLocalization::getCurrentLocale());
+
         Inertia::share([
             'app' => [
                 'name' => config('app.name'),
-                'ip' => Cache::remember('ip'.md5(env('APP_URL')), 86400, function () {
+                'ip' => Cache::remember('ip' . md5(env('APP_URL')), 86400, function () {
                     return file_get_contents("http://ipecho.net/plain");
                 }),
             ],
@@ -98,7 +95,7 @@ class AppServiceProvider extends ServiceProvider
 
                 public function toArray()
                 {
-                    return array_merge(parent::toArray(), $this->additional??[]);
+                    return array_merge(parent::toArray(), $this->additional ?? []);
                 }
 
                 public function merge(array $additiona)

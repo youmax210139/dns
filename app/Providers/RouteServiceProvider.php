@@ -53,10 +53,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::prefix(LaravelLocalization::setLocale())
-            ->middleware('localeSessionRedirect')
-            ->middleware('localizationRedirect')
-            ->middleware('localeViewPath')
-            ->middleware('web')
+            ->middleware(['web', 'localeCookieRedirect', 'localizationRedirect'])
             ->namespace($this->namespace)
             ->group(base_path('routes/web.php'));
     }

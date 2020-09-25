@@ -2,23 +2,29 @@
 namespace App\Services\Whois;
 
 use Carbon\Carbon;
+use Str;
 
 class Whois
 {
     protected $domainRegex = [
         'domain name:*\s+([\w\.\-]+)',
+        'domain:*\s+([\w\.\-]+)',
     ];
     protected $registrarRegex = [
         'registrar:\s+([\w\.\-\s\,\/\(\)]+)',
+        'organisation:\s+([\w\.\-\s\,\/\(\)]+)',
     ];
     protected $emailRegex = [
         'contact email:\s+([\w\.\-\_@]+)',
+        'e-mail:\s+([\w\.\-\_@]+)',
     ];
     protected $phoneRegex = [
-        'contact phone:\s+([\+\w\.\-\_@]+)',
+        'contact phone:\s+([\s\+\w\.\-\_@]+)',
+        'phone:\s+([\s\+\w\.\-\_@]+)',
     ];
     protected $created_atRegex = [
         'creation date:\s+([\w\.\-\_@\:]+)',
+        'created:\s+([\w\.\-\_@\:]+)',
     ];
     protected $expired_atRegex = [
         'expiration date:\s+([\w\.\-\_@\:]+)',
@@ -26,12 +32,15 @@ class Whois
     ];
     protected $updated_atRegex = [
         'updated date:\s+([\w\.\-\_@\:]+)',
+        'changed:\s+([\w\.\-\_@\:]+)',
     ];
     protected $whoisRegex = [
         'registrar whois server:\s+([\w\.\-\_@\:]+)',
+        'whois:\s+([\w\.\-\_@\:]+)',
     ];
     protected $nsRegex = [
         'name server:\s+([\w\.\-\_@\:]+)',
+        'nserver:\s+([\w\.\-\_@\:]+)',
     ];
 
     protected $fields = [
@@ -53,6 +62,11 @@ class Whois
         if (filter_var($domain, FILTER_VALIDATE_IP)) {
             return $domain;
         }
+        if (!Str::contains($domain, '//')) {
+            $domain = '//' . $domain;
+        }
+        $domain = parse_url($domain)['host'];
+
         $arr = array_slice(array_filter(explode('.', $domain, 4), function ($value) {
             return $value !== 'www';
         }), 0); //rebuild array indexes
@@ -61,24 +75,24 @@ class Whois
             $count = count($arr);
             $_sub = explode('.', $count === 4 ? $arr[3] : $arr[2]);
 
-            if (count($_sub) === 2) { // two level TLD
+            if (count($_sub) === 2) {
+                // second level TLD
                 $removed = array_shift($arr);
                 if ($count === 4) { // got a subdomain acting as a domain
                     $removed = array_shift($arr);
                 }
-            } elseif (count($_sub) === 1) { // one level TLD
-                $removed = array_shift($arr); //remove the subdomain
-
-                if (strlen($_sub[0]) === 2 && $count === 3) { // TLD domain must be 2 letters
-                    array_unshift($arr, $removed);
-                } else {
-                    // non country TLD according to IANA
-                    $tlds = config('tld', []);
-                    if (count($arr) > 2 && in_array($_sub[0], $tlds) !== false) { //special TLD don't have a country
-                        array_shift($arr);
-                    }
+            } elseif (count($_sub) === 1) {
+                // one level TLD
+                // $removed = array_shift($arr); //remove the subdomain
+                // non country TLD according to IANA
+                $tlds = config('tld', []);
+                if (count($arr) > 2 && in_array(strtoupper($_sub[0]), $tlds) !== false) {
+                    //special TLD don't have a country
+                    array_shift($arr);
                 }
-            } else { // more than 3 levels, something is wrong
+
+            } else {
+                // more than 3 levels, something is wrong
                 for ($i = count($_sub); $i > 1; $i--) {
                     $removed = array_shift($arr);
                 }
@@ -87,7 +101,8 @@ class Whois
             $arr0 = array_shift($arr);
 
             if (strpos(join('.', $arr), '.') === false
-                && in_array($arr[0], array('localhost', 'test', 'invalid')) === false) { // not a reserved domain
+                && in_array($arr[0], array('localhost', 'test', 'invalid')) === false) {
+                // not a reserved domain
                 // seems invalid domain, restore it
                 array_unshift($arr, $arr0);
             }
@@ -97,12 +112,9 @@ class Whois
 
     protected function find($name, $line)
     {
-        $regexName = $name.'Regex';
+        $regexName = $name . 'Regex';
         foreach ($this->$regexName as $regex) {
             if (preg_match("/{$regex}/", trim(strtolower($line)), $matches)) {
-                if($name == 'expired_at'){
-                    // dd($regex ,$matches[1]);
-                }
                 return $matches[1];
             }
         }

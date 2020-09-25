@@ -13,7 +13,8 @@ class TraceController extends Controller
         return Inertia::render('Traces/Create', [
             'domains' => Domain::orderBy('name')
                 ->get()
-                ->pluck('name'),
+                ->pluck('name')
+                ->unique()->values(),
         ]);
     }
 

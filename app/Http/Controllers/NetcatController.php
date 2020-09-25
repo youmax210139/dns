@@ -13,7 +13,8 @@ class NetcatController extends Controller
         return Inertia::render('Netcats/Create', [
             'domains' => Domain::orderBy('name')
                 ->get()
-                ->pluck('name'),
+                ->pluck('name')
+                ->unique()->values(),
         ]);
     }
 

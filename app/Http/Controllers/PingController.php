@@ -14,7 +14,8 @@ class PingController extends Controller
         return Inertia::render('Pings/Create', [
             'domains' => Domain::orderBy('name')
                 ->get()
-                ->pluck('name'),
+                ->pluck('name')
+                ->unique()->values(),
         ]);
     }
 

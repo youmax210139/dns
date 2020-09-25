@@ -56,7 +56,8 @@ class NslookupController extends Controller
             'types' => $this->getDnsTypeOptions(),
             'domains' => Domain::orderBy('name')
                 ->get()
-                ->pluck('name'),
+                ->pluck('name')
+                ->unique()->values(),
             'nameservers' => $this->getNameServerOptions(),
         ]);
     }

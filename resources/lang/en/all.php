@@ -54,6 +54,7 @@ return [
     'input_domain' => 'please input domain',
     'domain_not_found' => 'Domains are not found！',
     'domain_status_alert' => 'Domain Status Alert',
+    'input_remark' => 'please input remark',
 
     'platform' => 'Platform',
 

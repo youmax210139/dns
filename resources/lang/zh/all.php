@@ -54,6 +54,7 @@ return [
     'input_domain' => '请输入域名',
     'domain_not_found' => '域名不存在！',
     'domain_status_alert' => '域名告警视窗',
+    'input_remark' => '请输入附言',
 
     'platform' => '平台',
 

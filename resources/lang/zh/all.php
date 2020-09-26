@@ -39,6 +39,7 @@ return [
     'backup' => '备援',
     'renew' => '续约',
     'usage' => '使用率',
+    'remark' => '附言',
     'http_status_code' => '状态码',
     'expired_at' => '过期日期',
     'operation' => '操作',

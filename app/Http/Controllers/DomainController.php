@@ -21,8 +21,9 @@ class DomainController extends Controller
             'hostname' => 'main_domain',
             'name' => 'domain',
             'usage' => 'usage',
-            'backup' => 'backup',
+            'backup' => 'backup',            
             'http_status_code' => 'http_status_code',
+            'remark' => 'remark',
             'expired_at' => 'expired_at',
             'actions' => 'operation',
         ];
@@ -68,6 +69,7 @@ class DomainController extends Controller
                     'backup' => ['required', 'boolean'],
                     'renew' => ['required', 'boolean'],
                     'platform_id' => ['required', 'numeric'],
+                    'remark' => ['string'],
                 ]),
                 [
                     'expired_at' => Whois::getInfo(request()->name)['expired_at'] ?? null,
@@ -81,7 +83,7 @@ class DomainController extends Controller
     public function edit(Domain $domain)
     {
         return Inertia::render('Domains/Edit', [
-            'domain' => $domain->only('id', 'name', 'backup', 'renew', 'platform_id'),
+            'domain' => $domain->only('id', 'name', 'backup', 'renew', 'remark','platform_id'),
             'platforms' => Platform::all()->transform(function ($platform) {
                 return [
                     'label' => $platform->name,
@@ -107,6 +109,7 @@ class DomainController extends Controller
                 'backup' => ['required', 'boolean'],
                 'renew' => ['required', 'boolean'],
                 'platform_id' => ['required', 'numeric'],
+                'remark' => ['string']
             ])
         );
 

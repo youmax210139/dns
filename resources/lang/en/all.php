@@ -39,6 +39,7 @@ return [
     'backup' => 'Backup',
     'renew' => 'Renew',
     'usage' => 'Usage',
+    'remark' => 'Remark',
     'http_status_code' => 'Status Code',
     'expired_at' => 'Expiration',
     'operation' => 'Operation',

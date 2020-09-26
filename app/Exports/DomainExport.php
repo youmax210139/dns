@@ -41,6 +41,7 @@ class DomainExport implements FromCollection, Responsable, WithHeadings, WithMap
         'usage' => 'usage',
         'backup' => 'backup',
         'http_status_code' => 'http_status_code',
+        'remark' => 'remark',
         'expired_at' => 'expired_at',
     ];
 
@@ -54,7 +55,14 @@ class DomainExport implements FromCollection, Responsable, WithHeadings, WithMap
     public function map($domain): array
     {
         return collect(array_keys($this->fields))->map(function($v) use ($domain){
-            return $domain->$v;
+            switch($v){
+                case 'usage':
+                    return $domain->$v. '%';
+                case 'backup':
+                    return $domain->$v? 'Y' : 'N';
+                default:
+                    return $domain->$v;
+            }
         })->toArray();
     }
 

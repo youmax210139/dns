@@ -21,6 +21,9 @@
         <template v-slot:usage="props">
           <slot name="usage">{{ props.rowData.usage }}%</slot>
         </template>
+        <template v-slot:backup="props">
+          <slot name="usage">{{ props.rowData.backup?'Y':'N' }}</slot>
+        </template>
         <template v-slot:http_status_code="props">
           <span
             name="http_status_code"

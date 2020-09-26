@@ -22,6 +22,7 @@ class Domain extends Model
         'usage',
         'backup',
         'renew',
+        'remark',
         'http',
         'registered_at',
         'expired_at',
@@ -84,16 +85,6 @@ class Domain extends Model
                     $query->orderBy($sort[0], $sort[1]);
             }
         });
-    }
-
-    public function getBackupAttribute($value)
-    {
-        return $value == 1? 'Y' : 'N';
-    }
-
-    public function getRenewAttribute($value)
-    {
-        return $value == 1? 'Y' : 'N';
     }
 
     public function getHostnameAttribute()

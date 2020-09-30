@@ -5,8 +5,9 @@ namespace App\Console\Commands;
 use App\Models\Domain;
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
+use Http;
 use Illuminate\Console\Command;
-use Log;
+use Telegram;
 
 class AutoHttp extends Command
 {
@@ -45,39 +46,40 @@ class AutoHttp extends Command
         $promises = [];
         $domains = Domain::all();
         foreach ($domains as $domain) {
-            $promises[$domain->id] = $client->getAsync($domain->name);
+            $promises[$domain->id] = Http::getAsync($domain->name);
         }
         $responses = Promise\settle($promises)->wait();
-        // dd($responses[11]);
         foreach ($responses as $id => $value) {
-            $response = [];
-            try {
-                if ($value['state'] == 'fulfilled') {
-                    $response = $value['value'];
-                    $response = [
-                        'Status_code' => $response->getStatusCode(),
-                    ];
-                } else {
-                    if (method_exists($value['reason'], 'getResponse')) {
-                        $response = $value['reason']->getResponse();
-                        $response = [
-                            'Status_code' => $response->getStatusCode(),
-                        ];
-                    } else {
-                        $response = [
-                            'Status_code' => 0,
-                        ];
-                    }
-                }
-            } catch (\Error $e) {
-                Log::error($id);
-                Log::error(json_encode($value));
+            $value = $value['value']->getContents();
+            $domain = Domain::find($id);
+            if ($domain) {
+                $domain->update(['http' => $value]);
+                $value['Url'] = $domain->name;
             }
-            // store into domain
-            Domain::where('id', $id)->update([
-                'http' => $response ?? [],
-            ]);
+            $responses[$id] = $value;
         }
 
+        $text = $this->formatMessage($responses);
+        if (!empty($text) && env('TELEGRAM_CHAT_ID', false)) {
+            Telegram::sendMessage([
+                'chat_id' => env('TELEGRAM_CHAT_ID'),
+                'text' => $text,
+                'parse_mode' => 'html',
+            ]);
+        }
+    }
+
+    protected function formatMessage(array $response)
+    {
+        $message = '';
+        foreach ($response as $v) {
+            if ($v['Status_code'] < 400) {
+                continue;
+            }
+            $message .= "<b>Domain:</b>{$v['Url']}" . PHP_EOL;
+            $message .= "<b>Status:</b><i>{$v['Status_code']}</i>" . PHP_EOL;
+            $message .= "<b>Message:</b><em>{$v['Message']}</em>" . PHP_EOL . PHP_EOL;
+        }
+        return $message;
     }
 }

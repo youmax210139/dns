@@ -31,7 +31,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('autohttp:run')
             ->runInBackground()
-            ->everyTenMinutes();
+            ->everyFiveMinutes();
         
     }
 

@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         App\Services\Whois\WhoisServiceProvider::class,
+        App\Services\Http\HttpServiceProvider::class,
     ],
 
     /*
@@ -227,6 +228,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Whois' => App\Services\Whois\WhoisFacade::class,
+        'Http' => App\Services\Http\HttpFacade::class,
     ],
 
 ];

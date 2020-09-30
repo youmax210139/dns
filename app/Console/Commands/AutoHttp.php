@@ -47,6 +47,7 @@ class AutoHttp extends Command
         $domains = Domain::all();
         foreach ($domains as $domain) {
             $promises[$domain->id] = Http::getAsync($domain->name);
+            $this->info($domain->name);
         }
         $responses = Promise\settle($promises)->wait();
         foreach ($responses as $id => $value) {
@@ -59,17 +60,10 @@ class AutoHttp extends Command
             $responses[$id] = $value;
         }
 
-        $text = $this->formatMessage($responses);
-        if (!empty($text) && env('TELEGRAM_CHAT_ID', false)) {
-            Telegram::sendMessage([
-                'chat_id' => env('TELEGRAM_CHAT_ID'),
-                'text' => $text,
-                'parse_mode' => 'html',
-            ]);
-        }
+        $this->convert($responses);
     }
 
-    protected function formatMessage(array $response)
+    protected function convert(array $response)
     {
         $message = '';
         foreach ($response as $v) {
@@ -79,7 +73,26 @@ class AutoHttp extends Command
             $message .= "<b>Domain:</b>{$v['Url']}" . PHP_EOL;
             $message .= "<b>Status:</b><i>{$v['Status_code']}</i>" . PHP_EOL;
             $message .= "<b>Message:</b><em>{$v['Message']}</em>" . PHP_EOL . PHP_EOL;
+
+            if(strlen($message) > 500){
+                $this->sendMessage($message);
+                $message = '';
+            }
         }
-        return $message;
+
+        $this->sendMessage($message);
+    }
+
+    protected function sendMessage($message)
+    {
+        if(!env('TELEGRAM_CHAT_ID', false)){
+            return;
+        }
+        if(empty($message)) return;
+        Telegram::sendMessage([
+            'chat_id' => env('TELEGRAM_CHAT_ID'),
+            'text' => $message,
+            'parse_mode' => 'html',
+        ]);
     }
 }

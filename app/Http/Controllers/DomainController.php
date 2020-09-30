@@ -37,7 +37,7 @@ class DomainController extends Controller
                 ->merge([
                     'problem' => Domain::leftjoin('platforms', 'domains.platform_id', '=', 'platforms.id')
                                 ->filter(Request::only('search', 'trashed', 'expired', 'status'))
-                                ->selectRaw('sum(case json_extract(domains.http, "$.Status_code") when 200 then 0 else 1 end) as problem')
+                                ->selectRaw('sum(case when json_extract(domains.http, "$.Status_code") < 400 then 0 else 1 end) as problem')
                                 ->first()->problem
                 ])
                 ->only(...array_keys($fields));

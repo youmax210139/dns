@@ -70,11 +70,11 @@ class AutoHttp extends Command
             if ($v['Status_code'] < 400) {
                 continue;
             }
-            $message .= "<b>Domain:</b>{$v['Url']}" . PHP_EOL;
-            $message .= "<b>Status:</b><i>{$v['Status_code']}</i>" . PHP_EOL;
-            $message .= "<b>Message:</b><em>{$v['Message']}</em>" . PHP_EOL . PHP_EOL;
+            $message .= "Domain: <a href='http://{$v['Url']}'>{$v['Url']}</a>" . PHP_EOL;
+            $message .= "<b>Status: </b><i>{$v['Status_code']}</i>" . PHP_EOL;
+            $message .= "<b>Message: </b><em>{$v['Message']}</em>" . PHP_EOL . PHP_EOL;
 
-            if(strlen($message) > 500){
+            if(strlen($message) >  4000){
                 $this->sendMessage($message);
                 $message = '';
             }

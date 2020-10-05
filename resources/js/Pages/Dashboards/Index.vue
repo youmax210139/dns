@@ -71,12 +71,13 @@
     <div class="row">
       <div class="col-12">
         <data-table
+          ref="statusDataTable"
           :fields="statusFields"
-          :api-url="route('domains.index', { status: ['!=','200'] }).url()"
+          :api-url="route('domains.index', { status: ['>=', '400'] }).url()"
           :filterMode="false"
         >
           <template v-slot:header>
-            <h5 class="card-title">{{ __('domain_status_alert') }}</h5>
+            <h5 class="card-title">{{ __("domain_status_alert") }}</h5>
           </template>
           <template v-slot:name="props">
             <a
@@ -164,6 +165,15 @@ export default {
         return {};
       }
     },
+    refresh(){
+      this.$refs.statusDataTable.$refs.vuetable.reload()
+    }
+  },
+  mounted() {
+    this.timer = setInterval(this.refresh, 60 * 1000)
+  },
+  beforeDestroy() {
+    clearInterval(this.timer)
   },
 };
 </script>

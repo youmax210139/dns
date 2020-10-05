@@ -38,6 +38,7 @@ return [
     'domain' => '域名',
     'backup' => '备援',
     'renew' => '续约',
+    'enable' => '启用',
     'usage' => '使用率',
     'remark' => '附言',
     'http_status_code' => '状态码',

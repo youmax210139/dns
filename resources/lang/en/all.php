@@ -38,6 +38,7 @@ return [
     'domain' => 'Domain',
     'backup' => 'Backup',
     'renew' => 'Renew',
+    'enable' => 'Enable',
     'usage' => 'Usage',
     'remark' => 'Remark',
     'http_status_code' => 'Status Code',

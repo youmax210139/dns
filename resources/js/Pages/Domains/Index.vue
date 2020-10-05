@@ -24,6 +24,9 @@
         <template v-slot:backup="props">
           <slot name="usage">{{ props.rowData.backup?'Y':'N' }}</slot>
         </template>
+        <template v-slot:enable="props">
+          <slot name="enable">{{ props.rowData.enable?'Y':'N' }}</slot>
+        </template>
         <template v-slot:http_status_code="props">
           <span
             name="http_status_code"

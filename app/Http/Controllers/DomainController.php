@@ -21,7 +21,8 @@ class DomainController extends Controller
             'hostname' => 'main_domain',
             'name' => 'domain',
             'usage' => 'usage',
-            'backup' => 'backup',            
+            'backup' => 'backup',
+            'enable' => 'enable',            
             'http_status_code' => 'http_status_code',
             'remark' => 'remark',
             'expired_at' => 'expired_at',
@@ -68,6 +69,7 @@ class DomainController extends Controller
                     'name' => ['required', 'unique:domains', 'max:100'],
                     'backup' => ['required', 'boolean'],
                     'renew' => ['required', 'boolean'],
+                    'enable' => ['required', 'boolean'],
                     'platform_id' => ['required', 'numeric'],
                     'remark' => ['string'],
                 ]),
@@ -83,7 +85,7 @@ class DomainController extends Controller
     public function edit(Domain $domain)
     {
         return Inertia::render('Domains/Edit', [
-            'domain' => $domain->only('id', 'name', 'backup', 'renew', 'remark','platform_id'),
+            'domain' => $domain->only('id', 'name', 'backup', 'renew', 'enable', 'remark','platform_id'),
             'platforms' => Platform::all()->transform(function ($platform) {
                 return [
                     'label' => $platform->name,
@@ -108,6 +110,7 @@ class DomainController extends Controller
                 'name' => ['required', "unique:domains,name,{$domain->id}", 'max:100'],
                 'backup' => ['required', 'boolean'],
                 'renew' => ['required', 'boolean'],
+                'enable' => ['required', 'boolean'],
                 'platform_id' => ['required', 'numeric'],
                 'remark' => ['string']
             ])

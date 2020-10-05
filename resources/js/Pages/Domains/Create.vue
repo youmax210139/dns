@@ -20,6 +20,7 @@
             />
             <checkbox-input v-model="form.backup" :label="__('backup')" />
             <checkbox-input v-model="form.renew" :label="__('renew')" />
+            <checkbox-input v-model="form.enable" :label="__('enable')" />
             <text-input v-model="form.remark"
               :error="$page.errors.remark"
               :label="__('remark')"
@@ -63,6 +64,7 @@ export default {
         name: "",
         backup: false,
         renew: false,
+        enable: true,
         remark: "",
       },
     };

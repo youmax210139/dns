@@ -44,7 +44,7 @@ class AutoHttp extends Command
     {
         $client = new Client();
         $promises = [];
-        $domains = Domain::all();
+        $domains = Domain::where('enable', true)->get();
         foreach ($domains as $domain) {
             $promises[$domain->id] = Http::getAsync($domain->name);
             $this->info($domain->name);

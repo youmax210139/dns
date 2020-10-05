@@ -40,6 +40,7 @@ class DomainExport implements FromCollection, Responsable, WithHeadings, WithMap
         'name' => 'domain',
         'usage' => 'usage',
         'backup' => 'backup',
+        'enable' => 'enable',
         'http_status_code' => 'http_status_code',
         'remark' => 'remark',
         'expired_at' => 'expired_at',
@@ -58,6 +59,7 @@ class DomainExport implements FromCollection, Responsable, WithHeadings, WithMap
             switch($v){
                 case 'usage':
                     return $domain->$v. '%';
+                case 'enable':
                 case 'backup':
                     return $domain->$v? 'Y' : 'N';
                 default:

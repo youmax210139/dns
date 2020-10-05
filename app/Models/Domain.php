@@ -22,6 +22,7 @@ class Domain extends Model
         'usage',
         'backup',
         'renew',
+        'enable',
         'remark',
         'http',
         'registered_at',

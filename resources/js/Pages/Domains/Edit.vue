@@ -19,6 +19,7 @@
               :label="__('backup')"
             />
             <checkbox-input v-model="form.renew" :error="$page.errors.renew" :label="__('renew')"/>
+            <checkbox-input v-model="form.enable" :error="$page.errors.enable" :label="__('enable')"/>
             <text-input v-model="form.remark" :error="$page.errors.remark" :label="__('remark')" />
             <div class="form-group">
               <loading-button :loading="sending" class="btn btn-primary" type="submit">
@@ -59,6 +60,7 @@ export default {
         backup: this.domain.backup,
         renew: this.domain.renew,
         remark: this.domain.remark,
+        enable: this.domain.enable,
       },
     };
   },

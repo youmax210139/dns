@@ -1,9 +1,16 @@
 <template>
   <div class="row">
     <div class="col-12">
-      <data-table :fields="fields" :api-url="route('domains.index').url()" :info-template="infoTemplate">
+      <data-table
+        :fields="fields"
+        :api-url="route('domains.index').url()"
+        :info-template="infoTemplate"
+      >
         <template v-slot:append="props">
-          <a class="btn btn-primary" :href="route('domains.export', props.data.form)">
+          <a
+            class="btn btn-primary"
+            :href="route('domains.export', props.data.form)"
+          >
             {{ __("export") }}
           </a>
           <inertia-link class="btn btn-primary" :href="route('domains.create')">
@@ -14,18 +21,27 @@
           </inertia-link>
         </template>
         <template v-slot:name="props">
-          <a name="name" :href="urlTransform(props.rowData.name)" target="_blank">{{
-            props.rowData.name
-          }}</a>
+          <a
+            name="name"
+            :href="urlTransform(props.rowData.name)"
+            target="_blank"
+            >{{ props.rowData.name }}</a
+          >
         </template>
         <template v-slot:usage="props">
           <slot name="usage">{{ props.rowData.usage }}%</slot>
         </template>
         <template v-slot:backup="props">
-          <slot name="usage">{{ props.rowData.backup?'Y':'N' }}</slot>
+          <slot name="usage">{{ props.rowData.backup ? "Y" : "N" }}</slot>
         </template>
         <template v-slot:enable="props">
-          <slot name="enable">{{ props.rowData.enable?'Y':'N' }}</slot>
+          <slot name="enable">
+            <input
+              type="checkbox"
+              :checked="props.rowData.enable"
+              @change="enable(props.rowData)"
+            />
+          </slot>
         </template>
         <template v-slot:http_status_code="props">
           <span
@@ -69,13 +85,29 @@ export default {
     filters: Object,
     fields: Array,
   },
-  data(){
+  data() {
     return {
-      infoTemplate: "Total: {total}, Problem: <span class='text-danger'>{problem}</span>",
-    }
+      infoTemplate:
+        "Total: {total}, Problem: <span class='text-danger'>{problem}</span>",
+    };
   },
   methods: {
-
+    enable(rowData) {
+      console.log(rowData)
+        this.$http
+        .put(route("domains.update", rowData.id), {
+          enable: !rowData.enable,
+          platform_id: -1,
+        })
+        .then((res) => {
+          rowData.enable = res.data.enable
+          this.$toasted.success(this.__('edit_domain_success'));
+        })
+        .catch((err) => {
+          console.error(err)
+          this.$toasted.error(err)
+        });
+    },
   },
 };
 </script>

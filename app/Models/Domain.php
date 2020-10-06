@@ -31,6 +31,9 @@ class Domain extends Model
 
     protected $casts = [
         'http' => 'array',
+        'backup' => 'boolean',
+        'enable' => 'boolean',
+        'renew' => 'boolean',
     ];
 
     protected static function booted() {

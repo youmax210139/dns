@@ -100,22 +100,28 @@ class DomainController extends Controller
             Request::merge([
                 'platform_id' => 0,
             ]);
-        } else {
+        }
+        else if(Request::get('platform_id') == -1){
+            Request::offsetUnset('platform_id');
+        } 
+        else {
             Request::validate([
                 'platform_id' => 'exists:platforms,id',
             ]);
         }
         $domain->update(
             Request::validate([
-                'name' => ['required', "unique:domains,name,{$domain->id}", 'max:100'],
-                'backup' => ['required', 'boolean'],
-                'renew' => ['required', 'boolean'],
-                'enable' => ['required', 'boolean'],
-                'platform_id' => ['required', 'numeric'],
-                'remark' => ['string']
+                'name' => ['nullable', "unique:domains,name,{$domain->id}", 'max:100'],
+                'backup' => ['nullable', 'boolean'],
+                'renew' => ['nullable', 'boolean'],
+                'enable' => ['nullable', 'boolean'],
+                'platform_id' => ['nullable', 'numeric'],
+                'remark' => ['nullable', 'string'],
             ])
         );
-
+        if (Request::wantsJson()) {
+            return $domain;
+        }
         return Redirect::back()
             ->with('success', __('all.edit_domain_success'));
     }

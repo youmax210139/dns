@@ -347,6 +347,8 @@ return [
         'en/domains/export',
         'zh/platforms/export',
         'en/platforms/export',
+        'zh/img/*',
+        'en/img/*',
     ],
 
 ];

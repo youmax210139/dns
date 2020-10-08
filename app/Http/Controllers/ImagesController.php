@@ -11,11 +11,12 @@ class ImagesController extends Controller
     public function show(Filesystem $filesystem, $path)
     {
         $server = ServerFactory::create([
+            'driver' => 'imagick',
             'response' => new LaravelResponseFactory(app('request')),
-            'source' => storage_path('app/public/img'),
+            'source' => $filesystem->getDriver(),
             'cache' => $filesystem->getDriver(),
             'cache_path_prefix' => '.cache',
-            'base_url' => 'imgages',
+            'base_url' => '/img',
         ]);
         return $server->getImageResponse($path, request()->all());
     }

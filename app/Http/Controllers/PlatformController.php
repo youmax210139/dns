@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Platform;
 use App\Exports\PlatformExport;
+use App\Models\Platform;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use Redirect;
@@ -17,6 +17,7 @@ class PlatformController extends Controller
             'name' => 'platform',
             'created_at' => 'created_at',
             'updated_at' => 'updated_at',
+            'deleted_at' => 'deleted_at',
             'actions' => 'operation',
         ];
         if (Request::wantsJson()) {
@@ -28,7 +29,7 @@ class PlatformController extends Controller
         }
         return Inertia::render('Platforms/Index', [
             'filters' => Request::all('search', 'trashed'),
-            'fields' => $this->getDataTableFields($fields),
+            'fields' => $this->getDataTableFields($fields, ['actions'], ['deleted_at']),
         ]);
     }
 
@@ -72,15 +73,37 @@ class PlatformController extends Controller
             ->with('success', __('all.edit_platform_success'));
     }
 
+    public function restore(Platform $platform)
+    {
+        if ($platform->trashed()) {
+            $platform->restore();
+        }
+
+        if (Request::wantsJson()) {
+            return response()->json(null);
+        }
+        return Redirect::back()
+            ->with('success', __('all.restore_platform_success'))
+            ->withInput();
+    }
+
     public function destroy(Platform $platform)
     {
-        $platform->delete();
+        if ($platform->trashed()) {
+            $platform->forceDelete();
+        } else {
+            $platform->delete();
+        }
 
+        if (Request::wantsJson()) {
+            return response()->json(null);
+        }
         return Redirect::back()
             ->with('success', __('all.delete_platform_success'));
     }
 
-    public function export(){
+    public function export()
+    {
         return new PlatformExport();
     }
 }

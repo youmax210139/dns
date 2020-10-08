@@ -49,9 +49,20 @@ Vue.mixin({
     copy() {
       Vue.prototype.$toasted.success(this.__('copy_success'));
     },
-    destroy(message, route) {
+    alert(message, route, method, success, error=(err)=>{}) {
       if (confirm(message)) {
-        this.$inertia.delete(route);
+        this.$http({
+            url: route,
+            method: method
+          })
+          .then( res=>{
+            success(res)
+          }).catch( err=>{
+            console.error(err)
+            Vue.prototype.$toasted.error(this.__("error"))
+            error(err)
+          }
+          );
       }
     },
     // Translate the given key.

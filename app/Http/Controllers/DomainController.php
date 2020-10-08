@@ -26,6 +26,7 @@ class DomainController extends Controller
             'http_status_code' => 'http_status_code',
             'remark' => 'remark',
             'expired_at' => 'expired_at',
+            'deleted_at' => 'deleted_at',
             'actions' => 'operation',
         ];
 
@@ -45,7 +46,7 @@ class DomainController extends Controller
         }
         return Inertia::render('Domains/Index', [
             'filters' => Request::all('search', 'trashed'),
-            'fields' => $this->getDataTableFields($fields, ['actions', 'hostname']),
+            'fields' => $this->getDataTableFields($fields, ['actions', 'hostname'], ['deleted_at']),
         ]);
     }
 
@@ -126,12 +127,34 @@ class DomainController extends Controller
             ->with('success', __('all.edit_domain_success'));
     }
 
+    public function restore(Domain $domain)
+    {
+        if($domain->trashed()){
+            $domain->restore();
+        }
+
+        if (Request::wantsJson()) {
+            return response()->json(null);
+        }
+        return Redirect::back()
+            ->with('success', __('all.restore_domain_success'))
+            ->withInput();
+    }
+
     public function destroy(Domain $domain)
     {
-        $domain->delete();
-
+        if($domain->trashed()){
+            $domain->forceDelete();
+        }
+        else{
+            $domain->delete();
+        }
+        if (Request::wantsJson()) {
+            return response()->json(null);
+        }
         return Redirect::back()
-            ->with('success', __('all.delete_domain_success'));
+            ->with('success', __('all.delete_domain_success'))
+            ->withInput();
     }
 
     public function export(){

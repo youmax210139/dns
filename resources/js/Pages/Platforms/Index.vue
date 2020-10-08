@@ -1,23 +1,56 @@
 <template>
   <div class="row">
     <div class="col-12">
-            <data-table :fields="fields" :api-url="route('platforms.index').url()">
+      <data-table :fields="fields" :api-url="route('platforms.index').url()" ref="platformDataTable">
         <template v-slot:append="props">
-          <a class="btn btn-primary" :href="route('platforms.export', props.data.form)">
+          <a
+            class="btn btn-primary"
+            :href="route('platforms.export', props.data.form)"
+          >
             {{ __("export") }}
           </a>
-          <inertia-link class="btn btn-primary" :href="route('platforms.create')">
-              <span class="d-none d-md-inline-block">{{ __('create_platform') }}</span>
-              <span class="d-md-none">{{ __('create') }}</span>
-            </inertia-link>
+          <inertia-link
+            class="btn btn-primary"
+            :href="route('platforms.create')"
+          >
+            <span class="d-none d-md-inline-block">{{
+              __("create_platform")
+            }}</span>
+            <span class="d-md-none">{{ __("create") }}</span>
+          </inertia-link>
         </template>
         <template v-slot:actions="props">
-          <a class="btn btn-sm btn-info text-white" :href="route(`platforms.edit`, props.rowData.id)">
+          <a
+            v-if="props.rowData.deleted_at == null"
+            class="btn btn-sm btn-info text-white"
+            :href="route(`platforms.edit`, props.rowData.id)"
+          >
             <i class="fas fa-edit" />
           </a>
           <button
+            v-else
+            class="btn btn-sm btn-success text-white"
+            @click="
+              alert(
+                __('restore_platform'),
+                route('platforms.restore', props.rowData.id),
+                'put',
+                onRestoreSuccess
+              )
+            "
+          >
+            <i class="fas fa-trash-restore" />
+          </button>
+          <button
             class="btn btn-sm btn-danger text-white"
-            @click="destroy(__('delete_platform'), route('platforms.destroy', props.rowData.id))"
+            @click="
+              alert(
+                __('delete_platform'),
+                route('platforms.destroy', props.rowData.id),
+                'delete',
+                onDestroySuccess
+              )
+            "
           >
             <i class="fas fa-trash-alt" />
           </button>
@@ -39,6 +72,14 @@ export default {
     fields: Array,
   },
   methods: {
+    onDestroySuccess(res) {
+      this.$refs.platformDataTable.reload();
+      this.$toasted.success(this.__("delete_platform_success"));
+    },
+    onRestoreSuccess(res) {
+      this.$refs.platformDataTable.reload();
+      this.$toasted.success(this.__("restore_platform_success"));
+    },
   },
 };
 </script>

@@ -30,6 +30,7 @@ Route::get('/img/{path}', 'ImagesController@show')->where('path', '.*');
 
 // Locale
 Route::get('locales/{locale}', 'LocaleController@index')->name('locales.index')->middleware('auth');
+
 // Dashboard
 Route::get('/', function () {
     return redirect()->route('dashboards.index');
@@ -38,10 +39,12 @@ Route::resource('dashboards', 'DashboardController')->middleware('auth');
 
 // Platforms
 Route::get('/platforms/export', 'PlatformController@export')->name('platforms.export')->middleware('auth');
+Route::match(['put', 'patch'], '/platforms/restore/{platform}', 'PlatformController@restore')->name('platforms.restore')->middleware('auth');
 Route::resource('platforms', 'PlatformController')->middleware('auth');
 
 // Domains
 Route::get('/domains/export', 'DomainController@export')->name('domains.export')->middleware('auth');
+Route::match(['put', 'patch'], '/domains/restore/{domain}', 'DomainController@restore')->name('domains.restore')->middleware('auth');
 Route::resource('domains', 'DomainController')->middleware('auth');
 
 // Pings

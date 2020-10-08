@@ -189,6 +189,12 @@ export default {
     reset() {
       this.form = mapValues(this.form, () => null);
     },
+    refresh() {
+      this.$refs.vuetable.refresh()
+    },
+    reload(){
+      this.$refs.vuetable.reload()
+    }
   },
 };
 </script>

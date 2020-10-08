@@ -166,7 +166,7 @@ export default {
       }
     },
     refresh(){
-      this.$refs.statusDataTable.$refs.vuetable.reload()
+      this.$refs.statusDataTable.reload()
     }
   },
   mounted() {

@@ -73,8 +73,8 @@ class Controller extends BaseController
 
     protected function getLocaleNav()
     {
-        
-        return  collect(LaravelLocalization::getSupportedLocales())
+
+        return collect(LaravelLocalization::getSupportedLocales())
             ->transform(function ($item, $locale) {
                 return [
                     'href' => route('locales.index', $locale),
@@ -114,9 +114,10 @@ class Controller extends BaseController
         return __('title.' . Route::currentRouteName());
     }
 
-    protected function getDataTableFields(array $fields, array $unsortFields = ['actions'])
-    {
-        return collect($fields)->transform(function ($field, $key) use ($unsortFields) {
+    protected function getDataTableFields(array $fields,
+        array $unsortFields = ['actions'],
+        array $except = []) {
+        return collect($fields)->except($except)->transform(function ($field, $key) use ($unsortFields) {
             if (in_array($key, $unsortFields)) {
                 return [
                     'name' => $key,

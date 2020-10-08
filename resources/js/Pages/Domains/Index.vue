@@ -5,6 +5,7 @@
         :fields="fields"
         :api-url="route('domains.index').url()"
         :info-template="infoTemplate"
+        ref="domainDataTable"
       >
         <template v-slot:append="props">
           <a
@@ -52,17 +53,34 @@
         </template>
         <template v-slot:actions="props">
           <a
+            v-if="props.rowData.deleted_at == null"
             class="btn btn-sm btn-info text-white"
             :href="route(`domains.edit`, props.rowData.id)"
           >
             <i class="fas fa-edit" />
           </a>
           <button
+            v-else
+            class="btn btn-sm btn-success text-white"
+            @click="
+              alert(
+                __('restore_domain'),
+                route('domains.restore', props.rowData.id),
+                'put',
+                onRestoreSuccess
+              )
+            "
+          >
+            <i class="fas fa-trash-restore" />
+          </button>
+          <button
             class="btn btn-sm btn-danger text-white"
             @click="
-              destroy(
+              alert(
                 __('delete_domain'),
-                route('domains.destroy', props.rowData.id)
+                route('domains.destroy', props.rowData.id),
+                'delete',
+                onDestroySuccess
               )
             "
           >
@@ -93,20 +111,27 @@ export default {
   },
   methods: {
     enable(rowData) {
-      console.log(rowData)
-        this.$http
+      this.$http
         .put(route("domains.update", rowData.id), {
           enable: !rowData.enable,
           platform_id: -1,
         })
         .then((res) => {
-          rowData.enable = res.data.enable
-          this.$toasted.success(this.__('edit_domain_success'));
+          rowData.enable = res.data.enable;
+          this.$toasted.success(this.__("edit_domain_success"));
         })
         .catch((err) => {
-          console.error(err)
-          this.$toasted.error(err)
+          console.error(err);
+          this.$toasted.error(this.__("error"));
         });
+    },
+    onDestroySuccess(res) {
+      this.$refs.domainDataTable.reload();
+      this.$toasted.success(this.__("delete_domain_success"));
+    },
+    onRestoreSuccess(res) {
+      this.$refs.domainDataTable.reload();
+      this.$toasted.success(this.__("restore_domain_success"));
     },
   },
 };

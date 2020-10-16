@@ -18,9 +18,9 @@
               :label="__('domain')"
               :placeholder="__('input_domain')"
             />
-            <checkbox-input v-model="form.backup" :label="__('backup')" />
-            <checkbox-input v-model="form.renew" :label="__('renew')" />
-            <checkbox-input v-model="form.enable" :label="__('enable')" />
+            <toggle-input v-model="form.backup" :label="__('backup')" />
+            <toggle-input v-model="form.renew" :label="__('renew')" />
+            <toggle-input v-model="form.enable" :label="__('enable')" />
             <text-input v-model="form.remark"
               :error="$page.errors.remark"
               :label="__('remark')"
@@ -43,13 +43,13 @@
 <script>
 import LoadingButton from "@/Shared/Forms/LoadingButton";
 import TextInput from "@/Shared/Forms/TextInput";
-import CheckboxInput from "@/Shared/Forms/CheckboxInput";
+import ToggleInput from "@/Shared/Forms/ToggleInput";
 import TextSelectInput from "@/Shared/Forms/TextSelectInput";
 
 export default {
   components: {
     LoadingButton,
-    CheckboxInput,
+    ToggleInput,
     TextInput,
     TextSelectInput,
   },

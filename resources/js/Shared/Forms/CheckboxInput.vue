@@ -13,7 +13,6 @@
           :checked="checked"
           @change="change"
         />
-        <label>{{ option }}</label>
       </div>
       <div v-if="error instanceof Array" class="invalid-feedback d-block">{{ error[0] }}</div>
       <div v-else-if="error" class="invalid-feedback d-block">{{ error }}</div>
@@ -33,7 +32,6 @@ export default {
     },
     value: Boolean,
     label: String,
-    option: String,
     error: {
       type: [String, Array],
       default: "",

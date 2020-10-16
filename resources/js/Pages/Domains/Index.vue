@@ -37,9 +37,9 @@
         </template>
         <template v-slot:enable="props">
           <slot name="enable">
-            <input
-              type="checkbox"
-              :checked="props.rowData.enable"
+            <toggle-button
+              :value="props.rowData.enable"
+              :sync="true"
               @change="enable(props.rowData)"
             />
           </slot>
@@ -93,11 +93,13 @@
 </template>
 
 <script>
-import DataTable from "@/Shared/Tables/DataTable";
+import DataTable from "@/Shared/Tables/DataTable"
+import { ToggleButton } from "vue-js-toggle-button"
 
 export default {
   components: {
     DataTable,
+    ToggleButton,
   },
   props: {
     filters: Object,

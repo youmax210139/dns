@@ -18,8 +18,10 @@ $factory->define(App\Models\Domain::class, function (Faker $faker) {
         'account' => $faker->username,
         'name' => $faker->domainName,
         'usage' => $faker->randomFloat(2, 0, 100),
-        'backup' => $faker->boolean(50),
+        'backup' => $faker->boolean,
         'renew' => $faker->boolean,
+        'enable' => $faker->boolean,
+        'remark' => $faker->word,
         'registered_at' => $faker->dateTime($timezone = 'Asia/Taipei'),
         'expired_at' => $faker->dateTime($timezone = 'Asia/Taipei'),
     ];

@@ -1,72 +1,101 @@
 <template>
-  <div>
-    <h1 class="mb-8 font-bold text-3xl">
-      <inertia-link class="text-indigo-400 hover:text-indigo-600" :href="route('users')">Users</inertia-link>
-      <span class="text-indigo-400 font-medium">/</span> Create
-    </h1>
-    <div class="bg-white rounded shadow overflow-hidden max-w-3xl">
-      <form @submit.prevent="submit">
-        <div class="p-8 -mr-6 -mb-8 flex flex-wrap">
-          <text-input v-model="form.first_name" :error="$page.errors.first_name" class="pr-6 pb-8 w-full lg:w-1/2" label="First name" />
-          <text-input v-model="form.last_name" :error="$page.errors.last_name" class="pr-6 pb-8 w-full lg:w-1/2" label="Last name" />
-          <text-input v-model="form.email" :error="$page.errors.email" class="pr-6 pb-8 w-full lg:w-1/2" label="Email" />
-          <text-input v-model="form.password" :error="$page.errors.password" class="pr-6 pb-8 w-full lg:w-1/2" type="password" autocomplete="new-password" label="Password" />
-          <select-input v-model="form.owner" :error="$page.errors.owner" class="pr-6 pb-8 w-full lg:w-1/2" label="Owner">
-            <option :value="true">Yes</option>
-            <option :value="false">No</option>
-          </select-input>
-          <file-input v-model="form.photo" :error="$page.errors.photo" class="pr-6 pb-8 w-full lg:w-1/2" type="file" accept="image/*" label="Photo" />
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <form @submit.prevent="submit">
+            <text-input
+              v-model="form.first_name"
+              :error="$page.errors.first_name"
+              :label="__('first_name')"
+              :placeholder="__('input_first_name')"
+            />
+            <text-input
+              v-model="form.last_name"
+              :error="$page.errors.last_name"
+              :label="__('last_name')"
+              :placeholder="__('input_last_name')"
+            />
+            <text-input
+              v-model="form.email"
+              :type="'email'"
+              :error="$page.errors.email"
+              :label="__('email')"
+              :placeholder="__('input_email')"
+            />
+            <text-select-input
+              v-model="form.role_id"
+              :error="$page.errors.role_id"
+              :options="roles"
+              :placeholder="__('input_role')"
+              :label="__('role')"
+              :taggable="false"
+            />
+            <text-input
+              v-model="form.password"
+              :type="'password'"
+              :error="$page.errors.password"
+              :label="__('password')"
+              :placeholder="__('input_password')"
+            />
+            <text-input
+              v-model="form.password_confirmation"
+              :type="'password'"
+              :error="$page.errors.password_confirmation"
+              :label="__('password_confirmation')"
+              :placeholder="__('input_password_confirmation')"
+            />
+            <div class="form-group">
+              <loading-button
+                :loading="sending"
+                class="btn btn-primary"
+                type="submit"
+              >
+                {{ __("create_user") }}
+              </loading-button>
+            </div>
+          </form>
         </div>
-        <div class="px-8 py-4 bg-gray-100 border-t border-gray-200 flex justify-end items-center">
-          <loading-button :loading="sending" class="btn-indigo" type="submit">Create User</loading-button>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import LoadingButton from '@/Shared/Forms/LoadingButton'
-import SelectInput from '@/Shared/SelectInput'
-import TextInput from '@/Shared/Forms/TextInput'
-import FileInput from '@/Shared/FileInput'
+import LoadingButton from "@/Shared/Forms/LoadingButton";
+import TextInput from "@/Shared/Forms/TextInput";
+import TextSelectInput from "@/Shared/Forms/TextSelectInput";
 
 export default {
   components: {
     LoadingButton,
-    SelectInput,
     TextInput,
-    FileInput,
+    TextSelectInput,
   },
-  remember: 'form',
+  props: {
+    roles: Array,
+  },
+  remember: "form",
   data() {
     return {
       sending: false,
       form: {
-        first_name: null,
-        last_name: null,
-        email: null,
-        password: null,
-        owner: false,
-        photo: null,
+        first_name: "",
+        last_name: "",
+        email: "",
+        password: "",
+        password_confirmation: "",
+        role_id: 0,
       },
-    }
+    };
   },
   methods: {
     submit() {
-      this.sending = true
-
-      var data = new FormData()
-      data.append('first_name', this.form.first_name || '')
-      data.append('last_name', this.form.last_name || '')
-      data.append('email', this.form.email || '')
-      data.append('password', this.form.password || '')
-      data.append('owner', this.form.owner ? '1' : '0')
-      data.append('photo', this.form.photo || '')
-
-      this.$inertia.post(this.route('users.store'), data)
-        .then(() => this.sending = false)
+      this.sending = true;
+      this.$inertia
+        .post(this.route("users.store"), this.form)
+        .then(() => (this.sending = false));
     },
   },
-}
+};
 </script>

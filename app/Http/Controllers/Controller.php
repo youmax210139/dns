@@ -33,6 +33,16 @@ class Controller extends BaseController
                 "icon" => "business_chart-bar-32",
                 "route" => "dashboards.index",
             ],
+            // [
+            //     "label" => __('sidebar.permission'),
+            //     "icon" => "business_globe",
+            //     "route" => "permissions.index",
+            // ],
+            [
+                "label" => __('sidebar.user'),
+                "icon" => "users_single-02",
+                "route" => "users.index",
+            ],
             [
                 "label" => __('sidebar.platform'),
                 "icon" => "business_globe",

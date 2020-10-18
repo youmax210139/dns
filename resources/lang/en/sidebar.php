@@ -2,6 +2,9 @@
 
 return [
     'dashboard' => 'Dashboard',
+    'role' => 'Roles Management',
+    'user' => 'Users Management',
+    'log' => 'Logs Management',
     'platform' => 'Platform Management',
     'domain' => 'Domain Management',
     'ping' => 'Ping Tool',

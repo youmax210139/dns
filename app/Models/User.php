@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use League\Glide\Server;
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Auth\Authenticatable;
@@ -15,14 +17,15 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use SoftDeletes, Authenticatable, Authorizable;
+    use HasRoles;
 
-    protected $casts = [
-        'owner' => 'boolean',
+    protected $appends = [
+        'role_id',
     ];
 
-    public function account()
+    public function getRoleIdAttribute()
     {
-        return $this->belongsTo(Account::class);
+        return $this->roles[0]->id ?? 0;
     }
 
     public function getNameAttribute()
@@ -35,21 +38,21 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         $this->attributes['password'] = Hash::needsRehash($password) ? Hash::make($password) : $password;
     }
 
+    public function getCreatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d H:i:s');
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d H:i:s');
+    }
+
     public function photoUrl(array $attributes)
     {
         if ($this->photo_path) {
             return URL::to(App::make(Server::class)->fromPath($this->photo_path, $attributes));
         }
-    }
-
-    public function isDemoUser()
-    {
-        return $this->email === 'johndoe@example.com';
-    }
-
-    public function scopeOrderByName($query)
-    {
-        $query->orderBy('last_name')->orderBy('first_name');
     }
 
     public function scopeWhereRole($query, $role)
@@ -75,6 +78,17 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
                 $query->withTrashed();
             } elseif ($trashed === 'only') {
                 $query->onlyTrashed();
+            }
+        });
+    }
+
+    public function scopeSort($query, $sort)
+    {
+        $query->when($sort, function ($query, $sort) {
+            $sort = explode('|', $sort);
+            switch ($sort[0]) {
+                default:
+                    $query->orderBy($sort[0], $sort[1]);
             }
         });
     }

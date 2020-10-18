@@ -56,7 +56,7 @@
                   {{ __('login') }}
                   </button>
               </div>
-              <div class="pull-left">
+              <!-- <div class="pull-left">
                 <h6>
                   <a href="#register" class="link footer-link">
                     {{ __('signup') }}
@@ -69,7 +69,7 @@
                     {{ __('forgot_password') }}
                   </a>
                 </h6>
-              </div>
+              </div> -->
             </form>
           </div>
         </div>
@@ -196,5 +196,9 @@ export default {
 .login-page .card-login .logo-container {
   margin-top: 55px;
   margin-bottom: 55px;
+}
+.copyright{
+  text-align: center !important;
+  float: none !important;
 }
 </style>

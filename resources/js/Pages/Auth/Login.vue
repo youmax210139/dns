@@ -1,11 +1,19 @@
 <template>
   <div class="page-header" filter-color="orange">
-    <div class="page-header-image" style="background-image:url(/images/login.jpg)"></div>
+    <div
+      class="page-header-image"
+      style="background-image: url(/images/login.jpg)"
+    />
     <div class="content">
       <div class="container">
         <div class="col-md-5 ml-auto mr-auto">
           <div class="card card-login card-plain">
-            <form class="form" method="post" @submit.prevent="submit">
+            <form
+              class="form"
+              method="post"
+              :class="{ 'is-invalid': errors.email || errors.password }"
+              @submit.prevent="submit"
+            >
               <div class="card-header text-center">
                 <!-- Logo & Information Panel-->
                 <div class="logo-container">
@@ -14,47 +22,71 @@
                 <!-- End of Logo -->
               </div>
               <div class="card-body">
-                <div class="input-group form-group-no-border input-lg">
+                <div
+                  class="input-group form-group-no-border input-lg"
+                  :class="{
+                    'input-group-focus': emailActive,
+                    'has-danger': errors.email,
+                  }"
+                >
                   <div class="input-group-prepend">
                     <span class="input-group-text">
-                      <i class="now-ui-icons users_circle-08"></i>
+                      <i class="now-ui-icons users_circle-08" />
                     </span>
                   </div>
                   <input
                     v-model="form.email"
-                    @focus="emailActive=true"
-                    @blur="blur($event)"
+                    class="form-control"
                     type="text"
                     name="email"
                     required
-                    class="form-control"
-                    :placeholder="__('input_email')"
-                    :class="{'is-invalid': $page.errors.email}"
+                    :placeholder="__('input', { name: __('email') })"
+                    @blur="blur($event)"
                   />
                 </div>
-                <div class="input-group form-group-no-border input-lg">
+                <div
+                  v-if="errors.email"
+                  class="invalid-feedback text-center mb-2"
+                >
+                  {{ errors.email[0] }}
+                </div>
+                <div
+                  class="input-group form-group-no-border input-lg"
+                  :class="{
+                    'input-group-focus': passwordActive,
+                    'has-danger': errors.password,
+                  }"
+                >
                   <div class="input-group-prepend">
                     <span class="input-group-text">
-                      <i class="now-ui-icons text_caps-small"></i>
+                      <i class="now-ui-icons text_caps-small" />
                     </span>
                   </div>
                   <input
                     v-model="form.password"
-                    @focus="passwordActive=true"
-                    @blur="blur($event)"
                     type="password"
                     name="password"
-                    required
-                    :placeholder="__('input_password')"
                     class="form-control"
-                    :class="{'is-invalid': $page.errors.password}"
+                    required
+                    :class="{ 'is-invalid': errors.password }"
+                    :placeholder="__('input', { name: __('password') })"
+                    @blur="blur($event)"
                   />
+                </div>
+                <div
+                  v-if="errors.password"
+                  class="invalid-feedback text-center mb-2"
+                >
+                  {{ errors.password[0] }}
                 </div>
               </div>
               <div class="card-footer text-center">
-                <button type="submit" class="btn btn-primary btn-round btn-lg btn-block">
-                  {{ __('login') }}
-                  </button>
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-round btn-lg btn-block"
+                >
+                  {{ __("login") }}
+                </button>
               </div>
               <!-- <div class="pull-left">
                 <h6>
@@ -77,12 +109,11 @@
     </div>
     <footer class="footer">
       <div class="container">
-        <div class="copyright" id="copyright">
+        <div id="copyright" class="copyright">
           &copy; {{ $page.date }}, Maintained by Charlie. Coded by
-          <a
-            href="https://www.creative-tim.com"
-            target="_blank"
-          >Creative Tim</a>.
+          <a href="https://www.creative-tim.com" target="_blank">
+            Creative Tim
+          </a>
         </div>
       </div>
     </footer>
@@ -99,8 +130,8 @@ export default {
   },
   data() {
     return {
-      emailActive: true,
-      passwordActive: true,
+      emailActive: false,
+      passwordActive: false,
       loading: false,
       sending: false,
       form: {
@@ -108,25 +139,7 @@ export default {
         password: "P@ssw0rd",
         remember: null,
       },
-      validation: {
-        email: true,
-        password: true,
-      },
     };
-  },
-  computed: {
-    emailError() {
-      if (this.$page.errors.email) {
-        return this.$page.errors.email[0];
-      }
-      return "";
-    },
-    passwordError() {
-      if (this.$page.errors.password) {
-        return this.$page.errors.password[0];
-      }
-      return "";
-    },
   },
   methods: {
     blur(event) {
@@ -138,13 +151,17 @@ export default {
     },
     submit() {
       this.sending = true;
+      this.emailActive = false;
+      this.passwordActive = false;
       this.$inertia
         .post(this.route("login.attempt"), {
           email: this.form.email,
           password: this.form.password,
           remember: this.form.remember,
         })
-        .then(() => (this.sending = false));
+        .then(() => {
+          this.sending = false;
+        });
     },
   },
 };
@@ -197,8 +214,22 @@ export default {
   margin-top: 55px;
   margin-bottom: 55px;
 }
-.copyright{
+.copyright {
   text-align: center !important;
   float: none !important;
+}
+.login-page .card-login.card-plain form.is-invalid {
+  .input-group.form-group-no-border.has-danger {
+    .form-control,
+    .input-group-prepend .input-group-text {
+      color: #ff3636 !important;
+      &:focus {
+        color: #ff3636 !important;
+      }
+    }
+  }
+  .invalid-feedback {
+    display: block;
+  }
 }
 </style>

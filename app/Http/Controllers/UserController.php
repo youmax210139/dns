@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
-
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -19,10 +16,10 @@ class UserController extends Controller
     {
         $fields = [
             'id' => 'id',
-            'name' => 'name',
+            'name' => 'full_name',
             'email' => 'email',
+            'role_name' => 'role',
             'created_at' => 'created_at',
-            'updated_at' => 'updated_at',
             'deleted_at' => 'deleted_at',
             'actions' => 'operation',
         ];
@@ -62,15 +59,18 @@ class UserController extends Controller
             'role_id' => ['required', 'exists:roles,id'],
         ]);
 
-        User::create([
+        $user = User::create([
             'first_name' => Request::get('first_name'),
             'last_name' => Request::get('last_name'),
             'email' => Request::get('email'),
             'password' => Request::get('password'),
             'photo_path' => Request::file('photo') ? Request::file('photo')->store('users') : null,
         ]);
+        $user->assignRole(Request::get('role_id'));
 
-        return Redirect::route('users.index')->with('success', __('all.users.create_success'));
+        return Redirect::route('users.index')->with('success', __('all.create_success', [
+            'name' => __('all.user'),
+        ]));
     }
 
     public function edit(User $user)
@@ -111,7 +111,9 @@ class UserController extends Controller
         if (Request::wantsJson()) {
             return $user;
         }
-        return Redirect::back()->with('success', __('all.users.edit_success'));
+        return Redirect::back()->with('success', __('all.edit_success', [
+            'name' => __('all.user'),
+        ]));
     }
 
     public function restore(User $user)
@@ -124,7 +126,9 @@ class UserController extends Controller
             return response()->json(null);
         }
         return Redirect::back()
-            ->with('success', __('all.restore_user_success'))
+            ->with('success', __('all.restore_success', [
+                'name' => __('all.user'),
+            ]))
             ->withInput();
     }
 
@@ -140,6 +144,8 @@ class UserController extends Controller
             return response()->json(null);
         }
         return Redirect::back()
-            ->with('success', __('all.delete_user_success'));
+            ->with('success', __('all.delete_success',[
+                'name' => __('all.user')
+            ]));
     }
 }

@@ -46,7 +46,9 @@ class PlatformController extends Controller
             ])
         );
         return Redirect::route('platforms.index')
-            ->with('success', __('all.create_platform_success'));
+            ->with('success', __('all.create_success', [
+                'name' => __('all.platform'),
+            ]));
     }
 
     public function edit(Platform $platform)
@@ -70,7 +72,9 @@ class PlatformController extends Controller
         );
 
         return Redirect::back()
-            ->with('success', __('all.edit_platform_success'));
+            ->with('success', __('all.edit_success', [
+                'name' => __('all.platform'),
+            ]));
     }
 
     public function restore(Platform $platform)
@@ -83,7 +87,9 @@ class PlatformController extends Controller
             return response()->json(null);
         }
         return Redirect::back()
-            ->with('success', __('all.restore_platform_success'))
+            ->with('success', __('all.restore_success', [
+                'name' => __('all.platform'),
+            ]))
             ->withInput();
     }
 
@@ -99,7 +105,9 @@ class PlatformController extends Controller
             return response()->json(null);
         }
         return Redirect::back()
-            ->with('success', __('all.delete_platform_success'));
+            ->with('success', __('all.delete_success', [
+                'name' => __('all.platform'),
+            ]));
     }
 
     public function export()

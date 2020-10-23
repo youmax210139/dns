@@ -45,9 +45,18 @@ return [
 
     'email' => '邮箱',
     'password' => '密码',
+    'password_confirmation' => '确认密码',
     'login' => '登入',
     'signup' => '注册',
     'forgot_password' => '忘记密码?',
+
+    'role' => '角色',
+    'permission' => '权限',
+
+    'user' => '用户',
+    'first_name' => '名',
+    'last_name' => '姓',
+    'full_name' => '姓名',
 
     'platform_percentage' => '平台占比',
     'platform_line' => '平台占比',
@@ -80,14 +89,6 @@ return [
     'domain_status_alert' => '域名告警视窗',
 
     'platform' => '平台',
-    'create_platform_success' => '创建平台成功',
-    'edit_platform_success' => '编辑平台成功',
-    'restore_platform' => '确定要还原该平台？',
-    'restore_platform_success' => '还原平台成功',
-    'delete_platform' => '确定要删除该平台？',
-    'delete_platform_success' => '删除平台成功',
-    'input_platform' => '请输入平台',
-    'platform_not_found' => '平台不存在！',
 
     'pings.create' => 'Ping在线检测',
     'nslookups.create' => 'Nslookup在线检测',
@@ -102,7 +103,6 @@ return [
     'query_type' => '查询类型',
     'dns_public_server' => 'DNS公共服务器',
     'nslookup_check' => 'Nslookup检测',
-    'input_port'=> '请输入端口号',
     'port' => '端口号',
     'port_check' => '檢測端口',
 

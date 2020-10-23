@@ -8,7 +8,7 @@
               v-model="form.first_name"
               :error="$page.errors.first_name"
               :label="__('role')"
-              :placeholder="__('input_role')"
+              :placeholder="__('input', {name: __('role')})"
             />
             <dual-listbox
               v-model="form.permissions"
@@ -23,7 +23,7 @@
                 class="btn btn-primary"
                 type="submit"
               >
-                {{ __("create_role") }}
+                {{ __("roles.create") }}
               </loading-button>
             </div>
           </form>

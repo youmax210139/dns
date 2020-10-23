@@ -44,10 +44,19 @@ return [
     'error' => 'Error',
 
     'email' => 'Email',
-    'password' => 'password',
+    'password' => 'Password',
+    'password_confirmation' => 'Password Confirmation',
     'login' => 'Login',
     'signup' => 'Signup',
     'forgot_password' => 'Forgot Password?',
+
+    'role' => 'Role',
+    'permission' => 'Permission',
+
+    'user' => 'User',
+    'first_name' => 'First name',
+    'last_name' => 'Last name',
+    'full_name' => 'Full name',
 
     'platform_percentage' => 'Platform Percentage',
     'platform_line' => 'Platform Percentage',
@@ -56,8 +65,8 @@ return [
     'expired_in_month' => 'Domain Expired in a month',
     'expired_in_season' => 'Domain Expired in 3 month',
     
-    'created_at' => 'Created DateTime',
-    'updated_at' => 'Updated DateTime',
+    'created_at' => 'Created At',
+    'updated_at' => 'Updated At',
     
     'search' => 'Search ...',
     'filter' => 'Filter',
@@ -78,16 +87,8 @@ return [
     'operation' => 'Operation',
     'main_domain' => 'Main Domain',
     'domain_status_alert' => 'Domain Status Alert',
-
+    
     'platform' => 'Platform',
-    'create_platform_success' => 'Create Platform Success!',
-    'edit_platform_success' => 'Edit Platform Success!',
-    'restore_platform' => 'Are you sure restore selected platform？',
-    'restore_platform_success' => 'Restore Selected Platform Success!',
-    'delete_platform' => 'Are you sure to delete selected platform？',
-    'delete_platform_success' => 'Delete Platform Success!',
-    'input_platform' => 'please input platform',
-    'platform_not_found' => 'Platform is not found！',
 
     'pings.create' => 'Ping tool',
     'nslookups.create' => 'Nslookup tool',
@@ -102,7 +103,6 @@ return [
     'query_type' => 'Query Type',
     'dns_public_server' => 'DNS public server',
     'nslookup_check' => 'Nslookup Check',
-    'input_port'=> 'please input port',
     'port' => 'Port',
     'port_check' => 'Port Check',
 

@@ -6,7 +6,6 @@ use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
@@ -106,7 +105,9 @@ class RoleController extends Controller
         if (Request::wantsJson()) {
             return $user;
         }
-        return Redirect::back()->with('success', __('all.users.edit_success'));
+        return Redirect::back()->with('success', __('all.edit_success', [
+            'name' => __('all.role')
+        ]));
     }
 
     public function restore(User $user)
@@ -119,7 +120,9 @@ class RoleController extends Controller
             return response()->json(null);
         }
         return Redirect::back()
-            ->with('success', __('all.restore_user_success'))
+            ->with('success', __('all.restore_success', [
+                'name' => __('all.role'),
+            ]))
             ->withInput();
     }
 
@@ -135,6 +138,8 @@ class RoleController extends Controller
             return response()->json(null);
         }
         return Redirect::back()
-            ->with('success', __('all.delete_user_success'));
+            ->with('success', __('all.delete_success', [
+                'name' => __('all.role'),
+            ]));
     }
 }

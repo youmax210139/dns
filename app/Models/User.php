@@ -21,12 +21,19 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     protected $appends = [
         'role_id',
+        'role_name',
     ];
 
     public function getRoleIdAttribute()
     {
         return $this->roles[0]->id ?? 0;
     }
+
+    public function getRoleNameAttribute()
+    {
+        return $this->roles[0]->name ?? '--';
+    }
+
 
     public function getNameAttribute()
     {

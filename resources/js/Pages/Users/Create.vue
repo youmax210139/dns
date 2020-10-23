@@ -8,13 +8,13 @@
               v-model="form.first_name"
               :error="$page.errors.first_name"
               :label="__('first_name')"
-              :placeholder="__('input_first_name')"
+              :placeholder="__('input', {name: __('first_name')})"
             />
             <text-input
               v-model="form.last_name"
               :error="$page.errors.last_name"
               :label="__('last_name')"
-              :placeholder="__('input_last_name')"
+              :placeholder="__('input', {name: __('last_name')})"
             />
             <text-input
               v-model="form.email"
@@ -36,14 +36,14 @@
               :type="'password'"
               :error="$page.errors.password"
               :label="__('password')"
-              :placeholder="__('input_password')"
+              :placeholder="__('input', {name: __('password')})"
             />
             <text-input
               v-model="form.password_confirmation"
               :type="'password'"
               :error="$page.errors.password_confirmation"
               :label="__('password_confirmation')"
-              :placeholder="__('input_password_confirmation')"
+              :placeholder="__('input', {name: __('password_confirmation')})"
             />
             <div class="form-group">
               <loading-button

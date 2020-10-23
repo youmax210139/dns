@@ -8,7 +8,7 @@
               v-model="form.name"
               :error="$page.errors.name"
               :label="__('platform')"
-              :placeholder="__('input_platform')"
+              :placeholder="__('input', {name: __('platform')})"
             />
             <div class="form-group">
               <loading-button :loading="sending" class="btn btn-primary" type="submit">

@@ -32,7 +32,7 @@
             class="btn btn-sm btn-success text-white"
             @click="
               alert(
-                __('restore_platform'),
+                __('restore', {name: __('platform')}),
                 route('platforms.restore', props.rowData.id),
                 'put',
                 onRestoreSuccess
@@ -45,7 +45,7 @@
             class="btn btn-sm btn-danger text-white"
             @click="
               alert(
-                __('delete_platform'),
+                __('delete', {name: __('platform')}),
                 route('platforms.destroy', props.rowData.id),
                 'delete',
                 onDestroySuccess
@@ -74,11 +74,11 @@ export default {
   methods: {
     onDestroySuccess(res) {
       this.$refs.platformDataTable.reload();
-      this.$toasted.success(this.__("delete_platform_success"));
+      this.$toasted.success(this.__("delete_success", {name: this.__('platform')}));
     },
     onRestoreSuccess(res) {
       this.$refs.platformDataTable.reload();
-      this.$toasted.success(this.__("restore_platform_success"));
+      this.$toasted.success(this.__("restore_success", {name: this.__('platform')}));
     },
   },
 };

@@ -8,7 +8,7 @@
               v-model="form.platform_id"
               :error="$page.errors.platform_id"
               :options="platforms"
-              :placeholder="__('input_platform')"
+              :placeholder="__('input', {name: __('platform')})"
               :label="__('platform')"
               :taggable="false"
             />

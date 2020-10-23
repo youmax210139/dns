@@ -1,15 +1,16 @@
 <template>
   <div class="row">
     <div class="col-12">
-      <data-table :fields="fields" :api-url="route('roles.index').url()" ref="roleDataTable">
+      <data-table
+        ref="roleDataTable"
+        :fields="fields"
+        :api-url="route('roles.index').url()"
+      >
         <template v-slot:append="props">
-          <inertia-link
-            class="btn btn-primary"
-            :href="route('roles.create')"
-          >
-            <span class="d-none d-md-inline-block">{{
-              __("create_role")
-            }}</span>
+          <inertia-link class="btn btn-primary" :href="route('roles.create')">
+            <span class="d-none d-md-inline-block">
+              {{ __('roles.create') }}
+            </span>
             <span class="d-md-none">{{ __("create") }}</span>
           </inertia-link>
         </template>
@@ -68,11 +69,11 @@ export default {
   methods: {
     onDestroySuccess(res) {
       this.$refs.roleDataTable.reload();
-      this.$toasted.success(this.__("delete_role_success"));
+      this.$toasted.success(this.__("delete_success", {name: this.__('role')}));
     },
     onRestoreSuccess(res) {
       this.$refs.roleDataTable.reload();
-      this.$toasted.success(this.__("restore_role_success"));
+      this.$toasted.success(this.__("restore_success", {name: this.__('role')}));
     },
   },
 };

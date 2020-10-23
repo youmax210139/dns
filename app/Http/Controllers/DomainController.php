@@ -79,7 +79,7 @@ class DomainController extends Controller
             )
         );
         return Redirect::route('domains.index')
-            ->with('success', __('all.create_domain_success', [
+            ->with('success', __('all.create_success', [
                 'name' => __('all.domain'),
             ]));
     }

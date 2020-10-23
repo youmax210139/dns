@@ -12,15 +12,24 @@
                 placeholder="example.com"
                 :label="__('domain_or_ip')"
               />
-              <text-input v-model="form.port" :error="errors.port" :placeholder="__('input_port')" :label="__('port')" />
+              <text-input
+                v-model="form.port"
+                :error="errors.port"
+                :label="__('port')"
+                :placeholder="__('input', { name: __('port') })"
+              />
               <div class="form-group row">
                 <div class="col-12">
                   <a class="btn btn-primary mr-2 text-white" @click="reset">
-                    <i class="far fa-trash-alt"></i>
-                    {{ __('reset') }}
+                    <i class="far fa-trash-alt" />
+                    {{ __("reset") }}
                   </a>
-                  <loading-button :loading="sending" class="btn btn-primary mr-2" type="submit">
-                    {{ __('port_check') }}
+                  <loading-button
+                    :loading="sending"
+                    class="btn btn-primary mr-2"
+                    type="submit"
+                  >
+                    {{ __("port_check") }}
                   </loading-button>
                   <a
                     ref="copy"
@@ -29,8 +38,8 @@
                     data-clipboard-target="#output"
                     @click="copy"
                   >
-                    <i class="far fa-copy"></i>
-                    {{ __('copy_result') }}
+                    <i class="far fa-copy" />
+                    {{ __("copy_result") }}
                   </a>
                 </div>
               </div>
@@ -45,7 +54,12 @@
           <div class="card-body">
             <form class="form-horizontal" @submit.prevent="submit">
               <div class="form-group">
-                <textarea id="output" class="form-control" v-model="output" readonly></textarea>
+                <textarea
+                  id="output"
+                  v-model="output"
+                  class="form-control"
+                  readonly
+                />
               </div>
             </form>
           </div>

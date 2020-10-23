@@ -26,7 +26,7 @@
             class="btn btn-sm btn-success text-white"
             @click="
               alert(
-                __('restore_user'),
+                __('restore', {name: __('user')}),
                 route('users.restore', props.rowData.id),
                 'put',
                 onRestoreSuccess
@@ -39,7 +39,7 @@
             class="btn btn-sm btn-danger text-white"
             @click="
               alert(
-                __('delete_user'),
+                __('delete', {name: __('user')}),
                 route('users.destroy', props.rowData.id),
                 'delete',
                 onDestroySuccess
@@ -68,11 +68,11 @@ export default {
   methods: {
     onDestroySuccess(res) {
       this.$refs.userDataTable.reload();
-      this.$toasted.success(this.__("delete_user_success"));
+      this.$toasted.success(this.__("delete_success", {name: this.__('user')}));
     },
     onRestoreSuccess(res) {
       this.$refs.userDataTable.reload();
-      this.$toasted.success(this.__("restore_user_success"));
+      this.$toasted.success(this.__("restore_success", {name: this.__('user')}));
     },
   },
 };

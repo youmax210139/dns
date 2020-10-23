@@ -1,18 +1,49 @@
 <?php
 
 return [
+
+    # Route Title
+    'dashboards.index' => 'Dashboard',
+
+    'roles.index' => 'Role List',
+    'roles.create' => 'Create Role',
+    'roles.edit' => 'Edit Role',
+    'roles.destroy' => 'Delete Role',
+    
+    'users.index' => 'User List',
+    'users.create' => 'Create User',
+    'users.edit' => 'Edit User',
+    'users.destroy' => 'Delete User',
+
+    'platforms.index' => 'Platform List',
+    'platforms.create' => 'Create Platform',
+    'platforms.edit' => 'Edit Platform',
+    'platforms.destroy' => 'Delete Platform',
+    'platforms.export' => 'Export Platform',
+
+    'domains.index' => 'Domain List',
+    'domains.create' => 'Create Domain',
+    'domains.edit' => 'Edit Domain',
+    'domains.destroy' => 'Delete Domain',
+    'domains.export' => 'Export Domain',
+
+    'create_success' => 'Create :name Success!',
+    'edit_success' => 'Edit :name Success!',
+    'restore' => 'Are you sure restore selected :name？',
+    'restore_success' => 'Restore Selected :name Success!',
+    'delete' => 'Are you sure delete selected :name？',
+    'delete_success' => 'Delete :name Success!',
+    'input' => 'Please input :name',
+    'not_found' => ':name are not found！',
+
     'logout' => 'Logout',
     'view_all_messages' => 'view all messages',
     'create' => 'Create',
-    'edit' => 'Edit',
-    'input' => 'Please input',
     'loading' => 'loading',
     'export' => 'Export',
     'error' => 'Error',
 
-    'input_email' => 'please input email',
     'email' => 'Email',
-    'input_password' => 'please input password',
     'password' => 'password',
     'login' => 'Login',
     'signup' => 'Signup',
@@ -46,25 +77,10 @@ return [
     'expired_at' => 'Expiration',
     'operation' => 'Operation',
     'main_domain' => 'Main Domain',
-
-    'create_domain' => 'Create Domain',
-    'create_domain_success' => 'Create Domain Success!',
-    'edit_domain' => 'Edit Domain',
-    'edit_domain_success' => 'Edit Domain Success!',
-    'restore_domain' => 'Are you sure restore selected domain？',
-    'restore_domain_success' => 'Restore Selected Domain Success!',
-    'delete_domain' => 'Are you sure delete selected domain？',
-    'delete_domain_success' => 'Delete Domain Success!',
-    'input_domain' => 'please input domain',
-    'domain_not_found' => 'Domains are not found！',
     'domain_status_alert' => 'Domain Status Alert',
-    'input_remark' => 'please input remark',
 
     'platform' => 'Platform',
-
-    'create_platform' => 'Create Platform',
     'create_platform_success' => 'Create Platform Success!',
-    'edit_platform' => 'Edit Platform',
     'edit_platform_success' => 'Edit Platform Success!',
     'restore_platform' => 'Are you sure restore selected platform？',
     'restore_platform_success' => 'Restore Selected Platform Success!',
@@ -72,6 +88,12 @@ return [
     'delete_platform_success' => 'Delete Platform Success!',
     'input_platform' => 'please input platform',
     'platform_not_found' => 'Platform is not found！',
+
+    'pings.create' => 'Ping tool',
+    'nslookups.create' => 'Nslookup tool',
+    'whois.create' => 'Whois tool',
+    'traces.create' => 'Traceroute tool',
+    'netcats.create' => 'Netcat tool',
 
     'domain_or_ip' => 'Domain Or IP Address',
     'copy_result' => 'Copy Results',

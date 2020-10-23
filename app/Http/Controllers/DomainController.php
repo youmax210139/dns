@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DomainExport;
 use App\Models\Domain;
 use App\Models\Platform;
-use App\Exports\DomainExport;
-
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use Redirect;
@@ -22,7 +21,7 @@ class DomainController extends Controller
             'name' => 'domain',
             'usage' => 'usage',
             'backup' => 'backup',
-            'enable' => 'enable',            
+            'enable' => 'enable',
             'http_status_code' => 'http_status_code',
             'remark' => 'remark',
             'expired_at' => 'expired_at',
@@ -38,9 +37,9 @@ class DomainController extends Controller
                 ->paginate()
                 ->merge([
                     'problem' => Domain::leftjoin('platforms', 'domains.platform_id', '=', 'platforms.id')
-                                ->filter(Request::only('search', 'trashed', 'expired', 'status'))
-                                ->selectRaw('sum(case when json_extract(domains.http, "$.Status_code") < 400 then 0 else 1 end) as problem')
-                                ->first()->problem
+                        ->filter(Request::only('search', 'trashed', 'expired', 'status'))
+                        ->selectRaw('sum(case when json_extract(domains.http, "$.Status_code") < 400 then 0 else 1 end) as problem')
+                        ->first()->problem,
                 ])
                 ->only(...array_keys($fields));
         }
@@ -80,13 +79,15 @@ class DomainController extends Controller
             )
         );
         return Redirect::route('domains.index')
-            ->with('success', __('all.create_domain_success'));
+            ->with('success', __('all.create_domain_success', [
+                'name' => __('all.domain'),
+            ]));
     }
 
     public function edit(Domain $domain)
     {
         return Inertia::render('Domains/Edit', [
-            'domain' => $domain->only('id', 'name', 'backup', 'renew', 'enable', 'remark','platform_id'),
+            'domain' => $domain->only('id', 'name', 'backup', 'renew', 'enable', 'remark', 'platform_id'),
             'platforms' => Platform::all()->transform(function ($platform) {
                 return [
                     'label' => $platform->name,
@@ -101,11 +102,9 @@ class DomainController extends Controller
             Request::merge([
                 'platform_id' => 0,
             ]);
-        }
-        else if(Request::get('platform_id') == -1){
+        } else if (Request::get('platform_id') == -1) {
             Request::offsetUnset('platform_id');
-        } 
-        else {
+        } else {
             Request::validate([
                 'platform_id' => 'exists:platforms,id',
             ]);
@@ -124,12 +123,14 @@ class DomainController extends Controller
             return $domain;
         }
         return Redirect::back()
-            ->with('success', __('all.edit_domain_success'));
+            ->with('success', __('all.edit_success', [
+                'name' => __('all.domain'),
+            ]));
     }
 
     public function restore(Domain $domain)
     {
-        if($domain->trashed()){
+        if ($domain->trashed()) {
             $domain->restore();
         }
 
@@ -137,27 +138,31 @@ class DomainController extends Controller
             return response()->json(null);
         }
         return Redirect::back()
-            ->with('success', __('all.restore_domain_success'))
+            ->with('success', __('all.restore_success', [
+                'name' => __('all.domain'),
+            ]))
             ->withInput();
     }
 
     public function destroy(Domain $domain)
     {
-        if($domain->trashed()){
+        if ($domain->trashed()) {
             $domain->forceDelete();
-        }
-        else{
+        } else {
             $domain->delete();
         }
         if (Request::wantsJson()) {
             return response()->json(null);
         }
         return Redirect::back()
-            ->with('success', __('all.delete_domain_success'))
+            ->with('success', __('all.delete_success', [
+                'name' => __('all.domain'),
+            ]))
             ->withInput();
     }
 
-    public function export(){
+    public function export()
+    {
         return new DomainExport();
     }
 }

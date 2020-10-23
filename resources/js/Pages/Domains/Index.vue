@@ -16,7 +16,7 @@
           </a>
           <inertia-link class="btn btn-primary" :href="route('domains.create')">
             <span class="d-none d-md-inline-block">{{
-              __("create_domain")
+              __("domains.create")
             }}</span>
             <span class="d-md-none">{{ __("create") }}</span>
           </inertia-link>
@@ -64,7 +64,7 @@
             class="btn btn-sm btn-success text-white"
             @click="
               alert(
-                __('restore_domain'),
+                __('restore', {name: __('domain')}),
                 route('domains.restore', props.rowData.id),
                 'put',
                 onRestoreSuccess
@@ -77,7 +77,7 @@
             class="btn btn-sm btn-danger text-white"
             @click="
               alert(
-                __('delete_domain'),
+                __('delete', {name: __('domain')}),
                 route('domains.destroy', props.rowData.id),
                 'delete',
                 onDestroySuccess
@@ -120,7 +120,7 @@ export default {
         })
         .then((res) => {
           rowData.enable = res.data.enable;
-          this.$toasted.success(this.__("edit_domain_success"));
+          this.$toasted.success(this.__("edit_success",{name: this.__('domain')}));
         })
         .catch((err) => {
           console.error(err);
@@ -129,11 +129,11 @@ export default {
     },
     onDestroySuccess(res) {
       this.$refs.domainDataTable.reload();
-      this.$toasted.success(this.__("delete_domain_success"));
+      this.$toasted.success(this.__("delete_success", {name: this.__('domain')}));
     },
     onRestoreSuccess(res) {
       this.$refs.domainDataTable.reload();
-      this.$toasted.success(this.__("restore_domain_success"));
+      this.$toasted.success(this.__("restore_success", {name: this.__('domain')}));
     },
   },
 };

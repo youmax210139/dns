@@ -33,10 +33,6 @@ export default {
         return `text-input-${this._uid}`;
       },
     },
-    type: {
-      type: String,
-      default: "text",
-    },
     placeholder: {
       type: String,
       default: "",

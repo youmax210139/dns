@@ -20,8 +20,12 @@ Route::post('logout')->name('logout')->uses('Auth\LoginController@logout');
 Route::resource('users', 'UserController')->middleware('auth');
 Route::put('users/{user}/restore')->name('users.restore')->uses('UserController@restore')->middleware('auth');
 
+// Roles
+Route::resource('roles', 'RoleController')->middleware('auth');
+Route::put('roles/{role}/restore')->name('roles.restore')->uses('RoleController@restore')->middleware('auth');
+
 // Images
-Route::get('/img/{path}', 'ImagesController@show')->where('path', '.*');
+Route::get('/img/{path}', 'ImagesController@show')->where('path', '.*')->name('images.show');
 
 // Locale
 Route::get('locales/{locale}', 'LocaleController@index')->name('locales.index')->middleware('auth');
@@ -30,7 +34,7 @@ Route::get('locales/{locale}', 'LocaleController@index')->name('locales.index')-
 Route::get('/', function () {
     return redirect()->route('dashboards.index');
 })->middleware('auth');
-Route::resource('dashboards', 'DashboardController')->middleware('auth');
+Route::resource('dashboards', 'DashboardController')->only(['index'])->middleware('auth');
 
 // Platforms
 Route::get('/platforms/export', 'PlatformController@export')->name('platforms.export')->middleware('auth');

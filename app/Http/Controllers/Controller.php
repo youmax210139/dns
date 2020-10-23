@@ -33,11 +33,11 @@ class Controller extends BaseController
                 "icon" => "business_chart-bar-32",
                 "route" => "dashboards.index",
             ],
-            // [
-            //     "label" => __('sidebar.permission'),
-            //     "icon" => "business_globe",
-            //     "route" => "permissions.index",
-            // ],
+            [
+                "label" => __('sidebar.role'),
+                "icon" => "business_badge",
+                "route" => "roles.index",
+            ],
             [
                 "label" => __('sidebar.user'),
                 "icon" => "users_single-02",
@@ -121,7 +121,7 @@ class Controller extends BaseController
 
     protected function getPageTitle()
     {
-        return __('title.' . Route::currentRouteName());
+        return __('all.' . Route::currentRouteName());
     }
 
     protected function getDataTableFields(array $fields,

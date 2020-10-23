@@ -14,7 +14,7 @@
             :href="route('platforms.create')"
           >
             <span class="d-none d-md-inline-block">{{
-              __("create_platform")
+              __("platforms.create")
             }}</span>
             <span class="d-md-none">{{ __("create") }}</span>
           </inertia-link>

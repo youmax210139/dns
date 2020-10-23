@@ -12,7 +12,7 @@
             />
             <div class="form-group">
               <loading-button :loading="sending" class="btn btn-primary" type="submit">
-                {{ __('create_platform') }}
+                {{ __('platforms.create') }}
               </loading-button>
             </div>
           </form>

@@ -2,51 +2,46 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Inertia\Inertia;
-use Spatie\Permission\Models\Role;
-
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
+use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+use Inertia\Inertia;
 
-class UserController extends Controller
+class RoleController extends Controller
 {
     public function index()
     {
         $fields = [
             'id' => 'id',
-            'name' => 'name',
-            'email' => 'email',
-            'created_at' => 'created_at',
-            'updated_at' => 'updated_at',
+            'name' => 'role',
+            'permission' => 'permission',
             'deleted_at' => 'deleted_at',
             'actions' => 'operation',
         ];
         if (Request::wantsJson()) {
-            return User::query()
+            return Role::query()
                 ->sort(Request::get('sort'))
-                ->filter(Request::only('search', 'role', 'trashed'))
+                ->filter(Request::only('search', 'trashed'))
                 ->paginate()
                 ->only(...array_keys($fields));
         }
 
-        return Inertia::render('Users/Index', [
-            'filters' => Request::all('search', 'role', 'trashed'),
+        return Inertia::render('Roles/Index', [
+            'filters' => Request::all('search', 'trashed'),
             'fields' => $this->getDataTableFields($fields, ['actions'], ['deleted_at']),
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Users/Create', [
-            'roles' => Role::all()->transform(function ($role) {
+        return Inertia::render('Roles/Create', [
+            'permissions' => Permission::all()->transform(function ($value) {
                 return [
-                    'label' => $role->name,
-                    'code' => $role->id,
+                    'key' => $value->id,
+                    'content' => __("all.{$value->name}"),
                 ];
             }),
         ]);

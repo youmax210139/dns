@@ -1,18 +1,49 @@
 <?php
 
 return [
+    
+    # Route Title
+    'dashboards.index' => '仪表板',
+
+    'roles.index' => '角色列表',
+    'roles.create' => '创建角色',
+    'roles.edit' => '编辑角色',
+    'roles.destroy' => '删除角色',
+    
+    'users.index' => '用户列表',
+    'users.create' => '创建用户',
+    'users.edit' => '编辑用户',
+    'users.destroy' => '删除用户',
+
+    'platforms.index' => '平台列表',
+    'platforms.create' => '创建平台',
+    'platforms.edit' => '编辑平台',
+    'platforms.destroy' => '删除平台',
+    'platforms.export' => '汇出平台',
+
+    'domains.index' => '域名列表',
+    'domains.create' => '创建域名',
+    'domains.edit' => '编辑域名',
+    'domains.destroy' => '删除域名',
+    'domains.export' => '汇出域名',
+
+    'create_success' => '创建:name成功',
+    'edit_success' => '编辑:name成功',
+    'restore' => '确定要还原该:name？',
+    'restore_success' => '还原:name成功!',
+    'delete' => '确定要删除该:name？',
+    'delete_success' => '删除:name成功',
+    'input' => '请输入:name',
+    'not_found' => ':name不存在！',
+
     'logout' => '登出',
     'view_all_messages' => '检视所有讯息',
     'create' => '创建',
-    'edit' => '编辑',
-    'input' => '请输入',
     'loading' => '加载中',
     'export' => '汇出',
     'error' => '错误',
 
-    'input_email' => '请输入邮箱',
     'email' => '邮箱',
-    'input_password' => '请输入密码',
     'password' => '密码',
     'login' => '登入',
     'signup' => '注册',
@@ -46,25 +77,10 @@ return [
     'expired_at' => '过期日期',
     'operation' => '操作',
     'main_domain' => '主域名',
-
-    'create_domain' => '创建域名',
-    'create_domain_success' => '创建域名成功',
-    'edit_domain' => '编辑域名',
-    'edit_domain_success' => '编辑域名成功',
-    'restore_domain' => '确定要还原该域名？',
-    'restore_domain_success' => '还原域名成功!',
-    'delete_domain' => '确定要删除该域名？',
-    'delete_domain_success' => '删除域名成功',
-    'input_domain' => '请输入域名',
-    'domain_not_found' => '域名不存在！',
     'domain_status_alert' => '域名告警视窗',
-    'input_remark' => '请输入附言',
 
     'platform' => '平台',
-
-    'create_platform' => '创建平台',
     'create_platform_success' => '创建平台成功',
-    'edit_platform' => '编辑平台',
     'edit_platform_success' => '编辑平台成功',
     'restore_platform' => '确定要还原该平台？',
     'restore_platform_success' => '还原平台成功',
@@ -72,6 +88,12 @@ return [
     'delete_platform_success' => '删除平台成功',
     'input_platform' => '请输入平台',
     'platform_not_found' => '平台不存在！',
+
+    'pings.create' => 'Ping在线检测',
+    'nslookups.create' => 'Nslookup在线检测',
+    'whois.create' => 'Whois域名在線查詢',
+    'traces.create' => '路由器追踪',
+    'netcats.create' => '端口在線檢測工具',
 
     'domain_or_ip' => '域名或IP地址',
     'copy_result' => '复制结果',

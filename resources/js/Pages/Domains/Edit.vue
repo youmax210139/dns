@@ -12,14 +12,39 @@
               :label="__('platform')"
               :taggable="false"
             />
-            <text-input v-model="form.name" :error="$page.errors.name" :label="__('domain')" />
-            <toggle-input v-model="form.backup" :error="$page.errors.backup" :label="__('backup')"/>
-            <toggle-input v-model="form.renew" :error="$page.errors.renew" :label="__('renew')"/>
-            <toggle-input v-model="form.enable" :error="$page.errors.enable" :label="__('enable')"/>
-            <text-input v-model="form.remark" :error="$page.errors.remark" :label="__('remark')" />
+            <text-input
+              v-model="form.name"
+              :error="$page.errors.name"
+              :label="__('domain')"
+            />
+            <toggle-input
+              v-model="form.backup"
+              :error="$page.errors.backup"
+              :label="__('backup')"
+            />
+            <toggle-input
+              v-model="form.renew"
+              :error="$page.errors.renew"
+              :label="__('renew')"
+            />
+            <toggle-input
+              v-model="form.enable"
+              :error="$page.errors.enable"
+              :label="__('enable')"
+            />
+            <text-input
+              v-model="form.remark"
+              :error="$page.errors.remark"
+              :label="__('remark')"
+              :placeholder="__('input', { name: __('remark') })"
+            />
             <div class="form-group">
-              <loading-button :loading="sending" class="btn btn-primary" type="submit">
-                {{ __('edit_domain') }}
+              <loading-button
+                :loading="sending"
+                class="btn btn-primary"
+                type="submit"
+              >
+                {{ __("domains.edit") }}
               </loading-button>
             </div>
           </form>

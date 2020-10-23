@@ -16,22 +16,25 @@
               v-model="form.name"
               :error="$page.errors.name"
               :label="__('domain')"
-              :placeholder="__('input_domain')"
+              :placeholder="__('input', { name: __('domain') })"
             />
             <toggle-input v-model="form.backup" :label="__('backup')" />
             <toggle-input v-model="form.renew" :label="__('renew')" />
             <toggle-input v-model="form.enable" :label="__('enable')" />
-            <text-input v-model="form.remark"
+            <text-input
+              v-model="form.remark"
               :error="$page.errors.remark"
               :label="__('remark')"
-              :placeholder="__('input_remark')"
+              :placeholder="__('input', { name: __('remark') })"
             />
             <div class="form-group">
               <loading-button
                 :loading="sending"
                 class="btn btn-primary"
                 type="submit"
-              >{{ __('create_domain') }}</loading-button>
+              >
+                {{ __("domains.create") }}
+              </loading-button>
             </div>
           </form>
         </div>

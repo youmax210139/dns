@@ -1,14 +1,14 @@
 <template>
   <div class="row">
     <div class="col-12">
-      <data-table :fields="fields" :api-url="route('users.index').url()" ref="userDataTable">
+      <data-table :fields="fields" :api-url="route('roles.index').url()" ref="roleDataTable">
         <template v-slot:append="props">
           <inertia-link
             class="btn btn-primary"
-            :href="route('users.create')"
+            :href="route('roles.create')"
           >
             <span class="d-none d-md-inline-block">{{
-              __("users.create")
+              __("create_role")
             }}</span>
             <span class="d-md-none">{{ __("create") }}</span>
           </inertia-link>
@@ -17,7 +17,7 @@
           <a
             v-if="props.rowData.deleted_at == null"
             class="btn btn-sm btn-info text-white"
-            :href="route(`users.edit`, props.rowData.id)"
+            :href="route(`roles.edit`, props.rowData.id)"
           >
             <i class="fas fa-edit" />
           </a>
@@ -26,8 +26,8 @@
             class="btn btn-sm btn-success text-white"
             @click="
               alert(
-                __('restore_user'),
-                route('users.restore', props.rowData.id),
+                __('restore_role'),
+                route('roles.restore', props.rowData.id),
                 'put',
                 onRestoreSuccess
               )
@@ -39,8 +39,8 @@
             class="btn btn-sm btn-danger text-white"
             @click="
               alert(
-                __('delete_user'),
-                route('users.destroy', props.rowData.id),
+                __('delete_role'),
+                route('roles.destroy', props.rowData.id),
                 'delete',
                 onDestroySuccess
               )
@@ -67,12 +67,12 @@ export default {
   },
   methods: {
     onDestroySuccess(res) {
-      this.$refs.userDataTable.reload();
-      this.$toasted.success(this.__("delete_user_success"));
+      this.$refs.roleDataTable.reload();
+      this.$toasted.success(this.__("delete_role_success"));
     },
     onRestoreSuccess(res) {
-      this.$refs.userDataTable.reload();
-      this.$toasted.success(this.__("restore_user_success"));
+      this.$refs.roleDataTable.reload();
+      this.$toasted.success(this.__("restore_role_success"));
     },
   },
 };

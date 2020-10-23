@@ -21,14 +21,14 @@
               :type="'email'"
               :error="$page.errors.email"
               :label="__('email')"
-              :placeholder="__('input_email')"
+              :placeholder="__('input', { name: __('email') })"
             />
             <text-select-input
               v-model="form.role_id"
               :error="$page.errors.role_id"
               :options="roles"
-              :placeholder="__('input_role')"
               :label="__('role')"
+              :placeholder="__('input', { name: __('role') })"
               :taggable="false"
             />
             <text-input
@@ -51,7 +51,7 @@
                 class="btn btn-primary"
                 type="submit"
               >
-                {{ __("create_user") }}
+                {{ __("users.create") }}
               </loading-button>
             </div>
           </form>

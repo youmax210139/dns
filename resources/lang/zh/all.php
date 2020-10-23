@@ -35,6 +35,8 @@ return [
     'delete_success' => '删除:name成功',
     'input' => '请输入:name',
     'not_found' => ':name不存在！',
+    'item_available' => '可选:name',
+    'item_selected' => '已选:name',
 
     'logout' => '登出',
     'view_all_messages' => '检视所有讯息',

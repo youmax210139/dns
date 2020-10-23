@@ -12,7 +12,9 @@
             />
             <dual-listbox
               v-model="form.permissions"
+              :title-left="__('item_available', {name: __('permission')})"
               :left-items="permissions"
+              :title-right="__('item_selected', {name: __('permission')})"
               :right-items="form.permissions"
               :error="$page.errors.permission"
               :label="__('permission')"

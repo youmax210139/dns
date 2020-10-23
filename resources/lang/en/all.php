@@ -35,6 +35,8 @@ return [
     'delete_success' => 'Delete :name Success!',
     'input' => 'Please input :name',
     'not_found' => ':name are not found！',
+    'item_available' => 'Available :name',
+    'item_selected' => 'Selected :name',
 
     'logout' => 'Logout',
     'view_all_messages' => 'view all messages',

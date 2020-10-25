@@ -98,7 +98,7 @@ class UserController extends Controller
         ]);
 
         $user->update(Request::only('first_name', 'last_name', 'email'));
-        $user->assignRole(Request::get('role_id'));
+        $user->syncRoles(Request::get('role_id'));
 
         if (Request::file('photo')) {
             $user->update(['photo_path' => Request::file('photo')->store('users')]);

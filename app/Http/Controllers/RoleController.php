@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Permission;
 use App\Models\Role;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Validation\Rule;
@@ -49,71 +50,67 @@ class RoleController extends Controller
     public function store()
     {
         Request::validate([
-            'first_name' => ['required', 'max:50'],
-            'last_name' => ['required', 'max:50'],
-            'email' => ['required', 'max:50', 'email', Rule::unique('users')],
-            'password' => ['required', 'confirmed'],
-            'role_id' => ['required', 'exists:roles,id'],
+            'name' => ['required', 'max:50', 'unique:roles'],
+            'permissions' => ['required', 'array'],
+            'permissions.*.key' => ['required', 'exists:permissions,id'],
         ]);
-
-        User::create([
-            'first_name' => Request::get('first_name'),
-            'last_name' => Request::get('last_name'),
-            'email' => Request::get('email'),
-            'password' => Request::get('password'),
-            'photo_path' => Request::file('photo') ? Request::file('photo')->store('users') : null,
+        $role = Role::create([
+            'name' => Request::get('name'),
         ]);
-
-        return Redirect::route('users.index')->with('success', __('all.users.create_success'));
-    }
-
-    public function edit(User $user)
-    {
-        return Inertia::render('Users/Edit', [
-            'user' => $user->only('id', 'first_name', 'last_name', 'email', 'role_id'),
-            'roles' => Role::all()->transform(function ($role) {
-                return [
-                    'label' => $role->name,
-                    'code' => $role->id,
-                ];
-            }),
-        ]);
-    }
-
-    public function update(User $user)
-    {
-        Request::validate([
-            'first_name' => ['required', 'max:50'],
-            'last_name' => ['required', 'max:50'],
-            'email' => ['required', 'max:50', 'email', Rule::unique('users')->ignore($user->id)],
-            'role_id' => ['required', 'exists:roles,id'],
-            'password' => ['nullable', 'confirmed'],
-            'photo' => ['nullable', 'image'],
-        ]);
-
-        $user->update(Request::only('first_name', 'last_name', 'email'));
-        $user->assignRole(Request::get('role_id'));
-
-        if (Request::file('photo')) {
-            $user->update(['photo_path' => Request::file('photo')->store('users')]);
-        }
-
-        if (Request::get('password')) {
-            $user->update(['password' => Request::get('password')]);
-        }
-
-        if (Request::wantsJson()) {
-            return $user;
-        }
-        return Redirect::back()->with('success', __('all.edit_success', [
-            'name' => __('all.role')
+        $role->syncPermissions(Arr::pluck(Request::get('permissions'), 'key'));
+        return Redirect::route('roles.index')->with('success', __('all.create_success', [
+            'name' => __('all.role'),
         ]));
     }
 
-    public function restore(User $user)
+    public function edit(Role $role)
     {
-        if ($user->trashed()) {
-            $user->restore();
+        $permissions = [];
+        foreach ($role->permissions as $p) {
+            $permissions[] = [
+                'key' => $p->id,
+                'content' => __("all.{$p->name}"),
+            ];
+        }
+        return Inertia::render('Roles/Edit', [
+            'role' => [
+                'id'   => $role->id,
+                'name' => $role->name,
+                'permissions' => $permissions,
+            ],
+            'permissions' => Permission::whereNotIn('id', Arr::pluck($permissions, 'key'))->get()
+                ->transform(function ($value) {
+                    return [
+                        'key' => $value->id,
+                        'content' => __("all.{$value->name}"),
+                    ];
+                }),
+        ]);
+    }
+
+    public function update(Role $role)
+    {
+        Request::validate([
+            'name' => ['required', 'max:50', Rule::unique('roles')->ignore($role->id)],
+            'permissions' => ['required', 'array'],
+            'permissions.*.key' => ['required', 'exists:permissions,id'],
+        ]);
+
+        $role->update(['name' => Request::get('name')]);
+        $role->syncPermissions(Arr::pluck(Request::get('permissions'), 'key'));
+
+        if (Request::wantsJson()) {
+            return $role;
+        }
+        return Redirect::back()->with('success', __('all.edit_success', [
+            'name' => __('all.role'),
+        ]));
+    }
+
+    public function restore(Role $role)
+    {
+        if ($role->trashed()) {
+            $role->restore();
         }
 
         if (Request::wantsJson()) {
@@ -126,12 +123,12 @@ class RoleController extends Controller
             ->withInput();
     }
 
-    public function destroy(User $user)
+    public function destroy(Role $role)
     {
-        if ($user->trashed()) {
-            $user->forceDelete();
+        if ($role->trashed()) {
+            $role->forceDelete();
         } else {
-            $user->delete();
+            $role->delete();
         }
 
         if (Request::wantsJson()) {

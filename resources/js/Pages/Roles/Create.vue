@@ -5,8 +5,8 @@
         <div class="card-body">
           <form @submit.prevent="submit">
             <text-input
-              v-model="form.first_name"
-              :error="$page.errors.first_name"
+              v-model="form.name"
+              :error="$page.errors.name"
               :label="__('role')"
               :placeholder="__('input', {name: __('role')})"
             />

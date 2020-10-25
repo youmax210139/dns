@@ -61,6 +61,8 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'remember' => \Reinink\RememberQueryStrings::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        # Permission Middleware
+        'permission' => \App\Http\Middleware\PermissionMiddleware::class,
         # Locale Middleware
         'localize'                => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
         'localizationRedirect'    => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,

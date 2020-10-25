@@ -27,7 +27,7 @@
             class="btn btn-sm btn-success text-white"
             @click="
               alert(
-                __('restore_role'),
+                __('restore', {name: __('role')}),
                 route('roles.restore', props.rowData.id),
                 'put',
                 onRestoreSuccess
@@ -40,7 +40,7 @@
             class="btn btn-sm btn-danger text-white"
             @click="
               alert(
-                __('delete_role'),
+                __('delete', {name: __('role')}),
                 route('roles.destroy', props.rowData.id),
                 'delete',
                 onDestroySuccess

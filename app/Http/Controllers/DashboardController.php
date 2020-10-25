@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Domain;
 use App\Models\Platform;
 use Inertia\Inertia;
-
+use Auth;
 class DashboardController extends Controller
 {
     public function index()

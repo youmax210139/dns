@@ -132,7 +132,6 @@ export default {
     return {
       emailActive: false,
       passwordActive: false,
-      loading: false,
       sending: false,
       form: {
         email: "admin@gmail.com",
@@ -151,17 +150,12 @@ export default {
     },
     submit() {
       this.sending = true;
-      this.emailActive = false;
-      this.passwordActive = false;
-      this.$inertia
-        .post(this.route("login.attempt"), {
-          email: this.form.email,
-          password: this.form.password,
-          remember: this.form.remember,
-        })
-        .then(() => {
-          this.sending = false;
-        });
+      this.emailActive = this.passwordActive = false;
+      this.$inertia.post(this.route("login.attempt"), {
+        email: this.form.email,
+        password: this.form.password,
+        remember: this.form.remember,
+      });
     },
   },
 };
@@ -189,20 +183,13 @@ export default {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-.login-page
-  .card-login.card-plain
-  .form-group.form-group-no-border.input-group-focus
-  .input-group-text,
-.login-page
-  .card-login.card-plain
-  .input-group.form-group-no-border.input-group-focus
-  .input-group-text,
-.login-page
-  .card-login.card-plain
-  .input-group.form-group-no-border
-  .form-control:focus {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+.login-page .card-login.card-plain {
+  .form-group.form-group-no-border.input-group-focus .input-group-text,
+  .input-group.form-group-no-border.input-group-focus .input-group-text,
+  .input-group.form-group-no-border.input-group-focus .form-control{
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+  }
 }
 .login-page
   .card-login.card-plain

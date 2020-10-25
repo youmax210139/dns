@@ -3,7 +3,7 @@
     <label v-if="label" class="col-sm-12 form-control-label" :for="id"
       >{{ label }}:</label
     >
-    <div class="col-sm-12">
+    <div class="col-sm-12" @click.stop="click">
       <vue-list-picker
         :content-class="contentClass"
         :button-class="buttonClass"
@@ -11,7 +11,7 @@
         :right-items="right"
         :title-left="titleLeft"
         :title-right="titleRight"
-        :minHeight="minHeight"
+        :min-height="minHeight"
         :height="height"
       >
         <template v-slot:moveAllLeft>
@@ -96,13 +96,9 @@ export default {
     };
   },
   methods: {
-    select(value) {
-      // console.log(value);
-      if (value instanceof Object) {
-        return this.$emit("input", value["code"]);
-      }
-      return this.$emit("input", value);
-    },
+    click(event){
+      event.preventDefault()
+    }
   },
 };
 </script>

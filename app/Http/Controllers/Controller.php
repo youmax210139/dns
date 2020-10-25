@@ -6,85 +6,36 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use LaravelLocalization;
 use Route;
+use Str;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    protected $shareData = [];
+
+    protected $routeName = '';
+
     public function __construct()
     {
-        Inertia::share([
-            'breadcrumb' => $this->getBreadCrumb(),
+        $this->routeName = Route::currentRouteName();
+        $this->middleware('permission:');
+        $this->setupLocale();
+        Inertia::share(array_merge($this->shareData, [
             'title' => $this->getPageTitle(),
-            'locale_nav' => $this->getLocaleNav(),
-            'sidebar' => $this->getSidebar(),
-        ]);
-
+        ]));
     }
 
-    protected function getSidebar()
+    protected function setupLocale()
     {
-        return [
-            [
-                "label" => __('sidebar.dashboard'),
-                "icon" => "business_chart-bar-32",
-                "route" => "dashboards.index",
-            ],
-            [
-                "label" => __('sidebar.role'),
-                "icon" => "business_badge",
-                "route" => "roles.index",
-            ],
-            [
-                "label" => __('sidebar.user'),
-                "icon" => "users_single-02",
-                "route" => "users.index",
-            ],
-            [
-                "label" => __('sidebar.platform'),
-                "icon" => "business_globe",
-                "route" => "platforms.index",
-            ],
-            [
-                "label" => __('sidebar.domain'),
-                "icon" => "business_money-coins",
-                "route" => "domains.index",
-            ],
-            [
-                "label" => __('sidebar.ping'),
-                "icon" => "media-2_sound-wave",
-                "route" => "pings.create",
-            ],
-            [
-                "label" => __('sidebar.nslookup'),
-                "icon" => "gestures_tap-01",
-                "route" => "nslookups.create",
-            ],
-            [
-                "label" => __('sidebar.trace'),
-                "icon" => "education_paper",
-                "route" => "traces.create",
-            ],
-            [
-                "label" => __('sidebar.whois'),
-                "icon" => "travel_info",
-                "route" => "whois.create",
-            ],
-            [
-                "label" => __('sidebar.netcat'),
-                "icon" => "ui-2_settings-90",
-                "route" => "netcats.create",
-            ],
-        ];
-    }
-
-    protected function getLocaleNav()
-    {
-
-        return collect(LaravelLocalization::getSupportedLocales())
+        if (Str::contains($this->routeName, ['login', 'logout'])) {
+            return;
+        }
+        $this->shareData['locale_nav'] = collect(LaravelLocalization::getSupportedLocales())
             ->transform(function ($item, $locale) {
                 return [
                     'href' => route('locales.index', $locale),

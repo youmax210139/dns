@@ -4,18 +4,28 @@
       <div class="card">
         <div class="card-body">
           <form @submit.prevent="submit">
-            <text-input v-model="form.first_name" :error="$page.errors.first_name" :label="__('first_name')" />
-            <text-input v-model="form.last_name" :error="$page.errors.last_name" :label="__('last_name')" />
-            <text-input v-model="form.email" :type="'email'" :error="$page.errors.email" :label="__('email')" />
-            <text-select-input v-model="form.role_id" :error="$page.errors.role_id" :label="__('role')" :options="roles" :taggable="false"/>
-            <text-input v-model="form.password" :type="'password'" :error="$page.errors.password" :label="__('password')" />
-            <text-input v-model="form.password_confirmation" :type="'password'" :error="$page.errors.password_confirmation" :label="__('password_confirmation')" />
+            <text-input
+              v-model="form.name"
+              :error="$page.errors.name"
+              :label="__('role')"
+              :placeholder="__('input', { name: __('role') })"
+            />
+            <dual-listbox
+              v-model="form.permissions"
+              :title-left="__('item_available', { name: __('permission') })"
+              :left-items="permissions"
+              :title-right="__('item_selected', { name: __('permission') })"
+              :right-items="form.permissions"
+              :error="$page.errors.permission"
+              :label="__('permission')"
+            />
             <div class="form-group">
               <loading-button
                 :loading="sending"
                 class="btn btn-primary"
                 type="submit"
-              >{{ __('users.edit') }}</loading-button>
+                >{{ __("roles.edit") }}
+              </loading-button>
             </div>
           </form>
         </div>
@@ -27,28 +37,24 @@
 <script>
 import LoadingButton from "@/Shared/Forms/LoadingButton";
 import TextInput from "@/Shared/Forms/TextInput";
-import TextSelectInput from "@/Shared/Forms/TextSelectInput";
+import DualListbox from "@/Shared/Forms/DualListbox";
 
 export default {
   components: {
     LoadingButton,
     TextInput,
-    TextSelectInput,
+    DualListbox,
   },
   props: {
-    user: Object,
-    roles: Array,
+    role: Object,
+    permissions: Array,
   },
   data() {
     return {
       sending: false,
       form: {
-        first_name: this.user.first_name,
-        last_name: this.user.last_name,
-        email: this.user.email,
-        password: null,
-        password_confirmation: null,
-        role_id: this.user.role_id,
+        name: this.role.name,
+        permissions: this.role.permissions,
       },
     };
   },
@@ -56,7 +62,7 @@ export default {
     submit() {
       this.sending = true;
       this.$inertia
-        .put(this.route("users.update", this.user.id), this.form)
+        .put(this.route("roles.update", this.role.id), this.form)
         .then(() => (this.sending = false));
     },
   },

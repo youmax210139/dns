@@ -65,9 +65,8 @@ class PermissionMiddleware
         ];
     }
 
-    protected function getPermissionViaRoute()
+    protected function getPermissionViaRoute($routeName)
     {
-        $routeName = Route::currentRouteName();
         $routeName = str_replace('.update', '.edit', $routeName);
         $routeName = str_replace('.store', '.create', $routeName);
         $routeName = str_replace('.restore', '.destroy', $routeName);
@@ -83,8 +82,8 @@ class PermissionMiddleware
      */
     public function handle($request, Closure $next, $permission, $guard = null)
     {
-        $permission = $this->getPermissionViaRoute();
-        switch ($permission) {
+        $routeName = Route::currentRouteName();
+        switch ($routeName ) {
             case 'login':
             case 'logout':
             case 'login.attempt':
@@ -92,6 +91,8 @@ class PermissionMiddleware
             case 'images.show':
                 return $next($request);
         }
+
+        $permission = $this->getPermissionViaRoute($routeName);
         if (app('auth')->guard($guard)->guest()) {
             throw UnauthorizedException::notLoggedIn();
         }
@@ -109,7 +110,7 @@ class PermissionMiddleware
             Inertia::share('sidebar', $sidebar);
             return $next($request);
         }
-
+        
         throw UnauthorizedException::forPermissions([$permission]);
     }
 }

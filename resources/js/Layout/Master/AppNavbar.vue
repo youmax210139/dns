@@ -1,5 +1,7 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-transparent bg-primary navbar-absolute">
+  <nav
+    class="navbar navbar-expand-lg navbar-transparent bg-primary navbar-absolute"
+  >
     <div class="container-fluid">
       <div class="navbar-wrapper">
         <div class="navbar-toggle">
@@ -41,7 +43,9 @@
             >
               <i class="far fa-bell" v-show="notifications.length > 0" />
               <p>
-                <span v-show="notifications.length > 0">{{ notifications.length }}</span>
+                <span v-show="notifications.length > 0">{{
+                  notifications.length
+                }}</span>
               </p>
             </a>
             <ul
@@ -49,11 +53,16 @@
               class="dropdown-menu"
               v-show="notifications.length > 0"
             >
-              <li v-for="(note,index) in notifications" :key="note.id">
+              <li v-for="(note, index) in notifications" :key="note.id">
                 <a rel="nofollow" href="#" class="dropdown-item">
                   <div class="notification">
                     <div class="notification-content">
-                      <i :class="classObject.notification[note.type] || 'fa fa-comments bg-gray'" />
+                      <i
+                        :class="
+                          classObject.notification[note.type] ||
+                          'fa fa-comments bg-gray'
+                        "
+                      />
                       {{ note.message }}
                     </div>
                     <div class="notification-time">
@@ -63,8 +72,12 @@
                 </a>
               </li>
               <li>
-                <a rel="nofollow" href="#" class="dropdown-item all-notifications text-center">
-                  <strong>{{ __('view_all_messages') }}</strong>
+                <a
+                  rel="nofollow"
+                  href="#"
+                  class="dropdown-item all-notifications text-center"
+                >
+                  <strong>{{ __("view_all_messages") }}</strong>
                 </a>
               </li>
             </ul>
@@ -79,13 +92,22 @@
               aria-expanded="false"
               class="nav-link language dropdown-toggle"
             >
-              <img :src="`/img/flags/16/${currentLocale.locale}.png`" :alt="currentLocale.native " />
-              <span class="d-none d-sm-inline-block">{{ currentLocale.native }}</span>
+              <img
+                :src="`/img/flags/16/${currentLocale.locale}.png`"
+                :alt="currentLocale.native"
+              >
+              <span class="d-none d-sm-inline-block">{{
+                currentLocale.native
+              }}</span>
             </a>
             <ul aria-labelledby="languages" class="dropdown-menu">
               <li v-for="(item, index) in $page.locale_nav" :key="index">
                 <a rel="nofollow" :href="item.href" class="dropdown-item">
-                  <img :src="`/img/flags/16/${item.locale}.png`" :alt="item.native " class="mr-2" />
+                  <img
+                    class="mr-2"
+                    :src="`/img/flags/16/${item.locale}.png`"
+                    :alt="item.native"
+                  >
                   {{ item.native }}
                 </a>
               </li>
@@ -93,8 +115,12 @@
           </li>
           <!-- Logout    -->
           <li class="nav-item">
-            <inertia-link class="nav-link logout" :href="route('logout')" method="post">
-              <span class="d-none d-sm-inline">{{ __('logout') }}</span>
+            <inertia-link
+              class="nav-link logout"
+              :href="route('logout')"
+              method="post"
+            >
+              <span class="d-none d-sm-inline">{{ __("logout") }}</span>
               <i class="fas fa-sign-out-alt" />
             </inertia-link>
           </li>

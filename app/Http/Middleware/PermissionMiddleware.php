@@ -89,6 +89,7 @@ class PermissionMiddleware
             case 'logout':
             case 'login.attempt':
             case 'locales.index':
+            case 'images.show':
                 return $next($request);
         }
         if (app('auth')->guard($guard)->guest()) {

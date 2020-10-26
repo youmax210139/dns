@@ -17,12 +17,15 @@ Route::post('login')->name('login.attempt')->uses('Auth\LoginController@login')-
 Route::post('logout')->name('logout')->uses('Auth\LoginController@logout');
 
 // Users
+Route::match(['put', 'patch'], '/users/restore/{user}', 'UserController@restore')->name('users.restore')->middleware('auth');
 Route::resource('users', 'UserController')->middleware('auth');
-Route::put('users/{user}/restore')->name('users.restore')->uses('UserController@restore')->middleware('auth');
 
 // Roles
+Route::match(['put', 'patch'], '/roles/restore/{role}', 'RoleController@restore')->name('roles.restore')->middleware('auth');
 Route::resource('roles', 'RoleController')->middleware('auth');
-Route::put('roles/{role}/restore')->name('roles.restore')->uses('RoleController@restore')->middleware('auth');
+
+// Logs
+Route::resource('logs', 'LogController')->only(['index'])->middleware('auth');
 
 // Images
 Route::get('/img/{path}', 'ImagesController@show')->where('path', '.*')->name('images.show');

@@ -1,5 +1,5 @@
 <template>
-  <a class="navbar-brand" :href="route($page.title)">
+  <a class="navbar-brand">
     {{ __($page.title) }}
   </a>
 </template>

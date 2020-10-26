@@ -2,26 +2,25 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Models\Role as Model;
 
 class Role extends Model
 {
-    public function getCreatedAtAttribute($value)
-    {
-        return Carbon::parse($value)->format('Y-m-d H:i:s');
-    }
+    use SoftDeletes;
 
-    public function getUpdatedAtAttribute($value)
+    public function resolveRouteBinding($value, $field = null)
     {
-        return Carbon::parse($value)->format('Y-m-d H:i:s');
+        return in_array(SoftDeletes::class, class_uses($this))
+        ? $this->where($this->getRouteKeyName(), $value)->withTrashed()->first()
+        : parent::resolveRouteBinding($value);
     }
 
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where(function ($query) use ($search) {
-                $query->where('name', 'like', '%'.$search.'%');
+                $query->where('name', 'like', '%' . $search . '%');
             });
         })->when($filters['trashed'] ?? null, function ($query, $trashed) {
             if ($trashed === 'with') {

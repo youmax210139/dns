@@ -25,9 +25,7 @@ class Controller extends BaseController
         $this->routeName = Route::currentRouteName();
         $this->middleware('permission:');
         $this->setupLocale();
-        Inertia::share(array_merge($this->shareData, [
-            'title' => $this->getPageTitle(),
-        ]));
+        $this->setupPageTitle();
     }
 
     protected function setupLocale()
@@ -35,7 +33,7 @@ class Controller extends BaseController
         if (Str::contains($this->routeName, ['login', 'logout'])) {
             return;
         }
-        $this->shareData['locale_nav'] = collect(LaravelLocalization::getSupportedLocales())
+        Inertia::share('locale_nav', collect(LaravelLocalization::getSupportedLocales())
             ->transform(function ($item, $locale) {
                 return [
                     'href' => route('locales.index', $locale),
@@ -43,7 +41,8 @@ class Controller extends BaseController
                     'active' => LaravelLocalization::getCurrentLocale() == $locale,
                     'locale' => $locale,
                 ];
-            })->values();
+            })->values()
+        );
     }
 
     protected function getBreadCrumb()
@@ -70,9 +69,9 @@ class Controller extends BaseController
         return $breadcrumb;
     }
 
-    protected function getPageTitle()
+    protected function setupPageTitle()
     {
-        return __('all.' . Route::currentRouteName());
+        Inertia::share('title',  Route::currentRouteName());
     }
 
     protected function getDataTableFields(array $fields,

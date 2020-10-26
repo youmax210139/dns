@@ -123,7 +123,6 @@
 <script>
 import Layout from "@/Layout/Login/Layout";
 export default {
-  metaInfo: { title: "Login" },
   layout: Layout,
   props: {
     errors: Object,

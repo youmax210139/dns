@@ -12,7 +12,6 @@ try {
 }
 
 import Vue from 'vue'
-import VueMeta from 'vue-meta'
 import { InertiaApp } from '@inertiajs/inertia-vue'
 import PortalVue from 'portal-vue'
 import clipboard from 'clipboard'
@@ -38,7 +37,6 @@ Vue.prototype.$http = Axios
 Vue.mixin({ methods: { route: window.route } })
 Vue.use(InertiaApp)
 Vue.use(PortalVue)
-Vue.use(VueMeta)
 
 let app = document.getElementById('app')
 let page = JSON.parse(app.dataset.page)
@@ -49,15 +47,15 @@ Vue.mixin({
     copy() {
       Vue.prototype.$toasted.success(this.__('copy_success'));
     },
-    alert(message, route, method, success, error=(err)=>{}) {
+    alert(message, route, method, success, error = (err) => { }) {
       if (confirm(message)) {
         this.$http({
-            url: route,
-            method: method
-          })
-          .then( res=>{
+          url: route,
+          method: method
+        })
+          .then(res => {
             success(res)
-          }).catch( err=>{
+          }).catch(err => {
             console.error(err)
             Vue.prototype.$toasted.error(this.__("error"))
             error(err)
@@ -109,9 +107,6 @@ Vue.mixin({
 });
 
 new Vue({
-  metaInfo: {
-    title: `${page.props['app']['name']} - ${page.props['title']}`
-  },
   store,
   render: h => h(InertiaApp, {
     props: {

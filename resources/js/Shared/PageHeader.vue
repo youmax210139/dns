@@ -1,5 +1,7 @@
 <template>
-  <a class="navbar-brand" href="#">{{ $page.title }}</a>
+  <a class="navbar-brand" :href="route($page.title)">
+    {{ __($page.title) }}
+  </a>
 </template>
 
 <script>

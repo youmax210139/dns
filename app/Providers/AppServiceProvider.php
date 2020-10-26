@@ -33,7 +33,6 @@ class AppServiceProvider extends ServiceProvider
 
         Inertia::share([
             'app' => [
-                'name' => config('app.name'),
                 'ip' => Cache::remember('ip' . md5(env('APP_URL')), 86400, function () {
                     return file_get_contents("http://ipecho.net/plain");
                 }),

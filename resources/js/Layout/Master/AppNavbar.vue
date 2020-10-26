@@ -95,7 +95,7 @@
               <img
                 :src="`/img/flags/16/${currentLocale.locale}.png`"
                 :alt="currentLocale.native"
-              >
+              />
               <span class="d-none d-sm-inline-block">{{
                 currentLocale.native
               }}</span>
@@ -107,7 +107,7 @@
                     class="mr-2"
                     :src="`/img/flags/16/${item.locale}.png`"
                     :alt="item.native"
-                  >
+                  />
                   {{ item.native }}
                 </a>
               </li>
@@ -180,3 +180,8 @@ export default {
   methods: {},
 };
 </script>
+<style lang="scss" scoped>
+.nav-item:hover {
+  cursor: pointer;
+}
+</style>

@@ -15,6 +15,8 @@ return [
     'users.edit' => 'Edit User',
     'users.destroy' => 'Delete User',
 
+    'logs.index' => 'Log List',
+
     'platforms.index' => 'Platform List',
     'platforms.create' => 'Create Platform',
     'platforms.edit' => 'Edit Platform',

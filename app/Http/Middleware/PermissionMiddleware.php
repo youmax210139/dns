@@ -13,52 +13,46 @@ class PermissionMiddleware
     {
         return [
             [
-                "label" => __('sidebar.dashboard'),
                 "icon" => "business_chart-bar-32",
                 "route" => "dashboards.index",
             ],
             [
-                "label" => __('sidebar.role'),
                 "icon" => "business_badge",
                 "route" => "roles.index",
             ],
             [
-                "label" => __('sidebar.user'),
                 "icon" => "users_single-02",
                 "route" => "users.index",
             ],
             [
-                "label" => __('sidebar.platform'),
+                "icon" => "files_paper",
+                "route" => "logs.index",
+            ],
+            [
                 "icon" => "business_globe",
                 "route" => "platforms.index",
             ],
             [
-                "label" => __('sidebar.domain'),
                 "icon" => "business_money-coins",
                 "route" => "domains.index",
             ],
             [
-                "label" => __('sidebar.ping'),
                 "icon" => "media-2_sound-wave",
                 "route" => "pings.create",
             ],
             [
-                "label" => __('sidebar.nslookup'),
                 "icon" => "gestures_tap-01",
                 "route" => "nslookups.create",
             ],
             [
-                "label" => __('sidebar.trace'),
                 "icon" => "education_paper",
                 "route" => "traces.create",
             ],
             [
-                "label" => __('sidebar.whois'),
                 "icon" => "travel_info",
                 "route" => "whois.create",
             ],
             [
-                "label" => __('sidebar.netcat'),
                 "icon" => "ui-2_settings-90",
                 "route" => "netcats.create",
             ],
@@ -102,6 +96,7 @@ class PermissionMiddleware
             foreach ($this->getMenus() as $menu) {
                 foreach ($permissions as $p) {
                     if ($menu['route'] == $p) {
+                        $menu['label'] = __('all.'. $p);
                         $sidebar[] = $menu;
                         break;
                     }
@@ -110,7 +105,7 @@ class PermissionMiddleware
             Inertia::share('sidebar', $sidebar);
             return $next($request);
         }
-        
+
         throw UnauthorizedException::forPermissions([$permission]);
     }
 }

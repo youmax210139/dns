@@ -15,6 +15,8 @@ return [
     'users.edit' => '编辑用户',
     'users.destroy' => '删除用户',
 
+    'logs.index' => '日志列表',
+
     'platforms.index' => '平台列表',
     'platforms.create' => '创建平台',
     'platforms.edit' => '编辑平台',

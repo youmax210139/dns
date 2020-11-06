@@ -16,7 +16,7 @@
             </div>
           </div>
           <slot slot="append">
-            <slot name="append" v-bind="{props:$props,data:$data}"/>
+            <slot name="append" v-bind="{ props: $props, data: $data }" />
           </slot>
         </search-filter>
       </slot>
@@ -29,11 +29,12 @@
           :fields="fields"
           :css="css.table"
           :multi-sort="multiSort"
-          data-path="data"
+          :data-path="dataPath"
           pagination-path=""
           :data-manager="dataManager"
           :append-params="form"
           @vuetable:pagination-data="onPaginationData"
+          @vuetable:row-clicked="rowClicked"
         >
           <template
             v-for="(_, slot) of $scopedSlots"
@@ -95,17 +96,25 @@ export default {
       type: Boolean,
       default: true,
     },
-    infoTemplate:{
+    infoTemplate: {
       type: String,
       default: "Displaying {from} to {to} of {total} items",
     },
+    dataPath: {
+      type: String,
+      default: "data",
+    },
+    tableHeaderClass:{
+      type: String,
+      default: 'text-left font-bold'
+    }
   },
   data() {
     return {
       css: {
         table: {
           tableWrapper: "table-responsive",
-          tableHeaderClass: "text-left font-bold",
+          tableHeaderClass: this.tableHeaderClass,
           tableBodyClass: "",
           tableClass: "table table-striped table-hover mb-0",
           loadingClass: "loading",
@@ -138,10 +147,7 @@ export default {
           },
         },
       },
-      form: {
-        search: this.filters.search,
-        trashed: this.filters.trashed,
-      },
+      form: this.filters,
     };
   },
   watch: {
@@ -190,10 +196,14 @@ export default {
       this.form = mapValues(this.form, () => null);
     },
     refresh() {
-      this.$refs.vuetable.refresh()
+      this.$refs.vuetable.refresh();
     },
-    reload(){
-      this.$refs.vuetable.reload()
+    reload() {
+      this.$refs.vuetable.reload();
+    },
+    rowClicked(data)
+    {
+      this.$emit('vuetable:row-clicked', data)
     }
   },
 };

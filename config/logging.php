@@ -37,13 +37,20 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['mysql'],
             'ignore_exceptions' => false,
         ],
 
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
+            'level' => 'debug',
+        ],
+
+        'mysql' => [
+            'driver'  => 'custom',
+            'handler' => App\Logging\MySQLLoggingHandler::class,
+            'via' => App\Logging\MySQLLogger::class,
             'level' => 'debug',
         ],
 

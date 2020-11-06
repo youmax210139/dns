@@ -177,6 +177,8 @@ return [
 
         App\Services\Whois\WhoisServiceProvider::class,
         App\Services\Http\HttpServiceProvider::class,
+
+        App\Services\LogViewer\LogViewerServiceProvider::class,
     ],
 
     /*

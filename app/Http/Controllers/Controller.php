@@ -6,7 +6,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use LaravelLocalization;
 use Route;
@@ -34,14 +33,14 @@ class Controller extends BaseController
             return;
         }
         Inertia::share('locale_nav', collect(LaravelLocalization::getSupportedLocales())
-            ->transform(function ($item, $locale) {
-                return [
-                    'href' => route('locales.index', $locale),
-                    'native' => $item['native'],
-                    'active' => LaravelLocalization::getCurrentLocale() == $locale,
-                    'locale' => $locale,
-                ];
-            })->values()
+                ->transform(function ($item, $locale) {
+                    return [
+                        'href' => route('locales.index', $locale),
+                        'native' => $item['native'],
+                        'active' => LaravelLocalization::getCurrentLocale() == $locale,
+                        'locale' => $locale,
+                    ];
+                })->values()
         );
     }
 
@@ -71,24 +70,21 @@ class Controller extends BaseController
 
     protected function setupPageTitle()
     {
-        Inertia::share('title',  Route::currentRouteName());
+        Inertia::share('title', Route::currentRouteName());
     }
 
     protected function getDataTableFields(array $fields,
         array $unsortFields = ['actions'],
-        array $except = []) {
-        return collect($fields)->except($except)->transform(function ($field, $key) use ($unsortFields) {
-            if (in_array($key, $unsortFields)) {
-                return [
-                    'name' => $key,
-                    'title' => __('all.' . $field),
-                ];
+        array $except = [],
+        array $extras = []) {
+        return collect($fields)->except($except)->transform(function ($field, $key) use ($unsortFields, $extras) {
+            if (!in_array($key, $unsortFields)) {
+                $extras['sortField' ] = $key;
             }
-            return [
+            return array_merge([
                 'name' => $key,
-                'title' => __('all.' . $field),
-                'sortField' => $key,
-            ];
+                'title' => str_replace('all.', '', __('all.' . $field)),
+            ], $extras);
         })->values();
     }
 }

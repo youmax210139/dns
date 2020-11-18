@@ -32,6 +32,8 @@
         </template>
         <template v-slot:level="props">
           <span class="capitalize" :class="props.rowData.level_class">
+            <span class="fa" :class="`fa-${props.rowData.level_img}`" aria-hidden="true" />
+            &nbsp;&nbsp;
             {{ props.rowData.level_name }}
           </span>
         </template>
@@ -129,7 +131,8 @@ h1 {
 a.llv-active {
   z-index: 2;
   background-color: #f5f5f5;
-  border-color: #777;
+  border-color: inherit;
+  border-radius: unset;
 }
 .list-group-item {
   word-break: break-word;

@@ -12,12 +12,10 @@ class LogViewer
      */
     protected $file;
 
-
     /**
      * @var Level level
      */
     protected $level;
-
 
     public function __construct()
     {
@@ -29,7 +27,6 @@ class LogViewer
     {
         return $this->encrypted($this->file);
     }
-
 
     /**
      * @param bool $basename
@@ -79,14 +76,16 @@ class LogViewer
         }
     }
 
-    public function all()
+    public function all($sort = '', $filter = [])
     {
         return LogRepository::setTable($this->file)
-            ->orderby('datetime', 'desc')
+            ->sort($sort)
+            ->filter($filter)
             ->paginate()
-            ->transform(function($v){
+            ->transform(function ($v) {
                 return array_merge([
-                    
+                    'level_class' => $this->level->cssClass($v->level_name),
+                    'level_img' => $this->level->img($v->level_name),
                 ], $v->toArray());
             });
     }

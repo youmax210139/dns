@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\LogViewer\LogViewer;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
-use App\Services\LogViewer\LogViewer;
 
 class LogController extends Controller
 {
@@ -18,11 +18,10 @@ class LogController extends Controller
 
     public function index()
     {
-        $folderFiles = [];
         if (Request::has('f')) {
             $this->log_viewer->setFolder(Crypt::decrypt($this->request::get('f')));
-            $folderFiles = $this->log_viewer->getFolderFiles(true);
         }
+
         if (Request::has('l')) {
             $this->log_viewer->setFile(Crypt::decrypt(Request::input('l')));
         }
@@ -32,16 +31,13 @@ class LogController extends Controller
         }
 
         $standardFormat = true;
-        if($standardFormat)
-        {
+        if ($standardFormat) {
             $fields = [
                 'level' => 'Level',
                 'datetime' => 'Date',
                 'message' => 'Content',
             ];
-        }
-        else
-        {
+        } else {
             $fields = [
                 'line_no' => 'Line number',
                 'content' => 'Content',
@@ -49,9 +45,8 @@ class LogController extends Controller
         }
 
         if (Request::wantsJson()) {
-            return $this->log_viewer->all();
+            return $this->log_viewer->all(Request::get('sort'), Request::only('search'));
         }
-
         return Inertia::render('Logs/Index', [
             'filters' => Request::all('f', 'l'),
             'fields' => $this->getDataTableFields($fields, ['actions'], ['standardFormat']),

@@ -54,7 +54,7 @@ class Level
      */
     public function img($level)
     {
-        return $this->levels_imgs[$level];
+        return $this->levels_imgs[strtolower($level)];
     }
 
     /**
@@ -63,6 +63,6 @@ class Level
      */
     public function cssClass($level)
     {
-        return $this->levels_classes[$level];
+        return $this->levels_classes[strtolower($level)];
     }
 }

@@ -25,14 +25,40 @@
         @vuetable:row-clicked="rowClicked"
       >
         <template v-slot:header="props">
-          <a href=""> <span class="fa fa-download"></span> Download file </a>
-          <a id="delete-log" href="">
-            <span class="fa fa-trash"></span> Delete file
-          </a>
+          <div class="row">
+            <div class="col-6">
+              <form class="form" style="margin: 10px 0">
+                <div class="form-group">
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    type="text"
+                    name="search"
+                    placeholder="Search…"
+                    v-model="form.search"
+                  />
+                </div>
+              </form>
+            </div>
+            <div class="col-6 text-right">
+              <a href="" class="btn btn-primary">
+                <span class="fa fa-download" />
+                Download file
+              </a>
+              <a id="delete-log" href="" class="btn btn-primary">
+                <span class="fa fa-trash" />
+                Delete file
+              </a>
+            </div>
+          </div>
         </template>
         <template v-slot:level="props">
           <span class="capitalize" :class="props.rowData.level_class">
-            <span class="fa" :class="`fa-${props.rowData.level_img}`" aria-hidden="true" />
+            <span
+              class="fa"
+              :class="`fa-${props.rowData.level_img}`"
+              aria-hidden="true"
+            />
             &nbsp;&nbsp;
             {{ props.rowData.level_name }}
           </span>
@@ -72,6 +98,7 @@
 
 <script>
 import DataTable from "@/Shared/Tables/DataTable";
+import throttle from "lodash/throttle";
 
 export default {
   components: {
@@ -83,6 +110,19 @@ export default {
     files: Array,
     current_file: Object,
   },
+  data() {
+    return {
+      form: this.filters,
+    };
+  },
+  watch: {
+    form: {
+      handler: throttle(function () {
+        this.$nextTick(() => this.$refs.logDataTable.refresh());
+      }, 150),
+      deep: true,
+    },
+  },
   mounted() {
     $(".table-container tr").on("click", function () {
       console.log("#" + $(this).data("display"));
@@ -92,6 +132,7 @@ export default {
       return confirm("Are you sure?");
     });
   },
+
   methods: {
     rowClicked(data) {
       let ref = `#stack${data.index}`;

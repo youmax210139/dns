@@ -41,7 +41,7 @@
               </form>
             </div>
             <div class="col-6 text-right">
-              <a href="" class="btn btn-primary">
+              <a class="btn btn-primary" :href="`?dl=${current_file.encrypted}&search=${form.search||''}`">
                 <span class="fa fa-download" />
                 Download file
               </a>

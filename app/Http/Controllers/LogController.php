@@ -6,6 +6,7 @@ use App\Services\LogViewer\LogViewer;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
+use App\Exports\LogExport;
 
 class LogController extends Controller
 {
@@ -18,10 +19,10 @@ class LogController extends Controller
 
     public function index()
     {
-        if (Request::has('f')) {
-            $this->log_viewer->setFolder(Crypt::decrypt($this->request::get('f')));
+        if (Request::has('dl')) {
+            return new LogExport(Crypt::decrypt(Request::input('dl')));
         }
-
+        
         if (Request::has('l')) {
             $this->log_viewer->setFile(Crypt::decrypt(Request::input('l')));
         }
@@ -58,11 +59,9 @@ class LogController extends Controller
 
     private function earlyReturn()
     {
-        if (Request::has('dl')) {
-            return response()->download(Crypt::decrypt(Request::input('dl')));
-        } elseif (Request::has('clean')) {
-            app('files')->put(Crypt::decrypt(Request::input('clean'), ''));
-            return $this->redirect(url()->previous());
+        if (Request::has('clean')) {
+            // app('files')->put(Crypt::decrypt(Request::input('clean'), ''));
+            // return $this->redirect(url()->previous());
         } elseif (Request::has('del')) {
             $this->log_viewer->delete(Crypt::decrypt(Request::input('del')));
             return $this->redirect(Request::url());

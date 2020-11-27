@@ -349,6 +349,8 @@ return [
         'en/platforms/export',
         'zh/img/*',
         'en/img/*',
+        'zh/logs',
+        'en/logs',
     ],
 
 ];

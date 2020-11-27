@@ -3,35 +3,15 @@
 namespace App\Exports;
 
 use App\Models\Domain;
-use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Support\Facades\Request;
-use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Excel;
-use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\WithMapping;
 
-class DomainExport implements FromCollection, Responsable, WithHeadings, WithMapping
+class DomainExport extends BaseExport
 {
-    use Exportable;
-
     /**
      * It's required to define the fileName within
      * the export class when making use of Responsable.
      */
-    private $fileName = 'domains.xlsx';
-
-    /**
-     * Optional Writer Type
-     */
-    private $writerType = Excel::XLSX;
-
-    /**
-     * Optional headers
-     */
-    private $headers = [
-        'Content-Type' => 'text/csv',
-    ];
+    protected $fileName = 'domains.xlsx';
 
     protected $fields = [
         'id' => 'id',
@@ -46,22 +26,15 @@ class DomainExport implements FromCollection, Responsable, WithHeadings, WithMap
         'expired_at' => 'expired_at',
     ];
 
-    public function headings(): array
-    {
-        return collect(array_values($this->fields))->map(function($v){
-            return __($v);
-        })->toArray();
-    }
-
     public function map($domain): array
     {
-        return collect(array_keys($this->fields))->map(function($v) use ($domain){
-            switch($v){
+        return collect(array_keys($this->fields))->map(function ($v) use ($domain) {
+            switch ($v) {
                 case 'usage':
-                    return $domain->$v. '%';
+                    return $domain->$v . '%';
                 case 'enable':
                 case 'backup':
-                    return $domain->$v? 'Y' : 'N';
+                    return $domain->$v ? 'Y' : 'N';
                 default:
                     return $domain->$v;
             }

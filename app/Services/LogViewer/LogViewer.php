@@ -89,4 +89,9 @@ class LogViewer
                 ], $v->toArray());
             });
     }
+
+    public function delete($name)
+    {
+        return LogRepository::delete($name);
+    }
 }

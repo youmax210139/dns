@@ -58,38 +58,16 @@ class LogController extends Controller
 
     private function earlyReturn()
     {
-        if (Request::has('f')) {
-            $this->log_viewer->setFolder(Crypt::decrypt(Request::input('f')));
-        }
-
         if (Request::has('dl')) {
-            return $this->download($this->pathFromInput('dl'));
+            return response()->download(Crypt::decrypt(Request::input('dl')));
         } elseif (Request::has('clean')) {
-            app('files')->put($this->pathFromInput('clean'), '');
+            app('files')->put(Crypt::decrypt(Request::input('clean'), ''));
             return $this->redirect(url()->previous());
         } elseif (Request::has('del')) {
-            app('files')->delete($this->pathFromInput('del'));
-            return $this->redirect(Request::url());
-        } elseif (Request::has('delall')) {
-            $files = ($this->log_viewer->getFolderName())
-            ? $this->log_viewer->getFolderFiles(true)
-            : $this->log_viewer->getFiles(true);
-            foreach ($files as $file) {
-                app('files')->delete($this->log_viewer->pathToLogFile($file));
-            }
+            $this->log_viewer->delete(Crypt::decrypt(Request::input('del')));
             return $this->redirect(Request::url());
         }
         return false;
-    }
-
-    /**
-     * @param string $input_string
-     * @return string
-     * @throws \Exception
-     */
-    private function pathFromInput($input_string)
-    {
-        return $this->log_viewer->pathToLogFile(Crypt::decrypt(Request::input($input_string)));
     }
 
     /**
@@ -103,19 +81,5 @@ class LogController extends Controller
         }
 
         return app('redirect')->to($to);
-    }
-
-    /**
-     * @param string $data
-     * @return mixed
-     */
-    private function download($data)
-    {
-        if (function_exists('response')) {
-            return response()->download($data);
-        }
-
-        // For laravel 4.2
-        return app('\Illuminate\Support\Facades\Response')->download($data);
     }
 }

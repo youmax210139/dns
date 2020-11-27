@@ -8,6 +8,7 @@ use GuzzleHttp\Promise;
 use Http;
 use Illuminate\Console\Command;
 use Telegram;
+use Log;
 
 class AutoHttp extends Command
 {
@@ -55,6 +56,10 @@ class AutoHttp extends Command
             $domain = Domain::find($id);
             if ($domain) {
                 $domain->update(['http' => $value]);
+                Log::info([
+                    'domain' => $domain->name,
+                    'response' => $value,
+                ]);
                 $value['Url'] = $domain->name;
             }
             $responses[$id] = $value;

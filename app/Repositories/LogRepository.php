@@ -29,4 +29,9 @@ class LogRepository
     {
         return call_user_func_array([$this->model, $method], $args);
     }
+
+    public static function delete($name)
+    {
+        Schema::connection('log')->dropIfExists($name);
+    }
 }

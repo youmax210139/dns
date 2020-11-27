@@ -45,7 +45,7 @@
                 <span class="fa fa-download" />
                 Download file
               </a>
-              <a id="delete-log" href="" class="btn btn-primary">
+              <a id="delete-log"  class="btn btn-primary" :href="`?del=${current_file.encrypted}`">
                 <span class="fa fa-trash" />
                 Delete file
               </a>
@@ -174,6 +174,7 @@ a.llv-active {
   background-color: #f5f5f5;
   border-color: inherit;
   border-radius: unset;
+  border-top-width: 1px;
 }
 .list-group-item {
   word-break: break-word;

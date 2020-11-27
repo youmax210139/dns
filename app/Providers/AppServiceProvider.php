@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Date::use (CarbonImmutable::class);
+        $this->registerObserver();
         $this->registerInertia();
         $this->registerLengthAwarePaginator();
     }
@@ -25,7 +26,12 @@ class AppServiceProvider extends ServiceProvider
     {
     }
 
-    public function registerInertia()
+    protected function registerObserver()
+    {
+        \App\Models\Domain::observe(\App\Observers\DomainObserver::class);
+    }
+
+    protected function registerInertia()
     {
         Inertia::version(function () {
             return md5_file(public_path('mix-manifest.json'));

@@ -3,12 +3,11 @@
 namespace App\Console\Commands;
 
 use App\Models\Domain;
-use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
 use Http;
 use Illuminate\Console\Command;
-use Telegram;
 use Log;
+use Telegram;
 
 class AutoHttp extends Command
 {
@@ -43,7 +42,6 @@ class AutoHttp extends Command
      */
     public function handle()
     {
-        $client = new Client();
         $promises = [];
         $domains = Domain::where('enable', true)->get();
         foreach ($domains as $domain) {
@@ -79,7 +77,7 @@ class AutoHttp extends Command
             $message .= "<b>Status: </b><i>{$v['Status_code']}</i>" . PHP_EOL;
             $message .= "<b>Message: </b><em>{$v['Message']}</em>" . PHP_EOL . PHP_EOL;
 
-            if(strlen($message) >  4000){
+            if (strlen($message) > 4000) {
                 $this->sendMessage($message);
                 $message = '';
             }
@@ -90,10 +88,13 @@ class AutoHttp extends Command
 
     protected function sendMessage($message)
     {
-        if(!env('TELEGRAM_CHAT_ID', false)){
+        if (!env('TELEGRAM_CHAT_ID', false)) {
             return;
         }
-        if(empty($message)) return;
+        if (empty($message)) {
+            return;
+        }
+
         Telegram::sendMessage([
             'chat_id' => env('TELEGRAM_CHAT_ID'),
             'text' => $message,

@@ -27,8 +27,8 @@ class Http
         $this->client = new Client([
             'allow_redirects' => true,
             'handler' => $this->stack,
-            'timeout' => 10,
-            'connect_timeout' => 10,
+            'timeout' => 30,
+            'connect_timeout' => 30,
         ]);
     }
 

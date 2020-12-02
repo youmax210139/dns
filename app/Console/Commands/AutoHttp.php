@@ -54,7 +54,8 @@ class AutoHttp extends Command
             $domain = Domain::find($id);
             if ($domain) {
                 $domain->update(['http' => $value]);
-                Log::info([
+                $action = ($value['Status_code'] >= 400) ? 'error' : 'info';
+                Log::$action([
                     'domain' => $domain->name,
                     'response' => $value,
                 ]);

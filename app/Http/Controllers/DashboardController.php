@@ -27,7 +27,8 @@ class DashboardController extends Controller
             'statusFields' => $this->getDataTableFields([
                 'platform_name' => 'platform',
                 'name' => 'domain',
-                'http_status_code' => 'http_status_code',
+                'protocols' => 'protocol',
+                'status_code' => 'status_code',
             ]),
             'doughnut' => $doughnut,
         ]);

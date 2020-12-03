@@ -18,10 +18,11 @@ class DomainExport extends BaseExport
         'platform_name' => 'platform',
         'hostname' => 'main_domain',
         'name' => 'domain',
-        'usage' => 'usage',
+        'protocols' => 'protocol',
+        // 'usage' => 'usage',
         'backup' => 'backup',
         'enable' => 'enable',
-        'http_status_code' => 'http_status_code',
+        'status_code' => 'status_code',
         'remark' => 'remark',
         'expired_at' => 'expired_at',
     ];
@@ -47,7 +48,7 @@ class DomainExport extends BaseExport
     public function collection()
     {
         return Domain::leftjoin('platforms', 'domains.platform_id', '=', 'platforms.id')
-            ->select('domains.*', 'platforms.name as platform_name', 'domains.http->Status_code as http_status_code')
+            ->select('domains.*', 'platforms.name as platform_name')
             ->sort(Request::get('sort'))
             ->filter(Request::only('search', 'trashed', 'expired', 'status'))
             ->get();

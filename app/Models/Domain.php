@@ -13,7 +13,7 @@ class Domain extends Model
     protected $appends = [
         'hostname',
         'platform_name',
-        'http_status_code',
+        'status_code',
     ];
 
     protected $fillable = [
@@ -38,22 +38,15 @@ class Domain extends Model
         'protocols' => 'array',
     ];
 
-        /**
+    /**
      * The model's default values for attributes.
      *
      * @var array
      */
     protected $attributes = [
-        'protocols' => '["https"]'
+        'protocols' => '["http"]',
+        'http'=> '[]',
     ];
-
-    protected static function booted() {
-        static::creating(function ($domain) {
-            if ($domain->http === null) {
-                $domain->http = [];  // set empty json array
-            }
-        });
-    }
 
     public function platform()
     {
@@ -84,7 +77,8 @@ class Domain extends Model
         })->when($filters['expired'] ?? null, function ($query, $expired) {
             $query->where('domains.expired_at', '<=', $expired);
         })->when($filters['status'] ?? null, function ($query, $status) {
-            $query->where('domains.http->Status_code', ...$status);
+            $query->where('domains.http->http->Status_code', ...$status)
+                ->orWhere('domains.http->https->Status_code', ...$status);
         });
     }
 
@@ -112,8 +106,16 @@ class Domain extends Model
         return $this->platform->name ?? '--';
     }
 
-    public function getHttpStatusCodeAttribute()
+    public function getStatusCodeAttribute()
     {
-        return $this->http['Status_code'] ?? '--';
+        return [
+            'http' => $this->http['http']['Status_code'] ?? '--',
+            'https' => $this->http['https']['Status_code'] ?? '--'
+        ];
+    }
+
+    public function getUrlByProtocol($protocol)
+    {
+        return "{$protocol}://" . str_replace(['http://', 'https://'], '', $this->name);
     }
 }

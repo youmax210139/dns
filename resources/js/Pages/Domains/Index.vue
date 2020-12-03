@@ -53,11 +53,13 @@
             />
           </slot>
         </template>
-        <template v-slot:http_status_code="props">
+        <template v-slot:status_code="props">
           <span
-            name="http_status_code"
-            :class="getStatusClass(props.rowData.http_status_code)"
-            >{{ props.rowData.http_status_code }}</span
+            v-for="(protocol,_) in props.rowData.protocols"
+            :key="protocol"
+            :class="`badge-`+getStatusClass(props.rowData.status_code[protocol])"
+            class="badge"
+            >{{ props.rowData.status_code[protocol] }}</span
           >
         </template>
         <template v-slot:actions="props">

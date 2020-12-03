@@ -45,61 +45,75 @@ class AutoHttp extends Command
         $promises = [];
         $domains = Domain::where('enable', true)->get();
         foreach ($domains as $domain) {
-            $promises[$domain->id] = Http::getAsync($domain->name);
-            $this->info($domain->name);
+            foreach ($domain->protocols as $protocol) {
+                $promises[$domain->id . '.' . $protocol] = Http::getAsync($domain->getUrlByProtocol($protocol));
+                $this->info("Start Checking {$domain->getUrlByProtocol($protocol)}");
+            }
         }
         $responses = Promise\settle($promises)->wait();
-        foreach ($responses as $id => $value) {
+        $messages = [];
+        foreach ($responses as $key => $value) {
             $value = $value['value']->getContents();
+            $key = explode('.', $key);
+            $id = $key[0];
+            $protocol = $key[1];
             $domain = Domain::find($id);
             if ($domain) {
-                $domain->update(['http' => $value]);
-                $action = ($value['Status_code'] >= 400) ? 'error' : 'info';
-                Log::$action([
-                    'domain' => $domain->name,
-                    'response' => $value,
+                $domain->update(['http' => 
+                    array_merge($domain->http, [$protocol => $value]),
                 ]);
-                $value['Url'] = $domain->name;
-            }
-            $responses[$id] = $value;
-        }
-
-        $this->convert($responses);
-    }
-
-    protected function convert(array $response)
-    {
-        $message = '';
-        foreach ($response as $v) {
-            if ($v['Status_code'] < 400) {
-                continue;
-            }
-            $message .= "Domain: <a href='http://{$v['Url']}'>{$v['Url']}</a>" . PHP_EOL;
-            $message .= "<b>Status: </b><i>{$v['Status_code']}</i>" . PHP_EOL;
-            $message .= "<b>Message: </b><em>{$v['Message']}</em>" . PHP_EOL . PHP_EOL;
-
-            if (strlen($message) > 4000) {
-                $this->sendMessage($message);
-                $message = '';
+                $url = $domain->getUrlByProtocol($protocol);
+                if($value['Status_code'] >= 400)
+                {
+                    Log::error([
+                        'domain' => $url,
+                        'response' => $value,
+                    ]);
+                    $messages[] = ''.
+                    "Domain: <a href='{$url}'>{$url}</a>".PHP_EOL.
+                    "<b>Status: </b><i>{$value['Status_code']}</i>".PHP_EOL.
+                    "<b>Message: </b><em>{$value['Message']}</em>".PHP_EOL.PHP_EOL;
+                }
+                else
+                {
+                    Log::info([
+                        'domain' => $url,
+                        'response' => $value,
+                    ]);
+                }
             }
         }
 
-        $this->sendMessage($message);
+        $this->sendMessages($messages);
     }
 
-    protected function sendMessage($message)
+    protected function sendMessages(array $messages)
     {
         if (!env('TELEGRAM_CHAT_ID', false)) {
             return;
         }
-        if (empty($message)) {
+        if (empty($messages)) {
             return;
         }
-
-        Telegram::sendMessage([
-            'chat_id' => env('TELEGRAM_CHAT_ID'),
-            'text' => $message,
-            'parse_mode' => 'html',
-        ]);
+        $message = '';
+        foreach ($messages as $v) {
+            $message .= $v;
+            if (strlen($message) > 4000) {
+                Telegram::sendMessage([
+                    'chat_id' => env('TELEGRAM_CHAT_ID'),
+                    'text' => $message,
+                    'parse_mode' => 'html',
+                ]);
+                $message = '';
+            }
+        }
+        if(!empty($message))
+        {
+            Telegram::sendMessage([
+                'chat_id' => env('TELEGRAM_CHAT_ID'),
+                'text' => $message,
+                'parse_mode' => 'html',
+            ]);
+        }
     }
 }

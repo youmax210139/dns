@@ -87,7 +87,7 @@ return [
     'enable' => 'Enable',
     'usage' => 'Usage',
     'remark' => 'Remark',
-    'http_status_code' => 'Status Code',
+    'status_code' => 'Status Code',
     'expired_at' => 'Expiration',
     'operation' => 'Operation',
     'main_domain' => 'Main Domain',

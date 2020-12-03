@@ -26,10 +26,10 @@ class DomainController extends Controller
             'hostname' => 'main_domain',
             'name' => 'domain',
             'protocols' => 'protocol',
-            'usage' => 'usage',
+            // 'usage' => 'usage',
             'backup' => 'backup',
             'enable' => 'enable',
-            'http_status_code' => 'http_status_code',
+            'status_code' => 'status_code',
             'remark' => 'remark',
             'expired_at' => 'expired_at',
             'deleted_at' => 'deleted_at',
@@ -38,14 +38,14 @@ class DomainController extends Controller
 
         if (Request::wantsJson()) {
             return Domain::leftjoin('platforms', 'domains.platform_id', '=', 'platforms.id')
-                ->select('domains.*', 'platforms.name as platform_name', 'domains.http->Status_code as http_status_code')
+                ->select('domains.*', 'platforms.name as platform_name')
                 ->sort(Request::get('sort'))
                 ->filter(Request::only('search', 'trashed', 'expired', 'status'))
                 ->paginate()
                 ->merge([
                     'problem' => Domain::leftjoin('platforms', 'domains.platform_id', '=', 'platforms.id')
                         ->filter(Request::only('search', 'trashed', 'expired', 'status'))
-                        ->selectRaw('sum(case when json_extract(domains.http, "$.Status_code") < 400 then 0 else 1 end) as problem')
+                        ->selectRaw('sum(case when (json_extract(domains.http, "$.http.Status_code") < 400 OR json_extract(domains.http, "$.https.Status_code") < 400) then 0 else 1 end) as problem')
                         ->first()->problem,
                 ])
                 ->only(...array_keys($fields));

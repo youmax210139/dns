@@ -92,15 +92,15 @@ Vue.mixin({
     },
     getStatusClass(code) {
       if (code >= 200 && code < 300) {
-        return { "text-success": true };
+        return "success";
       } else if (code >= 300 && code < 400) {
-        return { "text-info": true };
+        return "info";
       } else if (code >= 400 && code < 500) {
-        return { "text-danger": true };
+        return "danger";
       } else if (code >= 500 && code < 600) {
-        return { "text-danger": true };
+        return "danger";
       } else {
-        return {};
+        return "default";
       }
     },
   }

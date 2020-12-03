@@ -87,12 +87,24 @@
               >{{ props.rowData.name }}</a
             >
           </template>
-
-          <template v-slot:http_status_code="props">
+          <template v-slot:protocols="props">
             <span
-              name="http_status_code"
-              :class="getStatusClass(props.rowData.http_status_code)"
-              >{{ props.rowData.http_status_code }}</span
+              v-for="(protocol, index) in props.rowData.protocols"
+              :key="index"
+              class="badge badge-info"
+            >
+              {{ protocol }}
+            </span>
+          </template>
+          <template v-slot:status_code="props">
+            <span
+              v-for="(protocol, _) in props.rowData.protocols"
+              :key="protocol"
+              :class="
+                `badge-` + getStatusClass(props.rowData.status_code[protocol])
+              "
+              class="badge"
+              >{{ props.rowData.status_code[protocol] }}</span
             >
           </template>
         </data-table>
@@ -152,28 +164,15 @@ export default {
     };
   },
   methods: {
-    getStatusClass(code) {
-      if (code >= 200 && code < 300) {
-        return { "text-success": true };
-      } else if (code >= 300 && code < 400) {
-        return { "text-info": true };
-      } else if (code >= 400 && code < 500) {
-        return { "text-danger": true };
-      } else if (code >= 500 && code < 600) {
-        return { "text-danger": true };
-      } else {
-        return {};
-      }
+    refresh() {
+      this.$refs.statusDataTable.reload();
     },
-    refresh(){
-      this.$refs.statusDataTable.reload()
-    }
   },
   mounted() {
-    this.timer = setInterval(this.refresh, 60 * 1000)
+    this.timer = setInterval(this.refresh, 60 * 1000);
   },
   beforeDestroy() {
-    clearInterval(this.timer)
+    clearInterval(this.timer);
   },
 };
 </script>

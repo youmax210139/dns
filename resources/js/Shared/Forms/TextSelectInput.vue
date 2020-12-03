@@ -1,6 +1,8 @@
 <template>
   <div class="form-group row">
-    <label v-if="label" class="col-sm-3 form-control-label" :for="id">{{ label }}:</label>
+    <label v-if="label" class="col-sm-3 form-control-label" :for="id"
+      >{{ label }}:</label
+    >
     <div class="col-sm-9">
       <v-select
         ref="select"
@@ -10,10 +12,13 @@
         :options="options"
         :taggable="taggable"
         :placeholder="placeholder"
-        :reduce="option => option.code || option"
+        :multiple="multiple"
+        :reduce="(option) => option.code || option"
         @input="select"
       />
-      <div v-if="error instanceof Array" class="invalid-feedback d-block">{{ error[0] }}</div>
+      <div v-if="error instanceof Array" class="invalid-feedback d-block">
+        {{ error[0] }}
+      </div>
       <div v-else-if="error" class="invalid-feedback d-block">{{ error }}</div>
     </div>
   </div>
@@ -37,7 +42,7 @@ export default {
       type: String,
       default: "",
     },
-    value: [String, Number],
+    value: [String, Number, Array],
     label: String,
     error: {
       type: [String, Array],
@@ -51,13 +56,18 @@ export default {
       type: Boolean,
       default: true,
     },
+    multiple: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     select(value) {
       // console.log(value);
-      if (value instanceof Object) {
-        return this.$emit("input", value["code"]);
-      }
+      // if (value instanceof Object) {
+
+      //   return this.$emit("input", value["code"]);
+      // }
       return this.$emit("input", value);
     },
   },

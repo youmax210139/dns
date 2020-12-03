@@ -29,6 +29,15 @@
             >{{ props.rowData.name }}</a
           >
         </template>
+        <template v-slot:protocols="props">
+          <span
+            v-for="(protocol,index) in props.rowData.protocols"
+            :key="index"
+            class="badge badge-info"
+          >
+            {{ protocol }}
+          </span>
+        </template>
         <template v-slot:usage="props">
           <slot name="usage">{{ props.rowData.usage }}%</slot>
         </template>
@@ -64,7 +73,7 @@
             class="btn btn-sm btn-success text-white"
             @click="
               alert(
-                __('restore', {name: __('domain')}),
+                __('restore', { name: __('domain') }),
                 route('domains.restore', props.rowData.id),
                 'put',
                 onRestoreSuccess
@@ -77,7 +86,7 @@
             class="btn btn-sm btn-danger text-white"
             @click="
               alert(
-                __('delete', {name: __('domain')}),
+                __('delete', { name: __('domain') }),
                 route('domains.destroy', props.rowData.id),
                 'delete',
                 onDestroySuccess
@@ -93,8 +102,8 @@
 </template>
 
 <script>
-import DataTable from "@/Shared/Tables/DataTable"
-import { ToggleButton } from "vue-js-toggle-button"
+import DataTable from "@/Shared/Tables/DataTable";
+import { ToggleButton } from "vue-js-toggle-button";
 
 export default {
   components: {
@@ -120,7 +129,9 @@ export default {
         })
         .then((res) => {
           rowData.enable = res.data.enable;
-          this.$toasted.success(this.__("edit_success",{name: this.__('domain')}));
+          this.$toasted.success(
+            this.__("edit_success", { name: this.__("domain") })
+          );
         })
         .catch((err) => {
           console.error(err);
@@ -129,11 +140,15 @@ export default {
     },
     onDestroySuccess(res) {
       this.$refs.domainDataTable.reload();
-      this.$toasted.success(this.__("delete_success", {name: this.__('domain')}));
+      this.$toasted.success(
+        this.__("delete_success", { name: this.__("domain") })
+      );
     },
     onRestoreSuccess(res) {
       this.$refs.domainDataTable.reload();
-      this.$toasted.success(this.__("restore_success", {name: this.__('domain')}));
+      this.$toasted.success(
+        this.__("restore_success", { name: this.__("domain") })
+      );
     },
   },
 };

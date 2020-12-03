@@ -19,6 +19,7 @@ class Domain extends Model
     protected $fillable = [
         'platform_id',
         'name',
+        'protocols',
         'usage',
         'backup',
         'renew',
@@ -34,6 +35,16 @@ class Domain extends Model
         'backup' => 'boolean',
         'enable' => 'boolean',
         'renew' => 'boolean',
+        'protocols' => 'array',
+    ];
+
+        /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'protocols' => '["https"]'
     ];
 
     protected static function booted() {

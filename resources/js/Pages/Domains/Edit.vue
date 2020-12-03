@@ -17,6 +17,15 @@
               :error="$page.errors.name"
               :label="__('domain')"
             />
+            <text-select-input
+              v-model="form.protocols"
+              :error="$page.errors.protocols"
+              :options="protocols"
+              :placeholder="__('input', {name: __('protocol')})"
+              :label="__('protocol')"
+              :taggable="false"
+              :multiple="true"
+            />
             <toggle-input
               v-model="form.backup"
               :error="$page.errors.backup"
@@ -71,6 +80,7 @@ export default {
   props: {
     domain: Object,
     platforms: Array,
+    protocols: Array,
   },
   data() {
     return {
@@ -78,6 +88,7 @@ export default {
       form: {
         platform_id: this.domain.platform_id,
         name: this.domain.name,
+        protocols: this.domain.protocols,
         backup: this.domain.backup,
         renew: this.domain.renew,
         remark: this.domain.remark,
@@ -89,6 +100,7 @@ export default {
     submit() {
       this.sending = true;
       this.$page.errors = mapValues(this.form, () => "");
+      console.log(this.form)
       this.$inertia
         .put(this.route("domains.update", this.domain.id), this.form)
         .then(() => {

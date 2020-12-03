@@ -81,6 +81,7 @@ return [
     'id'    => '#',
 
     'domain' => '域名',
+    'protocol' => '协定',
     'backup' => '备援',
     'renew' => '续约',
     'enable' => '启用',

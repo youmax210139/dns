@@ -18,6 +18,15 @@
               :label="__('domain')"
               :placeholder="__('input', { name: __('domain') })"
             />
+            <text-select-input
+              v-model="form.protocols"
+              :error="$page.errors.protocols"
+              :options="protocols"
+              :placeholder="__('input', {name: __('protocol')})"
+              :label="__('protocol')"
+              :taggable="false"
+              :multiple="true"
+            />
             <toggle-input v-model="form.backup" :label="__('backup')" />
             <toggle-input v-model="form.renew" :label="__('renew')" />
             <toggle-input v-model="form.enable" :label="__('enable')" />
@@ -58,6 +67,7 @@ export default {
   },
   props: {
     platforms: Array,
+    protocols: Array,
   },
   data() {
     return {
@@ -65,6 +75,7 @@ export default {
       form: {
         platform_id: 0,
         name: "",
+        protocols: ["http"],  
         backup: false,
         renew: false,
         enable: true,

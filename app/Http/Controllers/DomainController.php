@@ -12,6 +12,12 @@ use Whois;
 
 class DomainController extends Controller
 {
+
+    protected $protocols = [
+        'http',
+        'https',
+    ];
+
     public function index()
     {
         $fields = [
@@ -19,6 +25,7 @@ class DomainController extends Controller
             'platform_name' => 'platform',
             'hostname' => 'main_domain',
             'name' => 'domain',
+            'protocols' => 'protocol',
             'usage' => 'usage',
             'backup' => 'backup',
             'enable' => 'enable',
@@ -58,6 +65,7 @@ class DomainController extends Controller
                     'code' => $platform->id,
                 ];
             }),
+            'protocols' => $this->protocols,
         ]);
     }
 
@@ -67,6 +75,7 @@ class DomainController extends Controller
             array_merge(
                 Request::validate([
                     'name' => ['required', 'unique:domains', 'max:100'],
+                    'protocols' => ['required', 'array'],
                     'backup' => ['required', 'boolean'],
                     'renew' => ['required', 'boolean'],
                     'enable' => ['required', 'boolean'],
@@ -87,13 +96,14 @@ class DomainController extends Controller
     public function edit(Domain $domain)
     {
         return Inertia::render('Domains/Edit', [
-            'domain' => $domain->only('id', 'name', 'backup', 'renew', 'enable', 'remark', 'platform_id'),
+            'domain' => $domain->only('id', 'name', 'protocols', 'backup', 'renew', 'enable', 'remark', 'platform_id'),
             'platforms' => Platform::all()->transform(function ($platform) {
                 return [
                     'label' => $platform->name,
                     'code' => $platform->id,
                 ];
             }),
+            'protocols' => $this->protocols
         ]);
     }
     public function update(Domain $domain)
@@ -112,6 +122,7 @@ class DomainController extends Controller
         $domain->update(
             Request::validate([
                 'name' => ['nullable', "unique:domains,name,{$domain->id}", 'max:100'],
+                'protocols' => ['nullable', 'array'],
                 'backup' => ['nullable', 'boolean'],
                 'renew' => ['nullable', 'boolean'],
                 'enable' => ['nullable', 'boolean'],

@@ -81,6 +81,7 @@ return [
     'id'    => '#',
 
     'domain' => 'Domain',
+    'protocol' => 'Protocol',
     'backup' => 'Backup',
     'renew' => 'Renew',
     'enable' => 'Enable',

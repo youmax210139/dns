@@ -21,6 +21,11 @@ class DomainController extends Controller
     public function index()
     {
         $fields = [
+            '__checkbox' => [
+                'name' => '__checkbox',
+                'titleClass' => 'center aligned',
+                'dataClass' => 'center aligned',
+            ],
             'id' => 'id',
             'platform_name' => 'platform',
             'hostname' => 'main_domain',
@@ -52,7 +57,7 @@ class DomainController extends Controller
         }
         return Inertia::render('Domains/Index', [
             'filters' => Request::all('search', 'trashed'),
-            'fields' => $this->getDataTableFields($fields, ['actions', 'hostname'], ['deleted_at']),
+            'fields' => $this->getDataTableFields($fields, ['actions', 'hostname'], ['deleted_at', 'id']),
         ]);
     }
 
@@ -103,7 +108,7 @@ class DomainController extends Controller
                     'code' => $platform->id,
                 ];
             }),
-            'protocols' => $this->protocols
+            'protocols' => $this->protocols,
         ]);
     }
     public function update(Domain $domain)
@@ -176,4 +181,22 @@ class DomainController extends Controller
     {
         return new DomainExport();
     }
+
+    public function massDestroy()
+    {
+        $ids = Request::validate([
+            'ids' => ['required', 'array'],
+        ])['ids'];
+        Domain::whereIn('id', $ids)->where('deleted_at', '!=', null)->forceDelete();
+        Domain::whereIn('id', $ids)->delete();
+        if (Request::wantsJson()) {
+            return response()->json(null);
+        }
+        return Redirect::back()
+            ->with('success', __('all.delete_success', [
+                'name' => __('all.domain'),
+            ]))
+            ->withInput();
+    }
+
 }

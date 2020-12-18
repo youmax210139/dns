@@ -86,8 +86,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-  >>> .badge.badge-info{
-    margin-right: 8px;
-  }
-</style>

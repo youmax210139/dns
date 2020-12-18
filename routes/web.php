@@ -46,6 +46,7 @@ Route::resource('platforms', 'PlatformController')->middleware('auth');
 
 // Domains
 Route::get('/domains/export', 'DomainController@export')->name('domains.export')->middleware('auth');
+Route::delete('/domains/massDestroy', 'DomainController@massDestroy')->name('domains.massDestroy')->middleware('auth'); 
 Route::match(['put', 'patch'], '/domains/restore/{domain}', 'DomainController@restore')->name('domains.restore')->middleware('auth');
 Route::resource('domains', 'DomainController')->middleware('auth');
 

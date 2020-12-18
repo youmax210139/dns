@@ -58,11 +58,15 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import { Vuetable } from "vuetable-2";
+import VuetableFieldCheckbox from 'vuetable-2/src/components/VuetableFieldCheckbox.vue';
 import SearchFilter from "@/Shared/Tables/SearchFilter";
 import throttle from "lodash/throttle";
 import mapValues from "lodash/mapValues";
 import DataTablePagination from "@/Shared/Tables/DataTablePagination";
+
+Vue.component('vuetable-field-checkbox', VuetableFieldCheckbox)
 
 export default {
   components: {
@@ -147,8 +151,13 @@ export default {
           },
         },
       },
-      form: this.filters,
+      form: this.filters
     };
+  },
+  computed:{
+      selectedTo(){
+        return this.$refs.vuetable.selectedTo || [];
+      } 
   },
   watch: {
     form: {

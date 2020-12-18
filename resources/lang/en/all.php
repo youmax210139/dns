@@ -46,6 +46,7 @@ return [
     'loading' => 'loading',
     'export' => 'Export',
     'error' => 'Error',
+    'massDestroy' => 'Mass Delete',
 
     'email' => 'Email',
     'password' => 'Password',

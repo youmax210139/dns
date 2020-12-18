@@ -2,12 +2,11 @@
   <div class="card bg-transparent shadow-none">
     <div class="card-body p-0">
       <div class="row">
-        <div class="col-9">
+        <div class="col-md-7">
           <form class="form-inline">
-            <div class="form-group">
+            <div class="form-group justify-content-center justify-content-md-start">
               <dropdown :auto-close="false" placement="bottom-start">
-                <span class="d-none d-md-inline-block px-2">{{ __('filter') }}</span>
-                <i class="fas fa-caret-down" />
+                <span class="px-2">{{ __('filter') }}&nbsp;<i class="fas fa-caret-down" /></span>
                 <div class="card" slot="dropdown">
                   <div class="card-body">
                     <form class="form-horizontal">
@@ -29,7 +28,7 @@
             </div>
           </form>
         </div>
-        <div class="col-3 text-right">
+        <div class="col-md-5 text-center text-md-right">
           <slot name="append" />
         </div>
       </div>
@@ -45,7 +44,7 @@
     width: 100%;
   }
   button {
-    width: 15%;
+    width: auto;
   }
   input {
     width: 40%;

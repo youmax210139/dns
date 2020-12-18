@@ -46,6 +46,7 @@ return [
     'loading' => '加载中',
     'export' => '汇出',
     'error' => '错误',
+    'massDestroy' => '批次删除',
 
     'email' => '邮箱',
     'password' => '密码',

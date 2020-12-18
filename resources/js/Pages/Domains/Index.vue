@@ -20,6 +20,19 @@
             }}</span>
             <span class="d-md-none">{{ __("create") }}</span>
           </inertia-link>
+          <button
+            class="btn btn-danger"
+            @click="
+              alert(
+                __('delete', { name: __('domain') }),
+                route('domains.massDestroy', {'ids': selectedTo}),
+                'delete',
+                onDestroySuccess
+              )
+            "
+          >
+            {{ __("massDestroy") }}
+          </button>
         </template>
         <template v-slot:name="props">
           <a
@@ -31,7 +44,7 @@
         </template>
         <template v-slot:protocols="props">
           <span
-            v-for="(protocol,index) in props.rowData.protocols"
+            v-for="(protocol, index) in props.rowData.protocols"
             :key="index"
             class="badge badge-info"
           >
@@ -55,9 +68,11 @@
         </template>
         <template v-slot:status_code="props">
           <span
-            v-for="(protocol,_) in props.rowData.protocols"
+            v-for="(protocol, _) in props.rowData.protocols"
             :key="protocol"
-            :class="`badge-`+getStatusClass(props.rowData.status_code[protocol])"
+            :class="
+              `badge-` + getStatusClass(props.rowData.status_code[protocol])
+            "
             class="badge"
             >{{ props.rowData.status_code[protocol] }}</span
           >
@@ -121,6 +136,11 @@ export default {
       infoTemplate:
         "Total: {total}, Problem: <span class='text-danger'>{problem}</span>",
     };
+  },
+  computed:{
+    selectedTo(){
+      return this.$refs.domainDataTable.selectedTo;
+    }
   },
   methods: {
     enable(rowData) {

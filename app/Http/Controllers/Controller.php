@@ -78,6 +78,9 @@ class Controller extends BaseController
         array $except = [],
         array $extras = []) {
         return collect($fields)->except($except)->transform(function ($field, $key) use ($unsortFields, $extras) {
+            if (is_array($field)){
+                return $field;
+            }
             if (!in_array($key, $unsortFields)) {
                 $extras['sortField' ] = $key;
             }

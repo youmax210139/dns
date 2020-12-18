@@ -42,7 +42,7 @@
           <slot name="usage">{{ props.rowData.usage }}%</slot>
         </template>
         <template v-slot:backup="props">
-          <slot name="usage">{{ props.rowData.backup ? "Y" : "N" }}</slot>
+          <slot name="backup">{{ props.rowData.backup ? "Y" : "N" }}</slot>
         </template>
         <template v-slot:enable="props">
           <slot name="enable">

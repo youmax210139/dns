@@ -8,12 +8,22 @@ use Spatie\Permission\Models\Role as Model;
 class Role extends Model
 {
     use SoftDeletes;
+    protected $appends = [
+        'permissionNames',
+    ];
 
     public function resolveRouteBinding($value, $field = null)
     {
         return in_array(SoftDeletes::class, class_uses($this))
         ? $this->where($this->getRouteKeyName(), $value)->withTrashed()->first()
         : parent::resolveRouteBinding($value);
+    }
+
+    public function getPermissionNamesAttribute()
+    {
+        return $this->getPermissionNames()->map(function ($v) {
+            return __('all.' . $v);
+        })->slice(0, 8);
     }
 
     public function scopeFilter($query, array $filters)

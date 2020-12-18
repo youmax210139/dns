@@ -17,7 +17,7 @@ class RoleController extends Controller
         $fields = [
             'id' => 'id',
             'name' => 'role',
-            'permission' => 'permission',
+            'permissionNames' => 'permission',
             'deleted_at' => 'deleted_at',
             'actions' => 'operation',
         ];

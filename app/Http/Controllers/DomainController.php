@@ -27,7 +27,7 @@ class DomainController extends Controller
             'name' => 'domain',
             'protocols' => 'protocol',
             // 'usage' => 'usage',
-            'backup' => 'backup',
+            // 'backup' => 'backup',
             'enable' => 'enable',
             'status_code' => 'status_code',
             'remark' => 'remark',

@@ -14,6 +14,14 @@
             <span class="d-md-none">{{ __("create") }}</span>
           </inertia-link>
         </template>
+        <template v-slot:permissionNames="props">
+          <span
+            v-for="(permission, index) in props.rowData.permissionNames"
+            :key="index"
+            class="badge badge-info"
+            >{{ permission }}
+          </span>
+        </template>
         <template v-slot:actions="props">
           <a
             v-if="props.rowData.deleted_at == null"
@@ -78,3 +86,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+  >>> .badge.badge-info{
+    margin-right: 8px;
+  }
+</style>

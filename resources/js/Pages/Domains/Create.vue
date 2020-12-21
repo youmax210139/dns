@@ -12,11 +12,12 @@
               :label="__('platform')"
               :taggable="false"
             />
-            <text-input
-              v-model="form.name"
+            <text-area-input
+              v-model="form.names"
+              :rows="10"
               :error="$page.errors.name"
               :label="__('domain')"
-              :placeholder="__('input', { name: __('domain') })"
+              :placeholder="__('input', { name: __('domain') }) + __('multiple_domain_tip')"
             />
             <text-select-input
               v-model="form.protocols"
@@ -55,6 +56,7 @@
 <script>
 import LoadingButton from "@/Shared/Forms/LoadingButton";
 import TextInput from "@/Shared/Forms/TextInput";
+import TextAreaInput from "@/Shared/Forms/TextAreaInput";
 import ToggleInput from "@/Shared/Forms/ToggleInput";
 import TextSelectInput from "@/Shared/Forms/TextSelectInput";
 
@@ -63,6 +65,7 @@ export default {
     LoadingButton,
     ToggleInput,
     TextInput,
+    TextAreaInput,
     TextSelectInput,
   },
   props: {
@@ -74,7 +77,7 @@ export default {
       sending: false,
       form: {
         platform_id: 0,
-        name: "",
+        names: "",
         protocols: ["http"],  
         backup: false,
         renew: false,

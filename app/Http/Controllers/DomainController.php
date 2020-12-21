@@ -6,6 +6,7 @@ use App\Exports\DomainExport;
 use App\Models\Domain;
 use App\Models\Platform;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use Redirect;
 use Whois;
@@ -76,22 +77,40 @@ class DomainController extends Controller
 
     public function store()
     {
-        Domain::create(
-            array_merge(
-                Request::validate([
-                    'name' => ['required', 'unique:domains', 'max:100'],
-                    'protocols' => ['required', 'array'],
-                    'backup' => ['required', 'boolean'],
-                    'renew' => ['required', 'boolean'],
-                    'enable' => ['required', 'boolean'],
-                    'platform_id' => ['required', 'numeric'],
-                    'remark' => ['string'],
-                ]),
-                [
-                    'expired_at' => Whois::getInfo(request()->name)['expired_at'] ?? null,
-                ]
-            )
-        );
+        $names = explode(',', Request::validate([
+            'names' => ['required'],
+        ])['names']);
+        foreach ($names as $name) {
+            $validator = Validator::make([
+                'name' => $name,
+            ], [
+                'name' => ['required', 'unique:domains', 'max:100'],
+            ], [
+                'name.unique' => __('validation.unique', ['attribute' => $name]),
+            ]);
+
+            if ($validator->fails()) {
+                return Redirect::back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+            Domain::create(
+                array_merge(
+                    Request::validate([
+                        'protocols' => ['required', 'array'],
+                        'backup' => ['required', 'boolean'],
+                        'renew' => ['required', 'boolean'],
+                        'enable' => ['required', 'boolean'],
+                        'platform_id' => ['required', 'numeric'],
+                        'remark' => ['string'],
+                    ]),
+                    [
+                        'name' => $name,
+                        'expired_at' => Whois::getInfo($name)['expired_at'] ?? null,
+                    ]
+                )
+            );
+        }
         return Redirect::route('domains.index')
             ->with('success', __('all.create_success', [
                 'name' => __('all.domain'),

@@ -47,6 +47,7 @@ return [
     'export' => 'Export',
     'error' => 'Error',
     'massDestroy' => 'Mass Delete',
+    'multiple_domain_tip' => ',multiple domain should be sperated by comma. For instance: yahoo.com,google.com',
 
     'email' => 'Email',
     'password' => 'Password',

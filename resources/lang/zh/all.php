@@ -47,6 +47,7 @@ return [
     'export' => '汇出',
     'error' => '错误',
     'massDestroy' => '批次删除',
+    'multiple_domain_tip' => '，多个域名以逗号区隔，例: yahoo.com,google.com',
 
     'email' => '邮箱',
     'password' => '密码',

@@ -2,22 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Domain;
+use App\Charts\UserLineChart;
 use App\Models\Platform;
 use Inertia\Inertia;
-use Auth;
+
 class DashboardController extends Controller
 {
     public function index()
     {
-        $doughnut = [
-            'labels' => [],
-            'data' => [],
-        ];
-        Platform::withCount('domains')->get()->each(function ($platform) use (&$doughnut) {
-            $doughnut['labels'][] = $platform->name;
-            $doughnut['data'][] = $platform->domains_count;
-        });
+
         return Inertia::render('Dashboards/Index', [
             'expirationFields' => $this->getDataTableFields([
                 'platform_name' => 'platform',
@@ -30,7 +23,57 @@ class DashboardController extends Controller
                 'protocols' => 'protocol',
                 'status_code' => 'status_code',
             ]),
-            'doughnut' => $doughnut,
+            'doughnuts' => $this->getDoughnuts(),
+            'bar' => $this->getBar(),
+            'line' => $this->getLine(),
         ]);
+    }
+
+    protected function getDoughnuts()
+    {
+        // minutes
+        $doughnuts = [
+            30,
+            60,
+        ];
+        return $doughnuts;
+        // Platform::withCount('domains')->get()->each(function ($platform) use (&$doughnut) {
+        //     $doughnut['labels'][] = $platform->name;
+        //     $doughnut['data'][] = $platform->domains_count;
+        // });
+    }
+
+    protected function getBar()
+    {
+        return [
+            'chartdata' => [
+                'labels' => ['January', 'February'],
+                'datasets' => [
+                    [
+                        'label' => 'Data One',
+                        'backgroundColor' => '#f87979',
+                        'data' => [40, 20],
+                    ],
+                ],
+            ],
+            'options' => [
+                'responsive' => true,
+                'maintainAspectRatio' => false,
+            ],
+        ];
+    }
+
+    protected function getLine()
+    {
+        $chart = new UserLineChart;
+        $platforms = Platform::all();
+
+        $chart->dataset('New User Register Chart', 'line', $platforms)->options([
+            'fill' => 'true',
+            'borderColor' => '#51C1C0',
+        ]);
+
+        return $chart->api();
+
     }
 }

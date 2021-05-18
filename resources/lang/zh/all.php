@@ -64,9 +64,9 @@ return [
     'last_name' => '姓',
     'full_name' => '姓名',
 
-    'platform_percentage' => '平台占比',
-    'platform_line' => '平台占比',
-    'platform_bar' => '平台占比',
+    'usage_period_avg' => '时段可用性统计(平均)',
+    'avaliablity' => '可用性',
+    'avg_response_time' => '平均响应时间',
     'expired_in_week' => '一周内过期',
     'expired_in_month' => '一月内过期',
     'expired_in_season' => '三月内过期',

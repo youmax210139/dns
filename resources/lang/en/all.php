@@ -64,9 +64,9 @@ return [
     'last_name' => 'Last name',
     'full_name' => 'Full name',
 
-    'platform_percentage' => 'Platform Percentage',
-    'platform_line' => 'Platform Percentage',
-    'platform_bar' => 'Platform Percentage',
+    'usage_period_avg' => 'Time period availability statistics (average)',
+    'avaliablity' => 'Avaliablity',
+    'avg_response_time' => 'Response Time (average)',
     'expired_in_week' => 'Domain Expired in one week',
     'expired_in_month' => 'Domain Expired in a month',
     'expired_in_season' => 'Domain Expired in 3 month',

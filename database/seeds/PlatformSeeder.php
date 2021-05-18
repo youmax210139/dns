@@ -15,6 +15,6 @@ class PlatformSeeder extends Seeder
         if (Platform::count() >= 12) {
             return;
         }
-        factory(Platform::class, 12)->create();
+        Platform::factory()->count(12)->create();
     }
 }

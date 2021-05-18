@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\Platform;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PlatformFactory extends Factory
+class TestFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -22,7 +22,7 @@ class PlatformFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->company,
+            //
         ];
     }
 }

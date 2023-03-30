@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Whois;
 
 class Domain extends Model
 {
     use SoftDeletes;
+    use HasFactory;
 
     protected $appends = [
         'hostname',
@@ -85,7 +86,7 @@ class Domain extends Model
     public function scopeSort($query, $sort)
     {
         $query->when($sort, function ($query, $sort) {
-            $sort = explode('|', $sort);    
+            $sort = explode('|', $sort);
             switch($sort[0])
             {
                 case 'hostname':

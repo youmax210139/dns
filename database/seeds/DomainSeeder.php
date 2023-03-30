@@ -21,9 +21,10 @@ class DomainSeeder extends Seeder
             'www.google.com.jp',
         ];
         foreach ($domains as $domain) {
-            $data = factory(Domain::class)->raw([
-                'name' => $domain,
-            ]);
+            $data = Domain::factory()
+                ->raw([
+                    'name' => $domain,
+                ]);
             Domain::firstOrCreate(Arr::only($data, ['name']), $data);
         }
     }

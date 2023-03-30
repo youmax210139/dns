@@ -65,6 +65,7 @@ class DashboardController extends Controller
 
     protected function getLine()
     {
+        return [];
         $chart = new UserLineChart;
         $platforms = Platform::all();
 

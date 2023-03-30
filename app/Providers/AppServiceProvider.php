@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        Date::use (CarbonImmutable::class);
+        Date::use(CarbonImmutable::class);
         $this->registerObserver();
         $this->registerInertia();
         $this->registerLengthAwarePaginator();
@@ -70,8 +70,8 @@ class AppServiceProvider extends ServiceProvider
             },
             'errors' => function () {
                 return Session::get('errors')
-                ? Session::get('errors')->getBag('default')->getMessages()
-                : (object) [];
+                    ? Session::get('errors')->getBag('default')->getMessages()
+                    : (object) [];
             },
         ]);
     }

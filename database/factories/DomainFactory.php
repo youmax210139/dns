@@ -1,28 +1,36 @@
 <?php
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| This directory should contain each of the model factory definitions for
-| your application. Factories provide a convenient way to generate new
-| model instances for testing / seeding your application's database.
-|
- */
+use App\Models\Domain;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(App\Models\Domain::class, function (Faker $faker) {
-    return [
-        'account' => $faker->username,
-        'name' => $faker->domainName,
-        'usage' => $faker->randomFloat(2, 0, 100),
-        'backup' => $faker->boolean,
-        'renew' => $faker->boolean,
-        'enable' => $faker->boolean,
-        'remark' => $faker->word,
-        'registered_at' => $faker->dateTime($timezone = 'Asia/Taipei'),
-        'expired_at' => $faker->dateTime($timezone = 'Asia/Taipei'),
-    ];
-});
+class DomainFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Domain::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'account' => $this->faker->username,
+            'name' => $this->faker->domainName,
+            'usage' => $this->faker->randomFloat(2, 0, 100),
+            'backup' => $this->faker->boolean,
+            'renew' => $this->faker->boolean,
+            'enable' => $this->faker->boolean,
+            'remark' => $this->faker->word,
+            'registered_at' => $this->faker->dateTime('Asia/Taipei'),
+            'expired_at' => $this->faker->dateTime('Asia/Taipei'),
+        ];
+    }
+}

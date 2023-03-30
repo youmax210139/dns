@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Logging;
 
 use Monolog\Handler\AbstractProcessingHandler;
